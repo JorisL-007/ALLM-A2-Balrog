@@ -1,0 +1,219 @@
+{
+  "event": "candidate_review",
+  "stage": "E2",
+  "at_unix": 1792145258.6933687,
+  "candidate": "mechanics",
+  "hypothesis": {
+    "id": "mechanics",
+    "factor": "BabyAI action descriptions only",
+    "hypothesis": "Correct front-tile pickup/toggle wording reduces interaction failures",
+    "budget_tokens": 512,
+    "extra_calls": 0
+  },
+  "complete_panel": true,
+  "metrics": [
+    {
+      "pass_id": "screen_1",
+      "variant": "mechanics",
+      "benchmark": "babyai",
+      "episodes": "10",
+      "progression_pct": "30.0",
+      "calls": "899",
+      "input_tokens": "875103",
+      "output_tokens": "54436",
+      "steps": "899",
+      "invalid_commands": "0",
+      "unchanged_text": "590",
+      "repeated_actions": "693",
+      "decision_seconds": "404.61304684507195",
+      "execution_seconds": "415.4734528064728"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "mechanics",
+      "benchmark": "crafter",
+      "episodes": "2",
+      "progression_pct": "9.090909090909092",
+      "calls": "355",
+      "input_tokens": "597737",
+      "output_tokens": "18487",
+      "steps": "355",
+      "invalid_commands": "0",
+      "unchanged_text": "142",
+      "repeated_actions": "209",
+      "decision_seconds": "153.07544633198995",
+      "execution_seconds": "156.34617471694946"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "mechanics",
+      "benchmark": "babaisai",
+      "episodes": "6",
+      "progression_pct": "16.666666666666664",
+      "calls": "501",
+      "input_tokens": "1654772",
+      "output_tokens": "34153",
+      "steps": "501",
+      "invalid_commands": "0",
+      "unchanged_text": "457",
+      "repeated_actions": "470",
+      "decision_seconds": "283.7282860460109",
+      "execution_seconds": "291.68236207962036"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "mechanics",
+      "benchmark": "overall",
+      "episodes": "18",
+      "progression_pct": "18.585858585858585",
+      "calls": "1755",
+      "input_tokens": "3127612",
+      "output_tokens": "107076",
+      "steps": "1755",
+      "invalid_commands": "0",
+      "unchanged_text": "1189",
+      "repeated_actions": "1372",
+      "decision_seconds": "841.4167792230728",
+      "execution_seconds": "863.5019896030426"
+    }
+  ],
+  "paired_vs_planning": [
+    {
+      "pass_id": "screen_1",
+      "variant": "mechanics",
+      "baseline": "planning",
+      "benchmark": "babaisai",
+      "matched_cases": "6",
+      "delta_progression_pp": "0.0",
+      "delta_calls": "0",
+      "delta_output_tokens": "-856",
+      "delta_execution_seconds": "-7.970004320144653"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "mechanics",
+      "baseline": "planning",
+      "benchmark": "babyai",
+      "matched_cases": "10",
+      "delta_progression_pp": "-20.0",
+      "delta_calls": "134",
+      "delta_output_tokens": "7448",
+      "delta_execution_seconds": "50.99005341529846"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "mechanics",
+      "baseline": "planning",
+      "benchmark": "crafter",
+      "matched_cases": "2",
+      "delta_progression_pp": "4.545454545454545",
+      "delta_calls": "22",
+      "delta_output_tokens": "985",
+      "delta_execution_seconds": "2.5276219844818115"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "mechanics",
+      "baseline": "planning",
+      "benchmark": "overall",
+      "matched_cases": "18",
+      "delta_progression_pp": "-5.151515151515151",
+      "delta_calls": "156",
+      "delta_output_tokens": "7577",
+      "delta_execution_seconds": "45.54767107963562"
+    }
+  ],
+  "failure_examples": [
+    {
+      "pass_id": "screen_1",
+      "variant": "mechanics",
+      "case_id": "babaisai:env/goto_win-distr_obj_rule:11",
+      "kind": "repeated_unchanged_text",
+      "count": 94,
+      "directory": "runs/screen_1/mechanics/babaisai__env_goto_win-distr_obj_rule__11",
+      "first_example": {
+        "step": 6,
+        "observation": {
+          "long_term_context": "Active rules:\nkey is win\nbaba is you\n\nObjects on the map:\nrule `key` 5 step to the left and 1 step up\nrule `is` 4 step to the left and 1 step up\nrule `win` 3 step to the left and 1 step up\nkey 4 step to the left and 3 steps down\nball 2 step to the left and 3 steps down\nrule `baba` 5 step to the left and 4 steps down\nrule `is` 4 step to the left and 4 steps down\nrule `you` 3 step to the left and 4 steps down\nrule `ball` 2 step to the left and 4 steps down",
+          "short_term_context": ""
+        },
+        "proposed_action": "right",
+        "executed_action": "right",
+        "next_observation": {
+          "long_term_context": "Active rules:\nkey is win\nbaba is you\n\nObjects on the map:\nrule `key` 5 step to the left and 1 step up\nrule `is` 4 step to the left and 1 step up\nrule `win` 3 step to the left and 1 step up\nkey 4 step to the left and 3 steps down\nball 2 step to the left and 3 steps down\nrule `baba` 5 step to the left and 4 steps down\nrule `is` 4 step to the left and 4 steps down\nrule `you` 3 step to the left and 4 steps down\nrule `ball` 2 step to the left and 4 steps down",
+          "short_term_context": ""
+        },
+        "text_unchanged": true,
+        "repeated_action": true,
+        "invalid": false,
+        "reasoning": "SUBGOAL: Align with the key to potentially change the win condition by repositioning rules  \nPLAN: Move right to close the gap between player and key; adjust position to interact with rule blocks  \nPRECONDITION: No immovable obstacles; player must be within reach of key and win rule blocks; path clear  \nACTION: right",
+        "reward": 0.0,
+        "terminated": false,
+        "truncated": false,
+        "input_tokens": 1577,
+        "output_tokens": 68
+      }
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "mechanics",
+      "case_id": "babaisai:env/make_win-distr_obj_rule:11",
+      "kind": "repeated_unchanged_text",
+      "count": 85,
+      "directory": "runs/screen_1/mechanics/babaisai__env_make_win-distr_obj_rule__11",
+      "first_example": {
+        "step": 7,
+        "observation": {
+          "long_term_context": "Active rules:\nbaba is you\n\nObjects on the map:\nrule `is` 4 step to the left\nrule `win` 3 step to the left\nrule `key` 4 step to the left and 2 steps down\nkey 4 step to the left and 4 steps down\nball 2 step to the left and 4 steps down\nrule `baba` 5 step to the left and 5 steps down\nrule `is` 4 step to the left and 5 steps down\nrule `you` 3 step to the left and 5 steps down\nrule `ball` 1 step to the left and 5 steps down",
+          "short_term_context": ""
+        },
+        "proposed_action": "right",
+        "executed_action": "right",
+        "next_observation": {
+          "long_term_context": "Active rules:\nbaba is you\n\nObjects on the map:\nrule `is` 4 step to the left\nrule `win` 3 step to the left\nrule `key` 4 step to the left and 2 steps down\nkey 4 step to the left and 4 steps down\nball 2 step to the left and 4 steps down\nrule `baba` 5 step to the left and 5 steps down\nrule `is` 4 step to the left and 5 steps down\nrule `you` 3 step to the left and 5 steps down\nrule `ball` 1 step to the left and 5 steps down",
+          "short_term_context": ""
+        },
+        "text_unchanged": true,
+        "repeated_action": true,
+        "invalid": false,
+        "reasoning": "SUBGOAL: Align \"you\" with the win condition (3 steps left)  \nPLAN: Move right to reduce horizontal offset from 3 to 2 steps left, matching win rule  \nPRECONDITION: \"you\" must be at 3 steps left; current position is 3 steps left \u2192 no change needed; win is at 3 steps left  \nACTION: right",
+        "reward": 0.0,
+        "terminated": false,
+        "truncated": false,
+        "input_tokens": 1736,
+        "output_tokens": 77
+      }
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "mechanics",
+      "case_id": "babaisai:env/make_win:11",
+      "kind": "repeated_unchanged_text",
+      "count": 95,
+      "directory": "runs/screen_1/mechanics/babaisai__env_make_win__11",
+      "first_example": {
+        "step": 5,
+        "observation": {
+          "long_term_context": "Active rules:\nbaba is you\n\nObjects on the map:\nrule `is` 1 step to the left and 1 step up\nrule `win` 1 step up\nrule `key` 1 step to the left and 1 step down\nkey 2 step to the left and 3 steps down\nrule `baba` 2 step to the left and 4 steps down\nrule `is` 1 step to the left and 4 steps down\nrule `you` 4 steps down",
+          "short_term_context": ""
+        },
+        "proposed_action": "up",
+        "executed_action": "up",
+        "next_observation": {
+          "long_term_context": "Active rules:\nbaba is you\n\nObjects on the map:\nrule `is` 1 step to the left and 1 step up\nrule `win` 1 step up\nrule `key` 1 step to the left and 1 step down\nkey 2 step to the left and 3 steps down\nrule `baba` 2 step to the left and 4 steps down\nrule `is` 1 step to the left and 4 steps down\nrule `you` 4 steps down",
+          "short_term_context": ""
+        },
+        "text_unchanged": true,
+        "repeated_action": true,
+        "invalid": false,
+        "reasoning": "SUBGOAL: Reach the win condition (1 step up) from current position (4 steps down)  \nPLAN: Move up one step to reach 3 steps down, then continue upward to meet win condition  \nPRECONDITION: \"you\" can move up; no blocking rules or immovable objects in upward path; win condition reachable  \nACTION: up",
+        "reward": 0.0,
+        "terminated": false,
+        "truncated": false,
+        "input_tokens": 1190,
+        "output_tokens": 72
+      }
+    }
+  ],
+  "next_decision": "Drop from repetitions: neither pickup layout solved; no observed task-solving gain. Complete the other two predeclared candidates. Crafter/Baba prompts are unchanged controls, so score changes there cannot be attributed to BabyAI wording."
+}

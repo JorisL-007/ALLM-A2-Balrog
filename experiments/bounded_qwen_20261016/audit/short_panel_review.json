@@ -1,0 +1,133 @@
+{
+  "event": "candidate_review",
+  "stage": "E2",
+  "at_unix": 1792145504.2557275,
+  "candidate": "short",
+  "hypothesis": {
+    "id": "short",
+    "factor": "Two-field immediate-subgoal prompt only",
+    "hypothesis": "Shorter generation reduces cost and speculative plan/action disconnect",
+    "budget_tokens": 512,
+    "extra_calls": 0
+  },
+  "complete_panel": true,
+  "metrics": [
+    {
+      "pass_id": "screen_1",
+      "variant": "short",
+      "benchmark": "babyai",
+      "episodes": "10",
+      "progression_pct": "50.0",
+      "calls": "701",
+      "input_tokens": "544054",
+      "output_tokens": "13729",
+      "steps": "701",
+      "invalid_commands": "0",
+      "unchanged_text": "410",
+      "repeated_actions": "503",
+      "decision_seconds": "117.08368630200857",
+      "execution_seconds": "127.99291682243347"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "short",
+      "benchmark": "crafter",
+      "episodes": "2",
+      "progression_pct": "6.8181818181818175",
+      "calls": "186",
+      "input_tokens": "328005",
+      "output_tokens": "2647",
+      "steps": "186",
+      "invalid_commands": "0",
+      "unchanged_text": "22",
+      "repeated_actions": "158",
+      "decision_seconds": "32.67056531397975",
+      "execution_seconds": "35.87390398979187"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "short",
+      "benchmark": "babaisai",
+      "episodes": "6",
+      "progression_pct": "16.666666666666664",
+      "calls": "501",
+      "input_tokens": "1579686",
+      "output_tokens": "9278",
+      "steps": "501",
+      "invalid_commands": "0",
+      "unchanged_text": "464",
+      "repeated_actions": "478",
+      "decision_seconds": "95.00680455903057",
+      "execution_seconds": "103.05839776992798"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "short",
+      "benchmark": "overall",
+      "episodes": "18",
+      "progression_pct": "24.494949494949495",
+      "calls": "1388",
+      "input_tokens": "2451745",
+      "output_tokens": "25654",
+      "steps": "1388",
+      "invalid_commands": "0",
+      "unchanged_text": "896",
+      "repeated_actions": "1139",
+      "decision_seconds": "244.7610561750189",
+      "execution_seconds": "266.9252185821533"
+    }
+  ],
+  "paired_vs_planning": [
+    {
+      "pass_id": "screen_1",
+      "variant": "short",
+      "baseline": "planning",
+      "benchmark": "babaisai",
+      "matched_cases": "6",
+      "delta_progression_pp": "0.0",
+      "delta_calls": "0",
+      "delta_output_tokens": "-25731",
+      "delta_execution_seconds": "-196.59396862983704"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "short",
+      "baseline": "planning",
+      "benchmark": "babyai",
+      "matched_cases": "10",
+      "delta_progression_pp": "0.0",
+      "delta_calls": "-64",
+      "delta_output_tokens": "-33259",
+      "delta_execution_seconds": "-236.49048256874084"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "short",
+      "baseline": "planning",
+      "benchmark": "crafter",
+      "matched_cases": "2",
+      "delta_progression_pp": "2.272727272727273",
+      "delta_calls": "-147",
+      "delta_output_tokens": "-14855",
+      "delta_execution_seconds": "-117.94464874267578"
+    },
+    {
+      "pass_id": "screen_1",
+      "variant": "short",
+      "baseline": "planning",
+      "benchmark": "overall",
+      "matched_cases": "18",
+      "delta_progression_pp": "0.7575757575757577",
+      "delta_calls": "-211",
+      "delta_output_tokens": "-73845",
+      "delta_execution_seconds": "-551.0290999412537"
+    }
+  ],
+  "failure_examples": [
+    "pickup12: moves forward into a key at one step forward until horizon",
+    "open12 regresses relative to planning",
+    "All make_win and two_room-make_win cases remain unsolved"
+  ],
+  "success_example": "pickup11 ends at step17 with correct pick up action and observed You carry a grey ball",
+  "next_decision": "Promising cost reduction (74.2% fewer output tokens, 67.4% less execution time) with only +0.76 pp overall on one pass. Repeat after the transition panel; do not claim reliable task-solving improvement."
+}

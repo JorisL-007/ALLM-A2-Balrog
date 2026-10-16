@@ -50,14 +50,12 @@ with 16 GB VRAM. Inspect the actual installation before changing it. Reuse an
 existing compatible model server where possible. Do not kill unrelated jobs,
 upgrade the working stack, or download another model just to begin experimenting.
 
-Use model generation defaults, text history 16, no images, and the default game
-step limits. Retain existing CoT-history behavior unless explicitly testing it.
 Do not spend this session on a full standard-CoT sweep. The previous one was
 stopped because of excessive runtime; CoT is not a prerequisite for this work.
 
 ## Read first and establish the current state
 
-Locate and read the actual files in the project; do not assume exact paths:
+Locate and read the actual files in '/docs':
 
 - `Ass2Reasoning.pdf` and relevant sections of `Agentic_LLM_Book-full.pdf`.
 - The current BALROG evaluator, environment wrappers, prompt builder, agents,
@@ -104,11 +102,6 @@ environment. Our source inspection raised concerns about the wording of the
 upstream BabyAI pickup instructions. Check this rather than assuming either the
 prompt or our interpretation is correct.
 
-Distinguish harness bugs, misleading instructions and model errors. If you find
-a shared bug, preserve the original result and label corrected conditions
-explicitly. Compare affected conditions under the same corrected protocol;
-do not silently rewrite historical baselines.
-
 Create and save a deterministic, stratified development manifest, approximately:
 
 - BabyAI: all five default tasks with seeds 11 and 12: 10 episodes.
@@ -118,7 +111,6 @@ Create and save a deterministic, stratified development manifest, approximately:
   `env/goto_win`, `env/goto_win-distr_obj_rule`, `env/make_win`,
   `env/make_win-distr_obj_rule`, `env/two_room-goto_win`, `env/two_room-make_win`.
 
-Adapt only if an installed task is unavailable, documenting the replacement.
 Use the same manifest for every complete screening comparison. Measure time on
 a tiny setup check, then choose a feasible candidate count under the budget.
 
