@@ -1,0 +1,693 @@
+Step,Action,Reasoning,Observation,Reward,Done
+0,turn right,"SUBGOAL: Avoid the wall and find a clear path  
+PLAN: Turn right to check if a path is available; if not, turn left to explore other directions  
+PRECONDITION: A clear path must be accessible after turning; unknown if walls block all directions  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 3 steps forward
+a wall 1 step left",0,False
+1,turn left,"SUBGOAL: Avoid walls and find a clear path forward  
+PLAN: Check left and right to identify safe directions; avoid walls at 1 step left and 3 steps forward  
+PRECONDITION: No walls in front or adjacent directions; unknown if path exists behind or to the right  
+ACTION: turn left","a wall 1 step forward
+a wall 3 steps right",0,False
+2,turn left,"SUBGOAL: Identify a clear path to the door by avoiding walls  
+PLAN: Check forward (blocked), left (wall at 1 step), right (wall at 3 steps) — all directions blocked; no viable path found  
+PRECONDITION: No accessible path exists; door likely behind a wall or requires object interaction (unknown)  
+ACTION: turn left","a wall 4 steps forward
+a wall 1 step right",0,False
+3,go forward,"SUBGOAL: Explore forward to find a viable path or object  
+PLAN: Check if forward is blocked; if not, proceed. If blocked, reorient to find open direction  
+PRECONDITION: Forward path is unknown; must verify if forward is accessible or blocked  
+ACTION: go forward","a wall 3 steps forward
+a wall 1 step right",0,False
+4,turn right,"SUBGOAL: Identify a clear path to the door by exploring open directions  
+PLAN: Check forward, then right, then left to find a non-wall path  
+PRECONDITION: Forward and adjacent directions must be free of walls; current position is blocked by walls in all known directions  
+ACTION: turn right","a wall 1 step forward
+a wall 3 steps left",0,False
+5,turn left,"SUBGOAL: Find a clear path to the door by exploring open directions  
+PLAN: Check left to avoid wall, then test forward if possible  
+PRECONDITION: Left direction must be free of walls; current position has a wall 1 step forward and 3 steps left  
+ACTION: turn left","a wall 3 steps forward
+a wall 1 step right",0,False
+6,turn left,"SUBGOAL: Avoid walls and find a path toward the door  
+PLAN: Test forward (currently blocked), then try right (1 step right is a wall), then left (3 steps left is blocked); no clear path found  
+PRECONDITION: Forward and right are blocked; left is unknown but wall at 3 steps left suggests obstruction  
+ACTION: turn left","a wall 3 steps right
+a green key 5 steps forward
+a locked green door 2 steps right and 6 steps forward",0,False
+7,go forward,"SUBGOAL: Obtain the green key to unlock the door  
+PLAN: Move to the green key (5 steps forward), then go to the door (2 steps right and 6 steps forward) to unlock it  
+PRECONDITION: Must reach the green key (currently 5 steps forward); path clear to that point  
+ACTION: go forward","a wall 3 steps right
+a green key 4 steps forward
+a locked green door 2 steps right and 5 steps forward",0,False
+8,go forward,"SUBGOAL: Reach the green key to pick it up  
+PLAN: Go forward to get closer to the key (currently 4 steps forward)  
+PRECONDITION: No obstacles in the forward direction; key is visible and reachable  
+ACTION: go forward","a wall 3 steps right
+a green key 3 steps forward
+a locked green door 2 steps right and 4 steps forward",0,False
+9,go forward,"SUBGOAL: Pick up the green key  
+PLAN: Move forward to reach the key (currently 3 steps forward), then pick it up  
+PRECONDITION: No obstacles in forward direction; key is directly reachable and visible  
+ACTION: go forward","a wall 3 steps right
+a green key 2 steps forward
+a locked green door 2 steps right and 3 steps forward",0,False
+10,go forward,"SUBGOAL: Pick up the green key  
+PLAN: Move forward to reach the key (currently 2 steps forward), then pick it up  
+PRECONDITION: No obstacles in forward direction; key is directly reachable and visible  
+ACTION: go forward","a wall 3 steps right
+a green key 1 step forward
+a locked green door 2 steps right and 2 steps forward",0,False
+11,turn right,"SUBGOAL: Position oneself to access the green key without blocking  
+PLAN: Turn right to face the key’s direction; then go forward to reach it  
+PRECONDITION: No wall directly ahead after turning right; key is reachable  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 3 steps forward
+a locked green door 2 steps left and 2 steps forward
+a green key 1 step left",0,False
+12,go forward,"SUBGOAL: Reach the green key to use it on the locked green door  
+PLAN: Go forward to move closer to the key; then pick it up if possible  
+PRECONDITION: Key is directly ahead or reachable; no blocking walls in path  
+ACTION: go forward","a wall 2 steps forward
+a wall 2 steps left
+a locked green door 2 steps left and 1 step forward",0,False
+13,go forward,"SUBGOAL: Position self to access the green key and use it on the locked green door  
+PLAN: Move forward to reach the key; then pick it up and proceed to the door  
+PRECONDITION: Key must be directly in front or reachable without obstruction; no walls blocking path  
+ACTION: go forward","a wall 1 step forward
+a locked green door 2 steps left",0,False
+14,turn left,"SUBGOAL: Align with the locked green door to use the green key  
+PLAN: Turn left to face the door directly; then proceed to toggle the door with the key  
+PRECONDITION: Must be able to reach the door without obstruction; key must be accessible and in hand  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step right
+a green key 2 steps left and 1 step forward
+a locked green door 2 steps forward",0,False
+15,go forward,"SUBGOAL: Position self to use the green key on the locked green door  
+PLAN: Move forward to align with the door; ensure key is in hand and within reach  
+PRECONDITION: Key must be accessible and in hand; no walls blocking path to door  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left
+a locked green door 1 step forward",0,False
+16,go forward,"SUBGOAL: Use the green key to unlock the green door  
+PLAN: Move forward to stand directly in front of the door; ensure key is in hand and within reach  
+PRECONDITION: Key must be in hand; no obstacles blocking path to door; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left
+a locked green door 1 step forward",0,False
+17,go forward,"SUBGOAL: Position myself directly in front of the green door to unlock it  
+PLAN: Move forward to stand directly in front of the door; key is currently 2 steps left, so must reach it first  
+PRECONDITION: Key must be picked up and held; door must be directly in front; no blocking walls  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left
+a locked green door 1 step forward",0,False
+18,go forward,"SUBGOAL: Position myself directly in front of the locked green door to unlock it  
+PLAN: Move forward to stand directly in front of the door; key is currently 2 steps left, so must reach it first  
+PRECONDITION: Must be able to reach the key without obstruction; key must be accessible and visible  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left
+a locked green door 1 step forward",0,False
+19,turn left,"SUBGOAL: Reach the green key to unlock the door  
+PLAN: Move left to get closer to the key; key is 2 steps left and currently visible  
+PRECONDITION: Must be able to move left without obstruction; key must remain accessible  
+ACTION: turn left","a green key 2 steps forward
+a locked green door 1 step right",0,False
+20,go forward,"SUBGOAL: Position myself directly in front of the locked green door to unlock it  
+PLAN: Move forward to reach the door; it is 1 step right from current position  
+PRECONDITION: Must be able to move forward without obstruction; door must be directly ahead  
+ACTION: go forward","a wall 1 step right
+a green key 1 step forward",0,False
+21,turn left,"SUBGOAL: Move to a position where the green key is directly in front to use it on the door  
+PLAN: Turn left to face the green key, then go forward to reach it  
+PRECONDITION: Must be able to turn left without obstruction; green key must be directly ahead after turning  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a wall 2 steps left
+a green key 1 step right",0,False
+22,go forward,"SUBGOAL: Reach the green key to use it on the locked door  
+PLAN: Go forward to move closer to the key; then turn left to face it if needed  
+PRECONDITION: Must be able to move forward without obstruction; key must be accessible  
+ACTION: go forward","a wall 5 steps forward
+a wall 2 steps left",0,False
+23,go forward,"SUBGOAL: Reach the green key to unlock the door  
+PLAN: Move forward to approach the key; turn left to face it if needed; then use toggle to unlock the door  
+PRECONDITION: Key must be in view and accessible; no walls blocking path; door must be directly in front  
+ACTION: go forward","a wall 4 steps forward
+a wall 2 steps left",0,False
+24,turn left,"SUBGOAL: Position myself to access the green key and unlock the door  
+PLAN: Turn left to face the key; go forward to reach it; toggle the door with the key  
+PRECONDITION: Green key must be in view and accessible; door must be directly in front after movement  
+ACTION: turn left","a wall 2 steps forward
+a wall 3 steps left
+a locked green door 3 steps left and 1 step forward",0,False
+25,go forward,"SUBGOAL: Reach the green key to unlock the door  
+PLAN: Go forward to approach the key; turn left to face it; pick it up  
+PRECONDITION: Green key must be directly in front or reachable; must be able to pick it up  
+ACTION: go forward","a wall 1 step forward
+a locked green door 3 steps left",0,False
+26,turn left,"SUBGOAL: Reach the green key to unlock the door  
+PLAN: Turn left to face the green key; move forward to get closer  
+PRECONDITION: Green key must be directly in front after turning; no wall blocks path  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step right
+a green key 2 steps left and 2 steps forward
+a locked green door 3 steps forward",0,False
+27,go forward,"SUBGOAL: Get closer to the green key to use it on the door  
+PLAN: Move forward to approach the key; then turn left to face it if needed  
+PRECONDITION: No walls block forward path; key must be directly reachable  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left and 1 step forward
+a locked green door 2 steps forward",0,False
+28,go forward,"SUBGOAL: Position myself directly in front of the green key to pick it up  
+PLAN: Move forward to approach the key; then turn left to face it if needed  
+PRECONDITION: No wall blocks forward path; key must be directly reachable  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left
+a locked green door 1 step forward",0,False
+29,go forward,"SUBGOAL: Move directly in front of the green key to pick it up  
+PLAN: Go forward to reach the key; turn left to face it if needed  
+PRECONDITION: No wall blocks forward path; key must be directly accessible  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left
+a locked green door 1 step forward",0,False
+30,go forward,"SUBGOAL: Position myself to toggle the locked green door using the green key  
+PLAN: Move forward to place the key directly in front of the door; then toggle it  
+PRECONDITION: Must be able to reach the key and align it with the door (unknown if path is clear)  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left
+a locked green door 1 step forward",0,False
+31,turn left,"SUBGOAL: Position the green key directly in front of the locked green door to unlock it  
+PLAN: Move left to place the key in front of the door; then toggle it  
+PRECONDITION: Must be able to reach the key without obstruction; path to key is clear  
+ACTION: turn left","a green key 2 steps forward
+a locked green door 1 step right",0,False
+32,turn right,"SUBGOAL: Place the green key directly in front of the locked green door to unlock it  
+PLAN: Move right to reach the door; then go forward to position the key in front of it  
+PRECONDITION: Must be able to move right without obstruction; door must be accessible  
+ACTION: turn right","a wall 1 step right
+a green key 2 steps left
+a locked green door 1 step forward",0,False
+33,go forward,"SUBGOAL: Position the green key directly in front of the locked green door  
+PLAN: Move to the green key, pick it up, then go forward to place it in front of the door  
+PRECONDITION: Must be able to reach the green key without obstruction; key must be accessible  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left
+a locked green door 1 step forward",0,False
+34,go forward,"SUBGOAL: Position the green key directly in front of the locked green door  
+PLAN: Move forward to reach the key, then go forward again to place it in front of the door  
+PRECONDITION: Must be able to reach the green key without obstruction; key must be accessible and not blocked  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left
+a locked green door 1 step forward",0,False
+35,turn left,"SUBGOAL: Place the green key directly in front of the locked green door  
+PLAN: Move left to reach the key, then go forward to position it in front of the door  
+PRECONDITION: Key must be accessible and directly reachable; no walls blocking path to key  
+ACTION: turn left","a green key 2 steps forward
+a locked green door 1 step right",0,False
+36,go forward,"SUBGOAL: Position the green key directly in front of the locked green door  
+PLAN: Move forward to reach the key, then go forward again to place it in front of the door  
+PRECONDITION: Key must be accessible and directly reachable; no walls blocking path to key  
+ACTION: go forward","a wall 1 step right
+a green key 1 step forward",0,False
+37,turn left,"SUBGOAL: Position the green key directly in front of the locked green door  
+PLAN: Turn left to face the key, then move to align it with the door  
+PRECONDITION: Key must be accessible and directly reachable; no wall blocks path to key  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a wall 2 steps left
+a green key 1 step right",0,False
+38,go forward,"SUBGOAL: Position the green key directly in front of the locked green door  
+PLAN: Move forward to reach the door, then turn left to face the key and toggle it  
+PRECONDITION: Must be able to reach the door without walls; key must be in front of the door (unknown if currently aligned)  
+ACTION: go forward","a wall 5 steps forward
+a wall 2 steps left",0,False
+39,go forward,"SUBGOAL: Position self directly in front of the locked green door to unlock it  
+PLAN: Move forward to reach the door; confirm key is in front before toggling  
+PRECONDITION: Door must be directly ahead; key must be in front of door (unknown)  
+ACTION: go forward","a wall 4 steps forward
+a wall 2 steps left",0,False
+40,go forward,"SUBGOAL: Reach the locked green door to unlock it using the green key  
+PLAN: Move forward to align with the door; ensure key is in front before toggling  
+PRECONDITION: Key must be directly in front of the door; current position is unknown  
+ACTION: go forward","a wall 3 steps forward
+a wall 2 steps left",0,False
+41,go forward,"SUBGOAL: Reach the locked green door to unlock it using the green key  
+PLAN: Move forward to approach the door; key is now behind, so must reposition to get it in front  
+PRECONDITION: Key must be directly in front of the door; current position is too far back; path blocked by walls  
+ACTION: go forward","a wall 2 steps forward
+a wall 2 steps left",0,False
+42,turn left,"SUBGOAL: Reach the green key to unlock the door  
+PLAN: Move left to access the key; current position is blocked by walls on both sides  
+PRECONDITION: Key must be directly in front; path to it is blocked by walls; no clear path forward or left  
+ACTION: turn left","a wall 2 steps forward
+a wall 2 steps right",0,False
+43,go forward,"SUBGOAL: Reach the green key to unlock the door  
+PLAN: Move forward to check if key is accessible; wall on right and forward blocks left path  
+PRECONDITION: Key must be reachable without obstruction; current position is blocked on both sides; key location unknown  
+ACTION: go forward","a wall 1 step forward
+a wall 2 steps right",0,False
+44,turn right,"SUBGOAL: Reach the green key to unlock the door  
+PLAN: Move forward to check if key is accessible; key was last seen 1 step right of a wall  
+PRECONDITION: Key is not currently in reach; path forward is blocked by wall; key location unknown  
+ACTION: turn right","a wall 2 steps forward
+a wall 1 step left",0,False
+45,turn right,"SUBGOAL: Reach the green key located 1 step right  
+PLAN: Move forward to check if key is accessible; key was last seen 1 step right of a wall  
+PRECONDITION: Key is not visible in current view; path forward is blocked by wall; key location unknown  
+ACTION: turn right","a wall 6 steps forward
+a wall 2 steps left",0,False
+46,turn left,"SUBGOAL: Locate and access the green key  
+PLAN: Move forward to explore path; key was previously seen 2 steps left or 1 step right; current path blocked by wall  
+PRECONDITION: Key is not visible; wall blocks forward path; key location unknown beyond current view  
+ACTION: turn left","a wall 2 steps forward
+a wall 1 step left",0,False
+47,turn left,"SUBGOAL: Locate the green key near visible path  
+PLAN: Explore left to check for key; key was previously 1 step left or 2 steps forward  
+PRECONDITION: Key must be within immediate vicinity; left path not blocked by wall; key not visible in current view  
+ACTION: turn left","a wall 1 step forward
+a wall 2 steps right",0,False
+48,turn left,"SUBGOAL: Check left for accessible path or key  
+PLAN: Turn left to explore the side path; key may be near visible walls or in adjacent area  
+PRECONDITION: No wall directly blocks left; key or object must be within left vicinity (unknown)  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step right
+a green key 2 steps left and 4 steps forward
+a locked green door 5 steps forward",0,False
+49,go forward,"SUBGOAL: Approach the green key to pick it up for potential door unlocking  
+PLAN: Go forward to reduce distance to key; key is at 2 steps left and 4 steps forward, currently 5 steps forward from player  
+PRECONDITION: Key is visible and reachable; no obstacles between current position and key path (unknown if path is clear)  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left and 3 steps forward
+a locked green door 4 steps forward",0,False
+50,go forward,"SUBGOAL: Reach the green key to pick it up  
+PLAN: Go forward to reduce distance to key; key is 2 steps left and 3 steps forward  
+PRECONDITION: Path to key is clear; no walls or obstacles between current position and key  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left and 2 steps forward
+a locked green door 3 steps forward",0,False
+51,go forward,"SUBGOAL: Move closer to the green key to pick it up  
+PLAN: Go forward to reduce distance; key is 2 steps left and 1 step forward  
+PRECONDITION: No walls or obstacles in the forward direction; path to key is clear  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left and 1 step forward
+a locked green door 2 steps forward",0,False
+52,turn left,"SUBGOAL: Pick up the green key to unlock the door  
+PLAN: Move to the key’s position (2 steps left, 1 step forward); currently 1 step forward, so turn left to face it.  
+PRECONDITION: Key must be directly in front or reachable without obstacles; no walls blocking path.  
+ACTION: turn left","a wall 6 steps forward
+a green key 1 step right and 2 steps forward
+a locked green door 2 steps right",0,False
+53,turn left,"SUBGOAL: Reach the green key to pick it up and use it to unlock the door  
+PLAN: Move forward to align with the key (currently 1 step right and 2 steps forward); turn left to face it directly  
+PRECONDITION: Key must be directly in front; no walls blocking path to it; position relative to current location is confirmed  
+ACTION: turn left","a wall 5 steps forward
+a wall 1 step left",0,False
+54,go forward,"SUBGOAL: Position oneself directly in front of the green key to pick it up  
+PLAN: Move forward to reach the key’s current position (1 step right and 2 steps forward); then turn left to face it directly  
+PRECONDITION: Key must be visible and accessible; no walls blocking path; must be able to reach it without obstacles  
+ACTION: go forward","a wall 4 steps forward
+a wall 1 step left",0,False
+55,go forward,"SUBGOAL: Reach and pick up the green key  
+PLAN: Go forward to close the gap between current position and key; then turn left to face it directly  
+PRECONDITION: Key must be visible and accessible; no walls blocking path; must be able to reach it without obstacles (uncertain if path is clear)  
+ACTION: go forward","a wall 3 steps forward
+a wall 1 step left",0,False
+56,go forward,"SUBGOAL: Reach the green key to unlock the door  
+PLAN: Go forward to close the gap between current position and key; then turn left to face it directly  
+PRECONDITION: Path to key is clear; no walls blocking forward movement; key is within reach  
+ACTION: go forward","a wall 2 steps forward
+a wall 1 step left",0,False
+57,turn left,"SUBGOAL: Reach the green key to unlock the door  
+PLAN: Turn left to face the key’s direction; go forward to close remaining distance  
+PRECONDITION: Key is reachable and not blocked by walls; path clear in front and left  
+ACTION: turn left","a wall 1 step forward
+a wall 2 steps right",0,False
+58,turn right,"SUBGOAL: Align with the green key to pick it up  
+PLAN: Turn right to face the key’s location; then go forward to reach it  
+PRECONDITION: Key is directly reachable and not blocked; path clear to the right  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 2 steps forward
+a wall 1 step left",0,False
+59,go forward,"SUBGOAL: Reach the green key to pick it up  
+PLAN: Go forward to move closer to the key; then turn left to face it directly  
+PRECONDITION: Key is within reach and path is clear; no walls blocking forward movement  
+ACTION: go forward","a wall 1 step forward
+a wall 1 step left",0,False
+60,turn left,"SUBGOAL: Reach the green key by moving left to access its position  
+PLAN: Turn left to face the key’s direction; then move forward if possible  
+PRECONDITION: No wall blocking left movement; key is within view and accessible  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step forward
+a wall 1 step right",0,False
+61,turn left,"SUBGOAL: Access the green key by adjusting direction to face its location  
+PLAN: Turn left to reposition, then move forward if possible  
+PRECONDITION: No wall blocking left movement; key must be in view after reorientation  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step right
+a green key 2 steps left and 5 steps forward
+a locked green door 6 steps forward",0,False
+62,go forward,"SUBGOAL: Move toward the green key to pick it up  
+PLAN: Go forward to reduce distance; reposition if walls block path  
+PRECONDITION: No wall blocking forward movement; key must be in view after movement  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left and 4 steps forward
+a locked green door 5 steps forward",0,False
+63,go forward,"SUBGOAL: Get closer to the green key to pick it up  
+PLAN: Move forward to reduce distance; key is currently 4 steps forward and 2 left  
+PRECONDITION: No wall blocking forward path; key must be in direct line of sight  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left and 3 steps forward
+a locked green door 4 steps forward",0,False
+64,go forward,"SUBGOAL: Get to the green key to pick it up  
+PLAN: Move forward to reduce distance; key is 3 steps forward and 2 steps left  
+PRECONDITION: No obstruction in front; must be able to reach the key in line of sight  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left and 2 steps forward
+a locked green door 3 steps forward",0,False
+65,go forward,"SUBGOAL: Reach the green key to pick it up  
+PLAN: Move forward to reduce distance to the key; key is 2 steps forward and 2 steps left  
+PRECONDITION: No obstruction directly in front; must be able to move forward without blocking  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left and 1 step forward
+a locked green door 2 steps forward",0,False
+66,go forward,"SUBGOAL: Reach and pick up the green key  
+PLAN: Move forward to close the gap between current position and the key (1 step forward); key is now 2 steps left and 1 step forward  
+PRECONDITION: No wall or obstacle blocking forward path; key must be directly accessible  
+ACTION: go forward","a wall 1 step right
+a green key 2 steps left
+a locked green door 1 step forward",0,False
+67,turn left,"SUBGOAL: Reach the green key to pick it up  
+PLAN: Move left to align with the key (2 steps left); key is now directly accessible  
+PRECONDITION: No wall blocking left path; must be able to turn left to face key  
+ACTION: turn left","a green key 2 steps forward
+a locked green door 1 step right",0,False
+68,go forward,"SUBGOAL: Pick up the green key  
+PLAN: Move forward to reach the key (currently 2 steps forward), then pick it up  
+PRECONDITION: Key is directly in front and accessible; no obstacles blocking path  
+ACTION: go forward","a wall 1 step right
+a green key 1 step forward",0,False
+69,turn left,"SUBGOAL: Reach the green key to pick it up  
+PLAN: Turn left to face the key, which is now 1 step forward and directly accessible  
+PRECONDITION: Key is in front and not blocked; no walls or obstacles between agent and key  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a wall 2 steps left
+a green key 1 step right",0,False
+70,turn right,"SUBGOAL: Pick up the green key located 1 step right  
+PLAN: Move right to reach the key; confirm it is accessible and not blocked  
+PRECONDITION: Key is directly in front and not obstructed; no walls or barriers between agent and key  
+ACTION: turn right","a wall 1 step right
+a green key 1 step forward",0,False
+71,turn right,"SUBGOAL: Reach the green key located 1 step forward  
+PLAN: Turn right to face the key’s direction; confirm alignment with no wall obstruction  
+PRECONDITION: No wall directly ahead; key is in front and accessible  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step forward
+a wall 2 steps right
+a green key 1 step left
+a locked green door 1 step right and 1 step forward",0,False
+72,turn left,"SUBGOAL: Align with the green key to pick it up  
+PLAN: Turn left to face the key (1 step left); then go forward to reach it  
+PRECONDITION: Key is directly accessible; no wall ahead after turning  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step right
+a green key 1 step forward",0,False
+73,turn left,"SUBGOAL: Position oneself to pick up the green key  
+PLAN: Turn left to face the key; then go forward to reach it  
+PRECONDITION: Key must be directly accessible and not blocked by walls; no wall ahead after turning  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a wall 2 steps left
+a green key 1 step right",0,False
+74,turn right,"SUBGOAL: Reach the green key directly  
+PLAN: Turn right to face the key; go forward to pick it up  
+PRECONDITION: Key must be directly in front and not blocked; no walls in path  
+ACTION: turn right","a wall 1 step right
+a green key 1 step forward",0,False
+75,turn right,"SUBGOAL: Align facing the green key directly  
+PLAN: Turn right to face the key; confirm position; proceed to pick it up  
+PRECONDITION: Key must be directly in front; no wall blocking path; no obstacles in front  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step forward
+a wall 2 steps right
+a green key 1 step left
+a locked green door 1 step right and 1 step forward",0,False
+76,turn left,"SUBGOAL: Position myself to face and pick up the green key  
+PLAN: Turn left to face the key directly; confirm it is now in front  
+PRECONDITION: Key must be directly in front; no wall blocking path; no obstacles in front  
+ACTION: turn left","a wall 1 step right
+a green key 1 step forward",0,False
+77,pick up,"SUBGOAL: Pick up the green key directly in front  
+PLAN: Confirm key is in front; proceed to pick it up  
+PRECONDITION: Key must be directly in front and accessible (no wall blocking)  
+ACTION: pick up","You carry a green key
+a wall 5 steps forward
+a wall 1 step right",0,False
+78,go forward,"SUBGOAL: Reach the locked green door to unlock it  
+PLAN: Go forward to reach the door (currently 1 step forward)  
+PRECONDITION: No walls blocking path forward; door must be directly ahead  
+ACTION: go forward","You carry a green key
+a wall 4 steps forward
+a wall 1 step right",0,False
+79,go forward,"SUBGOAL: Reach the locked green door to unlock it  
+PLAN: Move forward to get closer to the door; the door is 4 steps forward, but path is blocked by a wall 1 step right. Must find a clear path.  
+PRECONDITION: Need to confirm if door is accessible; wall blocks direct path forward. Unclear if door is reachable without obstruction.  
+ACTION: go forward","You carry a green key
+a wall 3 steps forward
+a wall 1 step right",0,False
+80,go forward,"SUBGOAL: Position self to reach the locked green door  
+PLAN: Move forward to reduce distance; wall to the right blocks lateral access. Continue forward to test path.  
+PRECONDITION: Door is still 3 steps forward; no visible path or openable object. Unknown if door can be accessed directly.  
+ACTION: go forward","You carry a green key
+a wall 2 steps forward
+a wall 1 step right",0,False
+81,go forward,"SUBGOAL: Position directly in front of the locked green door to use the green key  
+PLAN: Move forward to reach the door; door is now 1 step forward, accessible after final step  
+PRECONDITION: Door must be directly in front and unlocked via key; no obstruction confirmed  
+ACTION: go forward","You carry a green key
+a wall 1 step forward
+a wall 1 step right",0,False
+82,turn left,"SUBGOAL: Align with the locked green door to use the green key  
+PLAN: Turn left to face the door directly; check if toggle can unlock it  
+PRECONDITION: Door must be directly in front and accessible; no wall blocking view or path  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","You carry a green key
+a wall 6 steps forward
+a wall 1 step right",0,False
+83,go forward,"SUBGOAL: Reach the locked green door to unlock it using the green key  
+PLAN: Go forward to move closer to the door; ensure it is directly in front before toggling  
+PRECONDITION: Door must be directly visible and accessible; no walls blocking path  
+ACTION: go forward","You carry a green key
+a wall 5 steps forward
+a wall 1 step right",0,False
+84,go forward,"SUBGOAL: Position oneself directly in front of the locked green door to unlock it  
+PLAN: Continue moving forward until the door is directly ahead; avoid walls blocking path  
+PRECONDITION: Door must be directly in front; no wall obstructs forward path (unknown if path is clear)  
+ACTION: go forward","You carry a green key
+a wall 4 steps forward
+a wall 1 step right",0,False
+85,go forward,"SUBGOAL: Position oneself directly in front of the locked green door to unlock it  
+PLAN: Move forward to reduce distance to the door; confirm door is now directly ahead  
+PRECONDITION: Clear path forward; door must be directly in front (unknown if reachable)  
+ACTION: go forward","You carry a green key
+a wall 3 steps forward
+a wall 1 step right",0,False
+86,go forward,"SUBGOAL: Position directly in front of the locked green door to use the green key  
+PLAN: Continue moving forward to reach the door; door is currently 3 steps forward and 1 step right  
+PRECONDITION: Path forward is clear; door must be directly ahead (unknown if reachable)  
+ACTION: go forward","You carry a green key
+a wall 2 steps forward
+a wall 1 step right",0,False
+87,go forward,"SUBGOAL: Reach the locked green door to unlock it using the green key  
+PLAN: Continue moving forward to align directly with the door; door is 2 steps forward and 1 step right  
+PRECONDITION: Path forward is clear and door is directly ahead (unknown if accessible)  
+ACTION: go forward","You carry a green key
+a wall 1 step forward
+a wall 1 step right",0,False
+88,turn left,"SUBGOAL: Position oneself to face the locked green door using the green key  
+PLAN: Turn left to align with the door’s path; then move forward to reach it  
+PRECONDITION: Door is accessible only when directly facing it; wall blocks forward movement currently  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","You carry a green key
+a wall 6 steps forward
+a wall 1 step right",0,False
+89,go forward,"SUBGOAL: Reach the locked green door to unlock it using the green key  
+PLAN: Move forward until directly in front of the door; then toggle it  
+PRECONDITION: Door must be directly visible and accessible; current position is 6 steps behind it (unknown exact path)  
+ACTION: go forward","You carry a green key
+a wall 5 steps forward
+a wall 1 step right",0,False
+90,go forward,"SUBGOAL: Move directly toward the locked green door to unlock it  
+PLAN: Continue moving forward to reach the door; the door is 1 step forward and 1 step right from current position  
+PRECONDITION: Door must be directly in front; current observation shows a wall 5 steps forward, indicating door not yet visible; path unclear  
+ACTION: go forward","You carry a green key
+a wall 4 steps forward
+a wall 1 step right",0,False
+91,go forward,"SUBGOAL: Reach the locked green door to unlock it using the green key  
+PLAN: Move forward to reduce distance to the door; door is 1 step forward and 1 step right from current position  
+PRECONDITION: Door must be directly ahead; current observation shows wall 4 steps forward, indicating door not yet in view; path blocked by walls  
+ACTION: go forward","You carry a green key
+a wall 3 steps forward
+a wall 1 step right",0,False
+92,go forward,"SUBGOAL: Approach the door directly ahead by reducing forward distance  
+PLAN: Continue moving forward to reach the door (1 step forward in previous observation)  
+PRECONDITION: Door is directly ahead and accessible; no obstacles in path; unknown if door is now visible  
+ACTION: go forward","You carry a green key
+a wall 2 steps forward
+a wall 1 step right",0,False
+93,go forward,"SUBGOAL: Reach the door directly ahead by reducing forward distance  
+PLAN: Continue moving forward to eliminate the remaining 2 steps forward  
+PRECONDITION: Door is directly ahead and accessible; no obstacles in path; no need to pick up or toggle  
+ACTION: go forward","You carry a green key
+a wall 1 step forward
+a wall 1 step right",0,False
+94,turn right,"SUBGOAL: Avoid the wall ahead and find a path to the door  
+PLAN: Turn right to check if a clear path exists; if not, reposition to face a different direction  
+PRECONDITION: A clear path exists to the right or behind; door is not blocked by walls  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","You carry a green key
+a wall 1 step forward
+a wall 1 step left",0,False
+95,turn right,"SUBGOAL: Check the right side for a clear path to the door  
+PLAN: Turn right to explore the side path; if blocked, reassess direction  
+PRECONDITION: No wall directly ahead after turning right; right path is unblocked  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","You carry a green key
+a wall 6 steps forward
+a wall 1 step left",0,False
+96,go forward,"SUBGOAL: Reach a position where the door is accessible  
+PLAN: Move forward to reduce distance to the door; wall on the right suggests door may be behind or beside current path  
+PRECONDITION: No wall directly ahead; door is not blocked by walls in front or side  
+ACTION: go forward","You carry a green key
+a wall 5 steps forward
+a wall 1 step left",0,False
+97,go forward,"SUBGOAL: Approach the door by moving forward despite the wall to the left  
+PLAN: Continue moving forward to reduce distance to the door; wall on left indicates door may be behind or beside current path  
+PRECONDITION: No obstruction ahead; door not blocked by walls in front or side; path forward is clear  
+ACTION: go forward","You carry a green key
+a wall 4 steps forward
+a wall 1 step left",0,False
+98,go forward,"SUBGOAL: Approach the door by moving forward despite the wall to the left  
+PLAN: Continue forward to reduce distance; wall on left suggests door is not directly accessible from this side  
+PRECONDITION: Path forward is clear; no obstacles blocking direct route to door; door not behind current wall  
+ACTION: go forward","You carry a green key
+a wall 3 steps forward
+a wall 1 step left",0,False
+99,go forward,"SUBGOAL: Reach a position where the door is accessible  
+PLAN: Continue forward to reduce distance to the door; wall on left suggests door is not directly reachable from this side  
+PRECONDITION: Path forward is clear and leads closer to the door; no obstacles blocking direct path  
+ACTION: go forward","You carry a green key
+a wall 2 steps forward
+a wall 1 step left",0,False
+100,go forward,"SUBGOAL: Reach the door by moving forward until the path is clear  
+PLAN: Continue forward to reduce distance to the door; wall on left indicates door may be ahead  
+PRECONDITION: Forward path is unobstructed and leads toward the door; no door or lock visible yet  
+ACTION: go forward","You carry a green key
+a wall 1 step forward
+a wall 1 step left",0,False
+101,turn right,"SUBGOAL: Check the wall to the left for a possible door or lock  
+PLAN: Turn right to face the wall on the left, then assess if it can be interacted with  
+PRECONDITION: Wall on the left is accessible and may contain a door or lock; no obstruction confirmed  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","You carry a green key
+a wall 6 steps forward
+a wall 1 step left",0,False
+102,go forward,"SUBGOAL: Check if the wall to the left can be opened with the green key  
+PLAN: Move forward to reduce distance, then turn right to face the left wall and try toggling it  
+PRECONDITION: The wall to the left is accessible and may be a door or lock; key is in hand  
+ACTION: go forward","You carry a green key
+a wall 5 steps forward
+a wall 1 step left",0,False
+103,go forward,"SUBGOAL: Approach the wall to the left to try opening it with the green key  
+PLAN: Move forward to reduce distance, then turn left to face the wall directly, then toggle it  
+PRECONDITION: The wall to the left is accessible and can be interacted with; no obstruction in path  
+ACTION: go forward","You carry a green key
+a wall 4 steps forward
+a wall 1 step left",0,False
+104,go forward,"SUBGOAL: Position yourself directly in front of the wall to use the green key  
+PLAN: Move forward to reduce distance, then turn left to face the wall  
+PRECONDITION: Wall is directly accessible and within reach; no obstacles in path  
+ACTION: go forward","You carry a green key
+a wall 3 steps forward
+a wall 1 step left",0,False
+105,go forward,"SUBGOAL: Position directly in front of the wall to use the green key  
+PLAN: Move forward one step to reduce distance; repeat until wall is immediately ahead  
+PRECONDITION: No obstacles blocking forward path; wall is reachable within one step  
+ACTION: go forward","You carry a green key
+a wall 2 steps forward
+a wall 1 step left",0,False
+106,go forward,"SUBGOAL: Position directly in front of the wall to use the green key  
+PLAN: Continue moving forward to reduce distance to the wall; repeat until wall is immediately ahead  
+PRECONDITION: No obstruction in forward direction; wall is reachable within one step  
+ACTION: go forward","You carry a green key
+a wall 1 step forward
+a wall 1 step left",0,False
+107,turn right,"SUBGOAL: Align with the wall to potentially use the green key  
+PLAN: Turn right to face a clear path or accessible object; assess new orientation  
+PRECONDITION: Must be able to face a direction without immediate obstruction; wall or object in new direction is reachable  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","You carry a green key
+a wall 6 steps forward
+a wall 1 step left
+a locked green door 1 step left and 5 steps forward",0,False
+108,go forward,"SUBGOAL: Position yourself to access and unlock the green door  
+PLAN: Move forward to reduce distance to the door; align with it for toggle interaction  
+PRECONDITION: Must be able to reach the door (currently 5 steps forward and 1 step left); no obstacles in path  
+ACTION: go forward","You carry a green key
+a wall 5 steps forward
+a wall 1 step left
+a locked green door 1 step left and 4 steps forward",0,False
+109,go forward,"SUBGOAL: Align with the locked green door to unlock it using the green key  
+PLAN: Move forward to reduce distance to the door; position directly in front of it  
+PRECONDITION: Must be able to reach the door (currently 4 steps forward and 1 step left); no obstacles blocking path  
+ACTION: go forward","You carry a green key
+a wall 4 steps forward
+a wall 1 step left
+a locked green door 1 step left and 3 steps forward",0,False
+110,go forward,"SUBGOAL: Position directly in front of the locked green door to unlock it using the green key  
+PLAN: Continue moving forward to reduce distance to the door; reach the door at 1 step left and 0 steps forward  
+PRECONDITION: Must reach the door without obstacles; path forward is clear (unknown if door is accessible from side)  
+ACTION: go forward","You carry a green key
+a wall 3 steps forward
+a wall 1 step left
+a locked green door 1 step left and 2 steps forward",0,False
+111,go forward,"SUBGOAL: Reach the locked green door directly to unlock it using the green key  
+PLAN: Continue moving forward to reach the door at 1 step left and 0 steps forward  
+PRECONDITION: Path forward is clear; door is directly accessible; no obstacles blocking the way  
+ACTION: go forward","You carry a green key
+a wall 2 steps forward
+a wall 1 step left
+a locked green door 1 step left and 1 step forward",0,False
+112,go forward,"SUBGOAL: Position yourself directly in front of the locked green door to unlock it  
+PLAN: Move forward one step to reach the door (currently 1 step forward away)  
+PRECONDITION: No obstacles blocking forward path; door is accessible and within reach  
+ACTION: go forward","You carry a green key
+a wall 1 step forward
+a locked green door 1 step left",0,False
+113,turn left,"SUBGOAL: Position yourself so the green door is directly in front, accessible for unlocking  
+PLAN: Turn left to face the door (currently 1 step left), then proceed to toggle the door with the green key  
+PRECONDITION: Door must be directly in front after turning; key is in hand (confirmed)  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","You carry a green key
+a wall 1 step right
+a locked green door 1 step forward",0,False
+114,go forward,"SUBGOAL: Unlock the green door using the green key  
+PLAN: Move forward to be directly in front of the door, then toggle it  
+PRECONDITION: Must be directly in front of the door (currently 1 step forward and 1 step right); key is in hand (confirmed)  
+ACTION: go forward","You carry a green key
+a wall 1 step right
+a locked green door 1 step forward",0,False
+115,go forward,"SUBGOAL: Position oneself directly in front of the locked green door to unlock it  
+PLAN: Move forward to be directly in front of the door  
+PRECONDITION: Must be in front of the door; door is locked and key is in hand (confirmed)  
+ACTION: go forward","You carry a green key
+a wall 1 step right
+a locked green door 1 step forward",0,False
+116,toggle,"SUBGOAL: Unlock the locked green door using the green key  
+PLAN: Toggle the door to attempt unlocking; key is carried and door is directly in front  
+PRECONDITION: Must be directly in front of the door and holding the key (both confirmed)  
+ACTION: toggle","You carry a green key
+a wall 1 step right
+a open green door 1 step forward",0.17734375000000002,True

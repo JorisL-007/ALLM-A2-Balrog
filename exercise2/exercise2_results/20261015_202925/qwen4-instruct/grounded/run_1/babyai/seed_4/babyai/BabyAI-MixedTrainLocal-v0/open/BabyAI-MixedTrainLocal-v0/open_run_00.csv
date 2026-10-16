@@ -1,0 +1,701 @@
+Step,Action,Reasoning,Observation,Reward,Done
+0,go forward,"SUBGOAL: Identify a path forward by avoiding walls  
+PLAN: Check if movement forward is blocked; if so, explore side paths  
+PRECONDITION: Need to verify if forward path is clear or blocked; wall 2 steps forward suggests obstruction  
+ACTION: go forward","a wall 1 step forward
+a wall 3 steps right",0,False
+1,turn right,"SUBGOAL: Avoid the wall blocking forward movement and find a clear path  
+PLAN: Check right side for accessibility; wall 3 steps right suggests it's blocked; try turning right to explore alternative route  
+PRECONDITION: Must confirm if right path is accessible; current observation does not show open space beyond 3 steps right  
+ACTION: turn right","a wall 3 steps forward
+a wall 1 step left",0,False
+2,turn left,"SUBGOAL: Explore the left path to find a clear route forward  
+PLAN: Check if left path is accessible; current observation shows a wall 1 step left, so cannot go left directly; need to verify if turning left opens a viable path  
+PRECONDITION: Must confirm if turning left leads to an open space or another wall; unknown if path beyond left is clear  
+ACTION: turn left","a wall 1 step forward
+a wall 3 steps right",0,False
+3,turn right,"SUBGOAL: Explore forward to find a clear path  
+PLAN: Check forward direction; current observation shows a wall 1 step forward, so cannot proceed directly. Try turning right to assess alternative route.  
+PRECONDITION: Must verify if right path is open or blocked; current observation shows wall 3 steps right, so likely blocked. Uncertain if turning right reveals a viable path.  
+ACTION: turn right","a wall 3 steps forward
+a wall 1 step left",0,False
+4,turn left,"SUBGOAL: Explore left to find a possible clear path  
+PLAN: Check if the wall 1 step left is accessible or if moving left reveals a new direction  
+PRECONDITION: Need to confirm if the wall 1 step left is solid or if a path exists beyond it; unknown if it blocks or opens  
+ACTION: turn left","a wall 1 step forward
+a wall 3 steps right",0,False
+5,turn left,"SUBGOAL: Identify a clear path forward by testing directionality  
+PLAN: Check forward path; if blocked, explore left or right alternatives  
+PRECONDITION: Forward path is blocked (wall), so must test side paths; directionality unknown  
+ACTION: turn left","a wall 4 steps forward
+a wall 1 step right",0,False
+6,turn left,"SUBGOAL: Explore a path not blocked by walls  
+PLAN: Test forward path (blocked), then try right (currently blocked), then left (unknown)  
+PRECONDITION: Right path is blocked; left path uncertainty unknown; forward remains blocked  
+ACTION: turn left","a wall 6 steps forward
+a wall 3 steps left
+a locked purple door 3 steps left and 5 steps forward
+a purple key 1 step left and 5 steps forward",0,False
+7,turn left,"SUBGOAL: Obtain the purple key to unlock the door  
+PLAN: Move to the key's position (1 step left, 5 steps forward), then pick it up, then go to the door  
+PRECONDITION: Must reach the key’s location (unknown path clarity); key must be accessible and visible  
+ACTION: turn left","a wall 3 steps forward
+a wall 1 step left",0,False
+8,go forward,"SUBGOAL: Reach the purple key to pick it up  
+PLAN: Go forward to move toward the key’s position (1 step left, 5 steps forward); then turn left to align with the key  
+PRECONDITION: Must be able to move forward without obstacles; path to key is clear (unknown)  
+ACTION: go forward","a wall 2 steps forward
+a wall 1 step left",0,False
+9,go forward,"SUBGOAL: Reach the purple key to pick it up  
+PLAN: Move forward to reduce distance to the key; then turn left to face it directly  
+PRECONDITION: Path forward is clear; no walls blocking movement (unknown if wall at 2 steps forward is blocking)  
+ACTION: go forward","a wall 1 step forward
+a wall 1 step left",0,False
+10,turn left,"SUBGOAL: Reach the purple key to pick it up  
+PLAN: Turn left to face the key; go forward to move closer  
+PRECONDITION: Clear path forward and left; key is at 1 step left and 5 steps forward (position unknown)  
+ACTION: turn left","a wall 1 step forward
+a wall 1 step right",0,False
+11,turn right,"SUBGOAL: Reach the purple key to pick it up  
+PLAN: Turn right to face the path leading to the key; then go forward to approach it  
+PRECONDITION: Must face a clear direction toward the key; wall ahead blocks forward movement  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step forward
+a wall 1 step left",0,False
+12,turn left,"SUBGOAL: Reach the purple key located 1 step left and 5 steps forward  
+PLAN: Turn left to face the direction of the key; go forward to move closer  
+PRECONDITION: Must face the correct direction toward the key; no walls blocking path ahead  
+ACTION: turn left","a wall 1 step forward
+a wall 1 step right",0,False
+13,turn left,"SUBGOAL: Align with the purple key to pick it up  
+PLAN: Turn left to face the direction of the key; then go forward to reach it  
+PRECONDITION: Must face the key’s direction; no wall blocking ahead (unknown if path is clear)  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a wall 1 step right",0,False
+14,turn left,"SUBGOAL: Reach the purple key to pick it up  
+PLAN: Turn left to face the key’s direction; go forward to move toward it; confirm position before picking  
+PRECONDITION: Must face the key (currently 1 step left and 5 steps forward); path clear to that point; key not blocked  
+ACTION: turn left","a wall 6 steps forward
+a wall 1 step left
+a locked purple door 1 step left and 5 steps forward
+a purple key 1 step right and 5 steps forward",0,False
+15,go forward,"SUBGOAL: Move toward the purple key to pick it up  
+PLAN: Go forward to reach the key’s row; turn left to face it; pick it up  
+PRECONDITION: Must be in the same row as the key (5 steps forward); no walls blocking path; key visible and reachable  
+ACTION: go forward","a wall 5 steps forward
+a wall 1 step left
+a locked purple door 1 step left and 4 steps forward
+a purple key 1 step right and 4 steps forward",0,False
+16,go forward,"SUBGOAL: Reach the purple key to pick it up  
+PLAN: Go forward to align with the key’s row; turn left to face it; pick up the key  
+PRECONDITION: Must be in the same row as the key (4 steps forward); no blocking walls; key visible and reachable  
+ACTION: go forward","a wall 4 steps forward
+a wall 1 step left
+a locked purple door 1 step left and 3 steps forward
+a purple key 1 step right and 3 steps forward",0,False
+17,go forward,"SUBGOAL: Reach and pick up the purple key  
+PLAN: Go forward to align with the key’s position; turn left to face it; pick up the key  
+PRECONDITION: Must be in the same row as the key (3 steps forward); key must be directly in front and visible  
+ACTION: go forward","a wall 3 steps forward
+a wall 1 step left
+a locked purple door 1 step left and 2 steps forward
+a purple key 1 step right and 2 steps forward",0,False
+18,go forward,"SUBGOAL: Position self to face and pick up the purple key  
+PLAN: Go forward to move closer to the key; turn left to face it directly; pick it up  
+PRECONDITION: Must be in front of the key (aligned with it); key must be visible and accessible  
+ACTION: go forward","a wall 2 steps forward
+a wall 1 step left
+a locked purple door 1 step left and 1 step forward
+a purple key 1 step right and 1 step forward",0,False
+19,go forward,"SUBGOAL: Position self to face and toggle the locked purple door using the key  
+PLAN: Move forward to align with the door; turn left to face it directly; use toggle to unlock  
+PRECONDITION: Must be directly in front of the door and have the key in hand; door must be accessible  
+ACTION: go forward","a wall 1 step forward
+a locked purple door 1 step left
+a purple key 1 step right",0,False
+20,turn left,"SUBGOAL: Position self directly in front of the locked purple door to unlock it  
+PLAN: Turn left to face the door; pick up the key from the right; toggle the door  
+PRECONDITION: Must be directly in front of the door and hold the key; key must be within reach  
+ACTION: turn left","a wall 1 step right
+a locked purple door 1 step forward",0,False
+21,go forward,"SUBGOAL: Position myself directly in front of the locked purple door to unlock it  
+PLAN: Move forward to stand directly in front of the door; use the key to toggle it  
+PRECONDITION: Must be directly in front of the door and hold the key (key is 1 step right, currently out of reach)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+22,turn right,"SUBGOAL: Reach the locked purple door and use the key to unlock it  
+PLAN: Move forward to stand directly in front of the door; pick up the key from 1 step right; toggle the door  
+PRECONDITION: Must be directly in front of the door and hold the key (key is currently 1 step right, out of reach)  
+ACTION: turn right","a wall 1 step forward
+a locked purple door 1 step left
+a purple key 1 step right",0,False
+23,turn right,"SUBGOAL: Position myself directly in front of the locked purple door to unlock it  
+PLAN: Move forward to stand in front of the door; then toggle it once the key is in hand  
+PRECONDITION: Must be directly in front of the door and hold the purple key (currently 1 step right, out of reach)  
+ACTION: turn right","a wall 1 step left
+a purple key 1 step forward",0,False
+24,turn right,"SUBGOAL: Move to the position where the purple key is located to pick it up  
+PLAN: Turn right to face the key; then go forward to reach it  
+PRECONDITION: Must be able to face the key and have a clear path to it (no walls ahead)  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a purple key 1 step left
+a locked purple door 1 step right",0,False
+25,turn left,"SUBGOAL: Reach the purple key to pick it up  
+PLAN: Turn left to face the key; go forward to move toward it  
+PRECONDITION: Must be able to face the key and have a clear path forward (no walls)  
+ACTION: turn left","a wall 1 step left
+a purple key 1 step forward",0,False
+26,turn right,"SUBGOAL: Position oneself to access the purple key  
+PLAN: Turn right to face the key; go forward to reach it  
+PRECONDITION: Must be able to face the key and have no wall directly ahead  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a purple key 1 step left
+a locked purple door 1 step right",0,False
+27,turn right,"SUBGOAL: Reach the locked purple door to open it  
+PLAN: Move toward the door from current position (1 step right); ensure no wall blocks path  
+PRECONDITION: Must be able to move right without obstruction; door must be directly ahead  
+ACTION: turn right","a wall 1 step right
+a locked purple door 1 step forward",0,False
+28,go forward,"SUBGOAL: Reach the locked purple door to open it  
+PLAN: Move forward to stand directly in front of the door  
+PRECONDITION: No wall blocks the path forward; door is directly ahead  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+29,go forward,"SUBGOAL: Move directly in front of the locked purple door to open it  
+PLAN: Go forward to stand directly in front of the door; confirm door is accessible  
+PRECONDITION: No obstacle blocks forward path; door is reachable and not behind a wall  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+30,go forward,"SUBGOAL: Position oneself directly in front of the locked purple door to unlock it  
+PLAN: Move forward to stand directly in front of the door; confirm it is accessible and can be toggled  
+PRECONDITION: No wall blocks forward path; door is directly in front and reachable  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+31,go forward,"SUBGOAL: Reach the locked purple door directly in front to unlock it  
+PLAN: Move forward to stand directly in front of the door; confirm it is accessible  
+PRECONDITION: No obstruction in front; door is directly reachable and not blocked  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+32,go forward,"SUBGOAL: Position oneself directly in front of the locked purple door to unlock it  
+PLAN: Move forward to stand directly in front of the door; confirm no obstruction  
+PRECONDITION: No wall or barrier in front; door is accessible and visible  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+33,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; ensure no wall blocks path  
+PRECONDITION: No wall in front; door is directly accessible (unknown if path is blocked)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+34,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; ensure no obstruction blocks path  
+PRECONDITION: No wall in front; door is accessible (currently blocked by wall to the right)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+35,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; avoid walls on the right; confirm door accessibility  
+PRECONDITION: No wall blocking forward path; door must be directly ahead (currently blocked by wall to the right)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+36,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; ensure no wall blocks path; confirm door is accessible  
+PRECONDITION: No wall blocking forward path; door must be directly ahead (currently blocked by wall to the right)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+37,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; confirm no obstruction; use toggle to unlock  
+PRECONDITION: No wall blocking forward path; door must be directly ahead; key must be accessible  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+38,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; ensure no wall blocks path; use toggle to unlock  
+PRECONDITION: No wall blocking forward path; door must be directly ahead; key must be accessible (unknown)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+39,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; ensure no obstruction; use toggle if door is accessible  
+PRECONDITION: No wall blocking forward path; door must be directly ahead; key not required for unlock (unknown)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+40,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; check if it can be toggled once adjacent  
+PRECONDITION: No wall blocking forward path; door must be directly ahead; toggle accessible  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+41,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; then toggle it to open  
+PRECONDITION: No obstruction in front; door must be directly ahead and accessible  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+42,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; then toggle it to open  
+PRECONDITION: Must be able to reach the door without obstruction; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+43,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; then toggle it to open  
+PRECONDITION: Must be able to reach the door without obstruction; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+44,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; then toggle it to open  
+PRECONDITION: Must be able to reach the door without obstruction; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+45,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; then toggle it to open  
+PRECONDITION: Must be able to reach the door without obstruction; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+46,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; then toggle it to open  
+PRECONDITION: Must be able to reach the door without obstruction; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+47,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; then toggle it to open  
+PRECONDITION: Must be able to reach the door without obstruction; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+48,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; then toggle it to open  
+PRECONDITION: Must be able to reach the door without obstruction; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+49,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward until the door is directly ahead; then toggle it to open  
+PRECONDITION: Must be able to reach the door without obstruction; door must be directly in front (currently 1 step forward)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+50,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; repeat until door is in front  
+PRECONDITION: No obstacles blocking forward path; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+51,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; repeat until door is in front  
+PRECONDITION: No obstacles blocking forward path; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+52,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward until the door is directly ahead; verify no blocking obstacles  
+PRECONDITION: No walls or barriers blocking forward path; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+53,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; avoid walls to the right  
+PRECONDITION: No wall blocking forward path; door must be directly ahead  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+54,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; avoid walls to the right; confirm door is accessible  
+PRECONDITION: No obstruction blocking forward path; door must be reachable and unlocked via toggle  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+55,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; confirm it is accessible and not blocked; use toggle to unlock  
+PRECONDITION: No wall or obstacle blocks the forward path; door is directly in front and reachable  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+56,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; confirm it is accessible and not blocked; use toggle to unlock  
+PRECONDITION: No wall or obstacle blocks the forward path; door is directly in front and reachable  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+57,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; confirm it is accessible and not blocked; use toggle to unlock  
+PRECONDITION: No wall or obstacle blocks the forward path; door is directly in front and reachable  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+58,go forward,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Move forward to reach the door; if blocked, adjust direction to find a clear path  
+PRECONDITION: No wall blocks the forward path; door is accessible and directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+59,turn left,"SUBGOAL: Position directly in front of the locked purple door to unlock it  
+PLAN: Turn left to avoid the wall, then go forward to reach the door  
+PRECONDITION: Wall is to the right; path forward is clear and leads to the door; no obstacles in the new direction  
+ACTION: turn left","a wall 6 steps forward
+a purple key 1 step left
+a locked purple door 1 step right",0,False
+60,turn left,"SUBGOAL: Reach the purple key to unlock the door  
+PLAN: Move left to get to the key, then go forward to the door  
+PRECONDITION: Must be able to move left without obstruction; key is visible and accessible  
+ACTION: turn left","a wall 1 step left
+a purple key 1 step forward",0,False
+61,turn left,"SUBGOAL: Reach the purple key to unlock the door  
+PLAN: Go forward to pick up the key, then go forward to the door  
+PRECONDITION: No wall or obstacle directly ahead; key is in front and accessible  
+ACTION: go forward
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", ""The observed wall/object directly ahead blocks forward movement.""], ""fallback"": true}","a wall 1 step forward
+a locked purple door 1 step left
+a purple key 1 step right",0,False
+62,turn right,"SUBGOAL: Pick up the purple key to unlock the door  
+PLAN: Move to the key (1 step right), then go forward to the door  
+PRECONDITION: Must be able to reach the key without obstacles; key must be directly in front  
+ACTION: turn right","a wall 1 step left
+a purple key 1 step forward",0,False
+63,turn right,"SUBGOAL: Move toward the purple key to pick it up  
+PLAN: Turn right to face the key, then go forward to reach it  
+PRECONDITION: Key must be directly in front after turning; no wall blocks path  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a purple key 1 step left
+a locked purple door 1 step right",0,False
+64,turn left,"SUBGOAL: Pick up the purple key located 1 step left  
+PLAN: Turn left to face the key, then go forward to reach it  
+PRECONDITION: Must be able to turn left without obstruction; key must be directly in front after turning  
+ACTION: turn left","a wall 1 step left
+a purple key 1 step forward",0,False
+65,turn left,"SUBGOAL: Reach the purple key by moving toward it  
+PLAN: Turn left to face the key, then go forward to pick it up  
+PRECONDITION: Must be able to turn left without obstruction; key must be directly in front after turning  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step forward
+a locked purple door 1 step left
+a purple key 1 step right",0,False
+66,turn right,"SUBGOAL: Pick up the purple key located 1 step right  
+PLAN: Turn right to face the key, then go forward to pick it up  
+PRECONDITION: Must be able to turn right without obstruction; key must be directly in front after turning  
+ACTION: turn right","a wall 1 step left
+a purple key 1 step forward",0,False
+67,turn right,"SUBGOAL: Position self to face the purple key directly in front  
+PLAN: Turn right to face the key, then go forward to pick it up  
+PRECONDITION: Must be able to turn right without obstruction; key must be directly in front after turning  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a purple key 1 step left
+a locked purple door 1 step right",0,False
+68,turn left,"SUBGOAL: Position directly in front of the purple key to pick it up  
+PLAN: Turn left to face the key, then go forward to reach it  
+PRECONDITION: Must be able to turn left without obstruction; key must be accessible  
+ACTION: turn left","a wall 1 step left
+a purple key 1 step forward",0,False
+69,turn left,"SUBGOAL: Move to face the purple key directly to pick it up  
+PLAN: Turn left to face the key, then go forward to reach it  
+PRECONDITION: Must be able to turn left without obstruction; key must be accessible and directly ahead after turning  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step forward
+a locked purple door 1 step left
+a purple key 1 step right",0,False
+70,turn right,"SUBGOAL: Move to the purple key to pick it up  
+PLAN: Turn right to face the key, then go forward to reach it  
+PRECONDITION: Must be able to turn right without obstruction; key must be directly ahead after turning  
+ACTION: turn right","a wall 1 step left
+a purple key 1 step forward",0,False
+71,turn right,"SUBGOAL: Move to face the purple key directly  
+PLAN: Turn right to face the key, then go forward to reach it  
+PRECONDITION: Must be able to turn right without obstruction; key must be directly ahead after turning  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a purple key 1 step left
+a locked purple door 1 step right",0,False
+72,turn left,"SUBGOAL: Move directly toward the purple key  
+PLAN: Turn left to face the key, then go forward to reach it  
+PRECONDITION: Must be able to turn left without obstruction; key must be directly ahead after turning  
+ACTION: turn left","a wall 1 step left
+a purple key 1 step forward",0,False
+73,turn left,"SUBGOAL: Move toward the purple key by adjusting orientation to face it directly  
+PLAN: Turn left to face the key (currently 1 step forward), then go forward to pick it up  
+PRECONDITION: Must be able to turn left without obstruction; key must be directly ahead after turning  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step forward
+a locked purple door 1 step left
+a purple key 1 step right",0,False
+74,turn right,"SUBGOAL: Move directly toward the purple key to pick it up  
+PLAN: Turn right to face the key (1 step right), then go forward to reach it  
+PRECONDITION: Must be able to turn right without obstruction; key must be directly ahead after turning  
+ACTION: turn right","a wall 1 step left
+a purple key 1 step forward",0,False
+75,turn right,"SUBGOAL: Align with the purple key to pick it up  
+PLAN: Turn right to face the key (currently 1 step forward), then go forward to reach it  
+PRECONDITION: Must be able to turn right without obstruction; key must be directly ahead after turning  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a purple key 1 step left
+a locked purple door 1 step right",0,False
+76,turn right,"SUBGOAL: Move to the purple key located 1 step left  
+PLAN: Turn right to face the key, then go forward to reach it  
+PRECONDITION: Must be able to turn right without obstruction; key must be directly ahead after turning  
+ACTION: turn right","a wall 1 step right
+a locked purple door 1 step forward",0,False
+77,turn right,"SUBGOAL: Reach the locked purple door to unlock it using the purple key  
+PLAN: Move to the purple key, pick it up, then go to the door and toggle it  
+PRECONDITION: Must be able to reach the purple key without obstruction; key must be accessible and visible  
+ACTION: turn right","a wall 1 step forward
+a locked purple door 1 step left
+a purple key 1 step right",0,False
+78,turn right,"SUBGOAL: Get to the purple key to pick it up and use it to unlock the door  
+PLAN: Turn right to face the purple key; go forward to reach it; pick it up  
+PRECONDITION: Purple key must be directly reachable and visible; no walls or obstacles between agent and key  
+ACTION: turn right","a wall 1 step left
+a purple key 1 step forward",0,False
+79,turn right,"SUBGOAL: Move to face the purple key directly to enable pickup  
+PLAN: Turn left to face the key; go forward (blocked) → instead, turn right to reposition  
+PRECONDITION: Must be able to face the key without obstruction; wall is only on left, so right turn is clear  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a purple key 1 step left
+a locked purple door 1 step right",0,False
+80,turn right,"SUBGOAL: Position self to face and pick up the purple key  
+PLAN: Turn right to face the key (1 step left); go forward to reach it  
+PRECONDITION: Must be able to turn right without obstruction; key must be directly accessible  
+ACTION: turn right","a wall 1 step right
+a locked purple door 1 step forward",0,False
+81,go forward,"SUBGOAL: Move forward to reach the locked purple door to unlock it  
+PLAN: Go forward to stand directly in front of the door; use toggle to attempt unlocking  
+PRECONDITION: Must be able to go forward without obstruction; door must be directly in front  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+82,go forward,"SUBGOAL: Position myself directly in front of the locked purple door to unlock it  
+PLAN: Move forward to stand directly in front of the door; use toggle to unlock it  
+PRECONDITION: Must be able to go forward without obstruction; door must be directly in front (confirmed in current observation)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+83,go forward,"SUBGOAL: Position myself directly in front of the locked purple door to unlock it  
+PLAN: Move forward to stand directly in front of the door; then use toggle to unlock it  
+PRECONDITION: Must be able to go forward without obstruction; door must be directly in front (confirmed)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+84,go forward,"SUBGOAL: Position myself directly in front of the locked purple door to unlock it  
+PLAN: Move forward to stand directly in front of the door; then toggle to unlock it  
+PRECONDITION: Must be able to go forward without obstruction; door must be directly in front (confirmed)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+85,go forward,"SUBGOAL: Position myself directly in front of the locked purple door to unlock it  
+PLAN: Move forward to stand directly in front of the door; then toggle to unlock it  
+PRECONDITION: Must be able to go forward without obstruction; door must be directly in front (confirmed)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+86,go forward,"SUBGOAL: Position myself directly in front of the locked purple door to unlock it  
+PLAN: Move forward until the door is directly in front; then toggle it  
+PRECONDITION: Must be able to move forward without obstruction; door must be directly ahead (unknown if path is blocked)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+87,go forward,"SUBGOAL: Position myself directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; continue until no obstruction remains  
+PRECONDITION: Path forward must be clear and door must be directly in front (unknown if wall blocks)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+88,go forward,"SUBGOAL: Position myself directly in front of the locked purple door to unlock it  
+PLAN: Move forward to place the door directly ahead; ensure no wall blocks path  
+PRECONDITION: Path forward must be clear and door must be directly in front (unknown if wall blocks)  
+ACTION: go forward","a wall 1 step right
+a locked purple door 1 step forward",0,False
+89,turn left,"SUBGOAL: Position myself directly in front of the locked purple door to unlock it  
+PLAN: Turn left to face the purple key, then move forward to reach the door  
+PRECONDITION: Purple key must be accessible and reachable; path to door must be clear  
+ACTION: turn left","a wall 6 steps forward
+a purple key 1 step left
+a locked purple door 1 step right",0,False
+90,go forward,"SUBGOAL: Move to the purple key to pick it up and use it to unlock the door  
+PLAN: Go forward to reach the key’s position, then turn left to face it and pick it up  
+PRECONDITION: Must be able to reach the purple key without obstruction; key must be in front or adjacent  
+ACTION: go forward","a wall 5 steps forward
+a wall 1 step right",0,False
+91,go forward,"SUBGOAL: Reach the purple key to pick it up and use it to unlock the door  
+PLAN: Go forward to move closer to the key; then turn left to face it and pick it up  
+PRECONDITION: Must be able to move forward without obstruction; key must be directly accessible  
+ACTION: go forward","a wall 4 steps forward
+a wall 1 step right",0,False
+92,go forward,"SUBGOAL: Reach the purple key to unlock the door  
+PLAN: Move forward to get closer to the key; turn left to face it; pick it up  
+PRECONDITION: Must be able to go forward without hitting a wall; key must be directly reachable  
+ACTION: go forward","a wall 3 steps forward
+a wall 1 step right",0,False
+93,turn left,"SUBGOAL: Reach the purple key to unlock the door  
+PLAN: Turn left to face the key; move forward to pick it up  
+PRECONDITION: Must be able to turn left without obstruction; key must be accessible  
+ACTION: turn left","a wall 6 steps forward
+a wall 3 steps right
+a purple key 3 steps left and 1 step forward",0,False
+94,go forward,"SUBGOAL: Move to the purple key to pick it up  
+PLAN: Go forward to reduce distance; adjust direction if needed to reach key  
+PRECONDITION: Clear path forward; key must be within reach (unknown if directly accessible)  
+ACTION: go forward","a wall 5 steps forward
+a wall 3 steps right
+a purple key 3 steps left",0,False
+95,turn left,"SUBGOAL: Reach the purple key to pick it up  
+PLAN: Move left to approach the key (currently 3 steps left and 1 step forward)  
+PRECONDITION: Must be able to move left without obstruction; key must be directly visible and accessible  
+ACTION: turn left","a wall 2 steps left
+a locked purple door 2 steps left and 3 steps forward
+a purple key 3 steps forward",0,False
+96,go forward,"SUBGOAL: Reach and pick up the purple key  
+PLAN: Move forward to reduce distance between player and key (currently 3 steps forward)  
+PRECONDITION: No obstacles in front; key is visible and accessible  
+ACTION: go forward","a wall 2 steps left
+a locked purple door 2 steps left and 2 steps forward
+a purple key 2 steps forward",0,False
+97,go forward,"SUBGOAL: Reach the locked purple door to open it using the purple key  
+PLAN: Move forward to reduce distance between player and door (currently 2 steps forward); then align with the door to toggle it  
+PRECONDITION: No obstacles in path; door must be directly in front to toggle; key must be accessible and in hand  
+ACTION: go forward","a wall 2 steps left
+a locked purple door 2 steps left and 1 step forward
+a purple key 1 step forward",0,False
+98,turn right,"SUBGOAL: Position oneself directly in front of the locked purple door to toggle it using the key  
+PLAN: Turn right to face the door; then go forward to align with it  
+PRECONDITION: Must be able to turn right without obstruction; door must be directly ahead after turning  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 5 steps forward
+a purple key 1 step left",0,False
+99,go forward,"SUBGOAL: Reach the locked purple door to unlock it using the purple key  
+PLAN: Go forward to move closer to the door; then turn left to face it directly; finally toggle the door  
+PRECONDITION: Must be able to reach the door without obstruction; key must be accessible and in hand  
+ACTION: go forward","a wall 4 steps forward
+a wall 2 steps left",0,False
+100,go forward,"SUBGOAL: Reach the locked purple door to unlock it using the purple key  
+PLAN: Go forward to approach the door; turn left to face it directly; toggle the door  
+PRECONDITION: Must be able to reach the door without obstruction; key must be accessible and in hand (unknown if key is in hand)  
+ACTION: go forward","a wall 3 steps forward
+a wall 2 steps left",0,False
+101,go forward,"SUBGOAL: Position self directly in front of the locked purple door to unlock it  
+PLAN: Go forward to reach the door; turn left to face it; toggle the door if possible  
+PRECONDITION: Must be able to reach the door without obstruction; key must be in hand (unknown)  
+ACTION: go forward","a wall 2 steps forward
+a wall 2 steps left",0,False
+102,go forward,"SUBGOAL: Reach the locked purple door to unlock it  
+PLAN: Go forward to approach the door; turn left to face it; toggle the door if possible  
+PRECONDITION: Door must be directly in front; key must be in hand (unknown)  
+ACTION: go forward","a wall 1 step forward
+a wall 2 steps left",0,False
+103,turn left,"SUBGOAL: Reach the locked purple door to unlock it  
+PLAN: Turn left to face a potential path; check if the key is accessible or if the door can be toggled  
+PRECONDITION: Door must be in view; key must be reachable or in hand (unknown)  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 2 steps forward
+a wall 1 step right",0,False
+104,go forward,"SUBGOAL: Reach and unlock the locked purple door  
+PLAN: Move forward to get closer to the door; verify if it is now in view and accessible  
+PRECONDITION: Door must be directly in front; unknown if it can be toggled or if key is needed  
+ACTION: go forward","a wall 1 step forward
+a wall 1 step right",0,False
+105,turn left,"SUBGOAL: Reach the purple key to unlock the door  
+PLAN: Turn to face the key's location (3 steps left, 1 step forward), then move toward it  
+PRECONDITION: Key must be in view and accessible; no obstacles blocking path to it  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step right
+a locked purple door 6 steps forward
+a purple key 4 steps forward",0,False
+106,go forward,"SUBGOAL: Reach the purple key to unlock the door  
+PLAN: Move forward to align with the key (4 steps forward); then go forward to reach it  
+PRECONDITION: Path to key is clear; key is within reach and visible  
+ACTION: go forward","a wall 1 step right
+a locked purple door 5 steps forward
+a purple key 3 steps forward",0,False
+107,go forward,"SUBGOAL: Position self to reach and use the purple key to unlock the door  
+PLAN: Move forward to close the gap between key and player; then turn left to face the door; use toggle to unlock it  
+PRECONDITION: Key must be directly in front or reachable; door must be in front after alignment; key is not blocked  
+ACTION: go forward","a wall 1 step right
+a locked purple door 4 steps forward
+a purple key 2 steps forward",0,False
+108,go forward,"SUBGOAL: Position self directly in front of the locked purple door to unlock it using the key  
+PLAN: Move forward to reduce distance between key and door; then align with door to toggle it  
+PRECONDITION: Key must be directly in front or reachable; door must be accessible and not blocked  
+ACTION: go forward","a wall 1 step right
+a locked purple door 3 steps forward
+a purple key 1 step forward",0,False
+109,turn left,"SUBGOAL: Position self directly in front of the locked purple door to unlock it using the key  
+PLAN: Turn left to face the key, then move forward to align with the door  
+PRECONDITION: Key must be accessible and directly in front; no wall blocks path  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a purple key 1 step right
+a locked purple door 3 steps right",0,False
+110,go forward,"SUBGOAL: Position self directly in front of the locked purple door to unlock it using the key  
+PLAN: Move forward to reduce distance to the door; key is currently 1 step right, so align with it first  
+PRECONDITION: No wall blocks path forward; key must be accessible and in front  
+ACTION: go forward","a wall 5 steps forward
+a wall 3 steps right",0,False
+111,turn left,"SUBGOAL: Reach the locked purple door to unlock it using the key  
+PLAN: Move forward to reduce distance; key is now 1 step right and behind a wall, so cannot reach it  
+PRECONDITION: No clear path forward; wall blocks all directions; key is inaccessible  
+ACTION: turn left","a wall 4 steps forward
+a wall 2 steps left",0,False
+112,go forward,"SUBGOAL: Reach the locked purple door to unlock it using the key  
+PLAN: Move forward to approach the door; key is out of reach and blocked by walls  
+PRECONDITION: No clear path forward or sideways; door and key are inaccessible due to walls  
+ACTION: go forward","a wall 3 steps forward
+a wall 2 steps left",0,False
+113,go forward,"SUBGOAL: Access the locked purple door using the purple key  
+PLAN: Move to the key’s location (1 step forward), then toggle the door if the key is in hand  
+PRECONDITION: Key must be within reach; door must be directly in front and accessible  
+ACTION: go forward","a wall 2 steps forward
+a wall 2 steps left",0,False
+114,go forward,"SUBGOAL: Reach the locked purple door to unlock it using the purple key  
+PLAN: Move forward to align with the door; ensure key is in hand and directly in front  
+PRECONDITION: Key must be within reach; door must be directly in front (unknown if key is accessible)  
+ACTION: go forward","a wall 1 step forward
+a wall 2 steps left",0,False
+115,turn right,"SUBGOAL: Align with the purple key to pick it up  
+PLAN: Turn right to face the key (currently 1 step right); then go forward to reach it  
+PRECONDITION: Key must be directly in front or reachable; current orientation blocks forward movement  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 5 steps forward
+a wall 1 step left",0,False
+116,go forward,"SUBGOAL: Reach the locked purple door to open it  
+PLAN: Go forward to approach the door (currently 3 steps right); then turn to face it  
+PRECONDITION: Door must be directly in front; current position is 1 step right of door, orientation unknown  
+ACTION: go forward","a wall 4 steps forward
+a wall 1 step left",0,False
+117,go forward,"SUBGOAL: Position yourself directly in front of the locked purple door  
+PLAN: Go forward to reduce distance to the door; then align facing it  
+PRECONDITION: Door must be directly ahead; current position is 1 step left of door, orientation unknown  
+ACTION: go forward","a wall 3 steps forward
+a wall 1 step left",0,False
+118,go forward,"SUBGOAL: Position directly in front of the locked purple door  
+PLAN: Move forward to reduce distance; confirm door is now ahead  
+PRECONDITION: Door must be directly ahead; current position is 1 step left of door, orientation unknown  
+ACTION: go forward","a wall 2 steps forward
+a wall 1 step left",0,False
+119,go forward,"SUBGOAL: Position directly in front of the locked purple door  
+PLAN: Move forward to reduce distance to the door; confirm it is now directly ahead  
+PRECONDITION: Door must be directly ahead; current position is 1 step left of door, orientation unknown; path clear forward  
+ACTION: go forward","a wall 1 step forward
+a wall 1 step left",0,False
+120,turn right,"SUBGOAL: Align with the path to the locked purple door by changing direction to face a clear route  
+PLAN: Turn right to face a potential open path; avoid walls directly ahead  
+PRECONDITION: Must face a direction where movement is unblocked; current forward and left are blocked  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 6 steps forward
+a wall 1 step left",0,False
+121,turn left,"SUBGOAL: Reach the locked purple door to open it  
+PLAN: Move forward until door is directly ahead; current path is blocked by walls, so no forward progress possible  
+PRECONDITION: No clear path forward or sideways; door is 3 steps right and behind a wall; cannot proceed without repositioning  
+ACTION: turn left","a wall 1 step forward
+a wall 1 step left",0,False
+122,turn right,"SUBGOAL: Reach the purple key to unlock the door  
+PLAN: Move toward the key (currently 1 step right); turn right to face that direction, then go forward to approach it  
+PRECONDITION: Key is visible and accessible; must be able to face it directly to pick it up  
+ACTION: turn right","a wall 6 steps forward
+a wall 1 step left",0,False
+123,turn left,"SUBGOAL: Reach and pick up the purple key  
+PLAN: Turn left to face the key's direction; go forward to approach it  
+PRECONDITION: Key must be directly in front and accessible; current facing is unknown  
+ACTION: turn left","a wall 1 step forward
+a wall 1 step left",0,False
+124,turn left,"SUBGOAL: Reach the purple key by repositioning to face its location  
+PLAN: Turn left to reorient, then go forward if path clears (but only if not blocked)  
+PRECONDITION: Key must be directly in front; current facing and position unknown; wall ahead blocks forward movement  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step forward
+a wall 1 step right",0,False
+125,turn right,"SUBGOAL: Reach the purple key to interact with it  
+PLAN: Turn right to face the direction of the key (1 step right), then go forward to approach it  
+PRECONDITION: Key is 1 step right; must face that direction to move toward it; no walls in path  
+ACTION: turn right","a wall 1 step forward
+a wall 1 step left",0,False
+126,turn left,"SUBGOAL: Avoid the wall and find a clear path to the door  
+PLAN: Turn left to check alternative direction; reorient to face a wall-free path  
+PRECONDITION: Wall is 1 step left and 1 step forward; turning left may reveal open path or new wall  
+ACTION: turn left
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step forward
+a wall 1 step right",0,False
+127,turn right,"SUBGOAL: Avoid the wall and explore a clear path to the door  
+PLAN: Turn right to check if the wall is behind or to the side, possibly revealing an open direction  
+PRECONDITION: Wall is 1 step forward and 1 step right; turning right may reveal a clear path or new obstacle  
+ACTION: turn right
+PYTHON_CHECK: {""violations"": [""The observed wall/object directly ahead blocks forward movement."", null], ""fallback"": false}","a wall 1 step forward
+a wall 1 step left",0,True

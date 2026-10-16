@@ -1,0 +1,1042 @@
+Step,Action,Reasoning,Observation,Reward,Done
+0,turn right,"Let's analyze the observation step by step:
+
+Observation:
+- ""a wall 1 step forward"" → There is a wall directly in front of you (1 step forward).
+- ""a wall 2 steps left"" → There is a wall 2 steps to your left.
+
+This means:
+- You cannot go forward because there's a wall.
+- You cannot go left by 2 steps because there's a wall there, so moving left by 2 steps is blocked.
+
+Since forward and 2 steps left are blocked, the only possible directions are:
+- Right (not mentioned in the observation, so no wall indicated)
+- Backward (not mentioned, so no wall indicated)
+
+But the observation doesn't mention anything about the right or back, so we can assume those directions are open.
+
+Best course of action:
+- Since forward is blocked, we cannot go forward.
+- We must avoid walls. The only safe directions are right or back.
+- However, our goal is to reach the red ball. Without knowing where the red ball is, we need to explore.
+
+But note: the observation only describes walls. There's no mention of the red ball. So the red ball is not visible in the current observation.
+
+Since we cannot go forward or 2 steps left (blocked), and we don’t have any information about the red ball’s location, we should explore safely.
+
+Best first move: Try turning right to see if that leads to a path or the red ball.
+
+ACTION: turn right","a wall 5 steps forward
+a wall 1 step left",0,False
+1,turn right,"Let's analyze the new observation step by step:
+
+Observation:
+- ""a wall 5 steps forward"" → There is a wall 5 steps ahead. So going forward (1 step at a time) is blocked beyond 5 steps.
+- ""a wall 1 step left"" → There is a wall directly to the left (1 step left).
+
+This means:
+- Forward (especially 5 steps ahead) is blocked — cannot move forward.
+- Left (1 step) is blocked — cannot turn left or move left.
+- Right and back are not mentioned, so they may be open.
+
+We are trying to reach the red ball. The red ball is not visible in the observation, so we must deduce its location or find a path to it.
+
+But currently:
+- Left is blocked (1 step).
+- Forward is blocked beyond 5 steps (so we cannot go forward at all).
+- Therefore, only possible directions are: right or back.
+
+Since forward and left are blocked, we must avoid those.
+
+We have no information about the red ball's location. So we need to explore safely.
+
+But note: we cannot go forward or left. So we can only go right or back.
+
+We should try to move in a direction that may lead to the red ball or reveal more about the environment.
+
+Since no wall is mentioned for right or back, and we have no prior information, it's safer to try moving in a direction that is unblocked.
+
+Let’s try **turning right** first to see what's ahead — this might reveal new information or a path.
+
+ACTION: turn right","a wall 6 steps forward
+a wall 2 steps right
+a red ball 1 step right and 5 steps forward",0,False
+2,"We now have a detailed observation:
+
+ A wall  steps forward  cannot go forward beyond  steps
+ A wall  steps right  cannot move right beyond  steps
+ A red ball is located at  step right and  steps forward  this is a specific coordinate relative to current position
+
+Our current position is the origin The red ball is at right  forward 
+
+We cannot go forward beyond  steps since wall is at  steps forward and we cannot go right beyond  steps wall at  steps right But the red ball is at  step right and  steps forward  which is within the bounds of the walls  right    forward   so its reachable
+
+So we need to:
+ Move forward  steps to reach the row where the red ball is
+ Then move right  step to reach the red ball
+
+But we must ensure we dont hit walls
+
+ Forward: wall at  steps  safe to go  steps forward
+ Right: wall at  steps  safe to go  step right
+
+So the path is:
+ Go forward  steps  now at  
+ Then turn right to face right  now facing right
+ Go forward  step  now at    red ball is there
+
+But wait: we are currently at  We need to go forward  steps to reach  then right  step to 
+
+We can do this stepbystep
+
+We are currently facing some direction from previous turns But we just turned right in the last step so we are now facing right
+
+We need to go forward  steps to reach the row where the red ball is
+
+But we are currently facing right  so going forward means moving right
+
+That is a problem
+
+We must reevaluate
+
+Our current orientation: after turn right from a previous state we dont know the original but the last action was turn right and now the observation is given
+
+So current facing: right
+
+If we go forward we go right  but theres a wall  steps right  so we can only go  step right max
+
+But the red ball is  step right and  steps forward  so its","We now have a detailed observation:
+
+- A wall 6 steps forward → cannot go forward beyond 6 steps.
+- A wall 2 steps right → cannot move right beyond 2 steps.
+- A red ball is located at **1 step right and 5 steps forward** → this is a specific coordinate relative to current position.
+
+Our current position is the origin. The red ball is at (right +1, forward +5).
+
+We cannot go forward beyond 5 steps (since wall is at 6 steps forward), and we cannot go right beyond 2 steps (wall at 2 steps right). But the red ball is at 1 step right and 5 steps forward — which is **within** the bounds of the walls (1 right < 2, 5 forward < 6), so it's reachable.
+
+So we need to:
+1. Move forward 5 steps (to reach the row where the red ball is).
+2. Then move right 1 step to reach the red ball.
+
+But we must ensure we don’t hit walls.
+
+- Forward: wall at 6 steps → safe to go 5 steps forward.
+- Right: wall at 2 steps → safe to go 1 step right.
+
+So the path is:
+- Go forward 5 steps → now at (0, 5)
+- Then turn right (to face right) → now facing right
+- Go forward 1 step → now at (1, 5) → red ball is there
+
+But wait: we are currently at (0,0). We need to go forward 5 steps to reach (0,5), then right 1 step to (1,5).
+
+We can do this step-by-step.
+
+We are currently facing some direction (from previous turns). But we just turned right in the last step, so we are now facing right.
+
+We need to go forward 5 steps to reach the row where the red ball is.
+
+But we are currently facing right — so going forward means moving right.
+
+That is a problem.
+
+We must reevaluate.
+
+Our current orientation: after ""turn right"" from a previous state (we don't know the original), but the last action was ""turn right"", and now the observation is given.
+
+So current facing: right.
+
+If we go forward, we go right — but there's a wall 2 steps right → so we can only go 1 step right (max).
+
+But the red ball is 1 step right and 5 steps forward — so it's","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 5 steps forward
+a wall 2 steps right
+a red ball 1 step right and 4 steps forward",0,False
+3,"Lets analyze the current observation carefully:
+
+Observation:
+ A wall  steps forward  cannot move forward beyond  steps
+ A wall  steps right  cannot move right beyond  steps
+ A red ball is located at  step right and  steps forward
+
+This means the red ball is at coordinate   relative to current position
+
+We are currently at  and we need to reach 
+
+We can move:
+ Forward: up to  steps wall at  steps forward  so  steps forward is safe
+ Right: up to  steps wall at  steps right  so  step right is safe
+
+So the path is:
+ Move forward  steps  reach 
+ Then move right  step  reach   red ball
+
+But we must consider orientation
+
+We are currently facing right since the last action was turn right
+
+So if we go forward we go right  which would hit the wall at  steps right if we go more than  step right
+
+Therefore we cannot go forward now  because forward is right and we can only go  step right max and we need to go  steps forward in the forward direction not right
+
+So we must turn to face forward ie the direction toward the red ball
+
+We need to face forward ie positive forward direction to move toward the red ball at 
+
+Current facing: right
+
+So we need to turn left twice to face forward:
+
+ Turn left  now facing up north
+ Turn left  now facing forward south or forward depends on coordinate system
+
+Wait  need to clarify coordinate system
+
+The observation says:
+ a wall  steps forward  so forward is a direction we can move in
+ a wall  steps right  right is a perpendicular direction
+
+So forward and right are directions relative to our current orientation
+
+We are currently facing right
+
+So:
+ forward means moving in the direction we are facing  right
+ right means  degrees to the right of forward  so if we are facing right then right is down south or up Lets define:
+
+Standard orientation:
+ Facing","Let's analyze the current observation carefully:
+
+Observation:
+- A wall 5 steps forward → cannot move forward beyond 5 steps.
+- A wall 2 steps right → cannot move right beyond 2 steps.
+- A red ball is located at **1 step right and 4 steps forward**.
+
+This means the red ball is at coordinate (1, 4) relative to current position.
+
+We are currently at (0,0), and we need to reach (1,4).
+
+We can move:
+- Forward: up to 5 steps (wall at 5 steps forward → so 4 steps forward is safe).
+- Right: up to 2 steps (wall at 2 steps right → so 1 step right is safe).
+
+So the path is:
+1. Move forward 4 steps → reach (0,4)
+2. Then move right 1 step → reach (1,4) → red ball
+
+But we must consider orientation.
+
+We are currently facing **right** (since the last action was ""turn right"").
+
+So if we go forward, we go right — which would hit the wall at 2 steps right (if we go more than 1 step right).
+
+Therefore, we **cannot** go forward now — because forward is right, and we can only go 1 step right (max), and we need to go 4 steps forward (in the forward direction), not right.
+
+So we must **turn** to face forward (i.e., the direction toward the red ball).
+
+We need to face forward (i.e., positive forward direction) to move toward the red ball at (1,4).
+
+Current facing: right.
+
+So we need to turn left twice to face forward:
+
+- Turn left → now facing up (north)
+- Turn left → now facing forward (south or forward? depends on coordinate system)
+
+Wait — need to clarify coordinate system.
+
+The observation says:
+- ""a wall 5 steps forward"" → so ""forward"" is a direction we can move in.
+- ""a wall 2 steps right"" → ""right"" is a perpendicular direction.
+
+So ""forward"" and ""right"" are directions relative to our current orientation.
+
+We are currently facing **right**.
+
+So:
+- ""forward"" means moving in the direction we are facing → right.
+- ""right"" means 90 degrees to the right of forward → so if we are facing right, then ""right"" is down (south), or up? Let's define:
+
+Standard orientation:
+- Facing","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 4 steps forward
+a wall 2 steps right
+a red ball 1 step right and 3 steps forward",0,False
+4,"We are given the current observation:
+
+ A wall  steps forward  cannot move forward beyond  steps
+ A wall  steps right  cannot move right beyond  steps
+ A red ball is located at  step right and  steps forward
+
+We are currently at position  and we need to reach the red ball at    meaning:
+  step to the right
+  steps in the forward direction
+
+But we must consider our current orientation
+
+We were previously told that the last action was turn right so we are currently facing right
+
+Therefore:
+ forward means moving in the direction we are currently facing  right
+ right means  degrees to the right of forward  which would be down if forward is right then right is down
+
+But the observation says:
+ a wall  steps right  this is a wall in the right direction from our current facing
+ a red ball  step right and  steps forward  so from our current position the red ball is:
+    step in the right direction
+    steps in the forward direction
+
+But if we are facing right then:
+ forward  right
+ right  down or backward depends on convention
+
+This is ambiguous Lets resolve with standard game logic
+
+In most such navigation games:
+ forward is the direction you are currently facing
+ right is  degrees to the right of forward
+ left is  degrees to the left
+ back is opposite of forward
+
+So if we are currently facing right then:
+ Forward  right
+ Right  down south
+ Left  up north
+ Back  left
+
+Now the red ball is at:
+  step right and  steps forward
+
+But if we are facing right:
+ right  down
+ forward  right
+
+So the red ball is at:
+  step down south
+  steps right forward
+
+But the observation says  step right and  steps forward  which would be:
+  step in the right direction which is down
+  steps in forward which is right
+
+So the red ball is at x","We are given the current observation:
+
+- A wall 4 steps forward → cannot move forward beyond 4 steps.
+- A wall 2 steps right → cannot move right beyond 2 steps.
+- A red ball is located at **1 step right and 3 steps forward**.
+
+We are currently at position (0,0), and we need to reach the red ball at (1, 3) — meaning:
+- 1 step to the right
+- 3 steps in the forward direction
+
+But we must consider our current orientation.
+
+We were previously told that the last action was ""turn right"", so we are currently **facing right**.
+
+Therefore:
+- ""forward"" means moving in the direction we are currently facing → right.
+- ""right"" means 90 degrees to the right of forward → which would be **down** (if forward is right, then right is down).
+
+But the observation says:
+- ""a wall 2 steps right"" → this is a wall in the ""right"" direction from our current facing.
+- ""a red ball 1 step right and 3 steps forward"" → so from our current position, the red ball is:
+  - 1 step in the ""right"" direction
+  - 3 steps in the ""forward"" direction
+
+But if we are facing right, then:
+- ""forward"" = right
+- ""right"" = down (or backward? depends on convention)
+
+This is ambiguous. Let's resolve with standard game logic.
+
+In most such navigation games:
+- ""forward"" is the direction you are currently facing.
+- ""right"" is 90 degrees to the right of forward.
+- ""left"" is 90 degrees to the left.
+- ""back"" is opposite of forward.
+
+So if we are currently facing **right**, then:
+- Forward = right
+- Right = down (south)
+- Left = up (north)
+- Back = left
+
+Now, the red ball is at:
+- 1 step right and 3 steps forward
+
+But if we are facing right:
+- ""right"" = down
+- ""forward"" = right
+
+So the red ball is at:
+- 1 step down (south)
+- 3 steps right (forward)
+
+But the observation says ""1 step right and 3 steps forward"" — which would be:
+- 1 step in the right direction (which is down)
+- 3 steps in forward (which is right)
+
+So the red ball is at (x=1","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps forward
+a wall 2 steps right
+a red ball 1 step right and 2 steps forward",0,False
+5,"We are given the current observation:
+
+ A wall  steps forward  cannot move forward beyond  steps  
+ A wall  steps right  cannot move right beyond  steps  
+ A red ball is located at  step right and  steps forward
+
+We are currently facing right as the last action was turn right
+
+Lets define directions clearly based on current orientation facing right:
+
+ Forward  direction we are facing  right  
+ Right   to the right of forward  down south  
+ Left   to the left of forward  up north  
+ Back  opposite of forward  left
+
+So:
+  step right   step in the down direction  
+  steps forward   steps in the right direction
+
+Therefore the red ball is located at:
+  step down south
+  steps right forward
+
+But we are currently facing right so:
+ Moving forward  moves us right east
+ Moving right  moves us down south
+
+We need to reach the red ball at right:  down: 
+
+But we cannot go more than  steps forward ie right  thats safe since we only need  steps forward
+
+We cannot go more than  steps right  but right here means down so we can go only  steps down
+
+We need to go:
+  steps forward right  to reach x
+  step right  to reach y down
+
+But we are currently facing right So:
+ If we go forward we go right east
+ If we go right we go down south
+
+So to reach the red ball:
+ Move forward  steps  go to 
+ Then turn left to face forward  now facing forward right
+ Then go right  step  down  step  to 
+
+Wait  no: if we are at  and we go forward  steps right we reach  Then we go right down  step  to  That is the red ball
+
+But the red ball is at  step right and  steps forward  which","We are given the current observation:
+
+- A wall 3 steps forward → cannot move forward beyond 3 steps  
+- A wall 2 steps right → cannot move right beyond 2 steps  
+- A red ball is located at **1 step right and 2 steps forward**
+
+We are currently facing **right** (as the last action was ""turn right"").
+
+Let’s define directions clearly based on current orientation (facing right):
+
+- **Forward** = direction we are facing → right  
+- **Right** = 90° to the right of forward → down (south)  
+- **Left** = 90° to the left of forward → up (north)  
+- **Back** = opposite of forward → left
+
+So:
+- ""1 step right"" → 1 step in the **down** direction  
+- ""2 steps forward"" → 2 steps in the **right** direction
+
+Therefore, the red ball is located at:
+- 1 step down (south)
+- 2 steps right (forward)
+
+But we are currently facing right, so:
+- Moving forward → moves us right (east)
+- Moving right → moves us down (south)
+
+We need to reach the red ball at (right: 2, down: 1)
+
+But we cannot go more than 3 steps forward (i.e., right) — that’s safe since we only need 2 steps forward.
+
+We cannot go more than 2 steps right — but ""right"" here means down, so we can go only 2 steps down.
+
+We need to go:
+- 2 steps forward (right) → to reach x=2
+- 1 step right → to reach y=1 (down)
+
+But we are currently facing right. So:
+- If we go forward, we go right (east)
+- If we go right, we go down (south)
+
+So to reach the red ball:
+1. Move forward 2 steps → go to (2,0)
+2. Then turn left (to face forward) → now facing forward (right)
+3. Then go right 1 step → down 1 step → to (2,1)
+
+Wait — no: if we are at (0,0), and we go forward 2 steps (right), we reach (2,0). Then we go right (down) 1 step → to (2,1). That is the red ball.
+
+But the red ball is at 1 step right and 2 steps forward → which","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 2 steps forward
+a wall 2 steps right
+a red ball 1 step right and 1 step forward",0,False
+6,"Current Observation:
+ A wall  steps forward  cannot move forward beyond  steps
+ A wall  steps right  cannot move right beyond  steps
+ A red ball is located at  step right and  step forward
+
+We are currently facing right from the last action: turn right
+
+Define directions based on current facing:
+ Forward  right east
+ Right  down south
+ Left  up north
+ Back  left west
+
+So:
+  step right   step down south
+  step forward   step right east
+
+Therefore the red ball is at:
+  step east forward
+  step south right
+
+We are at  We need to reach  in forward right coordinates
+
+But we can only go:
+ Forward right: up to  steps  safe we need only 
+ Right down: up to  steps  safe we need only 
+
+So we can reach the red ball
+
+But we are currently facing right
+
+We need to go:
+ Forward  step  move to 
+ Then go right  step  move to   red ball
+
+But after going forward  step we are still facing right
+
+Then going right down  step will take us to   the red ball
+
+So sequence:
+ go forward  move  step forward right  now at 
+ go right  move  step right down  now at   red ball
+
+But is that correct
+
+Wait: the red ball is at  step right and  step forward
+
+From our current position:
+  step forward   step in direction we are facing  right
+  step right   step in direction to the right of forward  down
+
+So yes red ball is at    in xy where x  forward y  right
+
+So we need to:
+ Move forward  step  to 
+ Move right  step  to 
+
+We are not blocked by walls:
+ Wall at  steps forward  we only go  step","Current Observation:
+- A wall 2 steps forward → cannot move forward beyond 2 steps
+- A wall 2 steps right → cannot move right beyond 2 steps
+- A red ball is located at 1 step right and 1 step forward
+
+We are currently facing **right** (from the last action: ""turn right"").
+
+Define directions based on current facing:
+- Forward = right (east)
+- Right = down (south)
+- Left = up (north)
+- Back = left (west)
+
+So:
+- ""1 step right"" → 1 step down (south)
+- ""1 step forward"" → 1 step right (east)
+
+Therefore, the red ball is at:
+- 1 step east (forward)
+- 1 step south (right)
+
+We are at (0,0). We need to reach (1,1) in (forward, right) coordinates.
+
+But we can only go:
+- Forward (right): up to 2 steps → safe (we need only 1)
+- Right (down): up to 2 steps → safe (we need only 1)
+
+So we can reach the red ball.
+
+But we are currently facing right.
+
+We need to go:
+1. Forward 1 step → move to (1,0)
+2. Then go right 1 step → move to (1,1) → red ball
+
+But after going forward 1 step, we are still facing right.
+
+Then going right (down) 1 step will take us to (1,1) — the red ball.
+
+So sequence:
+- go forward → move 1 step forward (right) → now at (1,0)
+- go right → move 1 step right (down) → now at (1,1) → red ball
+
+But is that correct?
+
+Wait: the red ball is at 1 step right and 1 step forward.
+
+From our current position:
+- 1 step forward = 1 step in direction we are facing → right
+- 1 step right = 1 step in direction to the right of forward → down
+
+So yes, red ball is at (1,0) → (1,1) in (x,y) where x = forward, y = right.
+
+So we need to:
+- Move forward 1 step → to (1,0)
+- Move right 1 step → to (1,1)
+
+We are not blocked by walls:
+- Wall at 2 steps forward → we only go 1 step","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+7,go right,"We are now given a new observation:
+
+- A wall 1 step forward → cannot move forward beyond 1 step  
+- A red ball 1 step right  
+
+We are currently facing right (as per prior history: last action was ""turn right"").
+
+Define directions:
+- Forward = direction we are currently facing = right (east)
+- Right = 90° to the right of forward = down (south)
+
+So:
+- ""1 step right"" → 1 step in the down (south) direction
+
+Therefore, the red ball is 1 step south of our current position.
+
+We cannot go forward beyond 1 step (wall at 1 step forward), but we can go right (down) as long as we don’t hit a wall — no wall mentioned in right direction.
+
+So we can safely:
+- Go right (down) 1 step to reach the red ball.
+
+We do not need to go forward — we are already at the correct forward position (0), and the red ball is only 1 step right (down).
+
+Thus, the best action is:
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+8,go right,"We are given the observation:  
+- A wall 1 step forward → cannot move forward beyond 1 step  
+- A red ball 1 step right  
+
+Current facing: right (from previous ""turn right"" action)
+
+Directions:
+- Forward = direction we are currently facing = right (east)
+- Right = 90° to the right of forward = down (south)
+
+So ""1 step right"" means 1 step south.
+
+The red ball is 1 step south of our current position.
+
+We can:
+- Move forward? No — wall at 1 step forward, so we cannot go forward.
+- Move right? Yes — we can go down 1 step, and there's no wall mentioned in the right direction.
+- Turn? Only if needed to face properly.
+
+We are already facing right, so going right (south) will move us toward the red ball.
+
+Thus, the correct action is:
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+9,go right,"We are given the observation:  
+- A wall 1 step forward → cannot move forward  
+- A red ball 1 step right  
+
+Current facing: right (from previous turn right)  
+
+Directions:  
+- Forward = right (east)  
+- Right = down (south)  
+
+So ""1 step right"" means 1 step south.  
+
+We cannot go forward (blocked by wall at 1 step forward).  
+We can go right (south) — no wall mentioned in that direction.  
+
+The red ball is directly 1 step to the south (right direction).  
+
+Therefore, we should move right to reach the red ball.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+10,go right,"We are given the observation:  
+- A wall 1 step forward → cannot move forward  
+- A red ball 1 step right  
+
+Current facing: right (from prior turn right)  
+
+In this coordinate system:  
+- Forward = direction we are currently facing → right (east)  
+- Right = 90° to the right of forward → down (south)  
+
+So ""1 step right"" means 1 step in the south direction.  
+
+We cannot go forward (blocked by wall), so we must move in the right direction (south) to reach the red ball.  
+
+No obstacle is mentioned in the right direction (south), so we can safely go right.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+11,go right,"We are given the observation:  
+- A wall 1 step forward → cannot move forward  
+- A red ball 1 step right  
+
+Current facing: right (from previous turn right)  
+
+In the game's coordinate system:  
+- Forward = direction we are currently facing → right (east)  
+- Right = 90° to the right of forward → down (south)  
+
+So ""1 step right"" means 1 step in the south direction.  
+
+We cannot go forward (blocked by wall), so we must move in the right direction (south) to reach the red ball.  
+
+There is no wall mentioned in the right direction, so we can safely go right.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+12,go right,"We are given the observation:  
+- A wall 1 step forward → cannot move forward  
+- A red ball 1 step right  
+
+Current facing: right (from previous turn right)  
+
+In the game's coordinate system:  
+- Forward = direction we are currently facing → right (east)  
+- Right = 90° to the right of forward → down (south)  
+
+So ""1 step right"" means 1 step in the south direction.  
+
+We cannot go forward (blocked by wall), so we must move in the right direction (south) to reach the red ball.  
+
+There is no wall mentioned in the right direction, so we can safely go right.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+13,go right,"We are given the observation:  
+- A wall 1 step forward → cannot move forward  
+- A red ball 1 step right  
+
+Current facing: right (from prior turn right)  
+
+In the game's coordinate system:  
+- Forward = direction we are currently facing → right (east)  
+- Right = 90° to the right of forward → down (south)  
+
+So ""1 step right"" means 1 step south.  
+
+We cannot go forward (blocked by wall), so we must move to the red ball by going right (south).  
+
+There is no wall blocking the right direction, so we can safely go right.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+14,go right,"We are given the observation:  
+- A wall 1 step forward → cannot move forward  
+- A red ball 1 step right  
+
+Current facing: right (from prior ""turn right"")  
+
+In the game's coordinate system:  
+- Forward = direction we are currently facing → right (east)  
+- Right = 90° to the right of forward → down (south)  
+
+So ""1 step right"" means 1 step south.  
+
+We cannot go forward (blocked by wall), so we must move to the red ball by going right (south).  
+
+There is no wall blocking the right direction, so we can safely go right.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+15,go right,"We are given the observation:  
+- A wall 1 step forward → cannot move forward  
+- A red ball 1 step right  
+
+Current facing: right (from previous ""turn right"")  
+
+In the game's coordinate system:  
+- Forward = direction we are currently facing → right (east)  
+- Right = 90° to the right of forward → down (south)  
+
+So ""1 step right"" means 1 step south.  
+
+We cannot go forward (blocked by wall), so we must move to the red ball by going right (south).  
+
+There is no wall blocking the right direction, so we can safely go right.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+16,go right,"We are currently facing right.  
+Observation:  
+- A wall 1 step forward → cannot move forward  
+- A red ball is 1 step right  
+
+""Right"" in our current orientation (facing right) means downward (south).  
+So the red ball is 1 step in the right direction (south).  
+
+We cannot go forward (blocked by wall), so we must go right to reach the red ball.  
+
+There is no wall blocking the right direction.  
+
+Therefore, the correct action is to go right.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+17,go right,"We are currently facing right.  
+Observation:  
+- A wall 1 step forward → cannot move forward (blocked)  
+- A red ball is 1 step right  
+
+In our current orientation:  
+- ""Forward"" is right (east)  
+- ""Right"" is down (south)  
+
+So the red ball is 1 step in the right direction, i.e., directly south of us.  
+
+We cannot go forward (blocked by wall), so we must move right to reach the red ball.  
+
+No obstacles are mentioned in the right direction.  
+
+Therefore, the only safe and necessary action is to go right.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+18,go right,"We are currently facing right.  
+Observation:  
+- A wall 1 step forward → cannot move forward (blocked)  
+- A red ball is 1 step right  
+
+In our current orientation:  
+- ""Forward"" is the direction we are facing (right/east)  
+- ""Right"" is the direction to the right of forward, which is down (south)  
+
+So the red ball is 1 step in the right direction → directly south of us.  
+
+We cannot go forward (blocked by wall), so we must move in the ""right"" direction to reach the red ball.  
+
+There is no mention of a wall in the right direction, so moving right is safe.  
+
+The red ball is directly reachable by going right.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+19,go right,"We are currently facing right.  
+Observation:  
+- A wall 1 step forward → cannot move forward (blocked)  
+- A red ball is located 1 step right  
+
+In current orientation:  
+- ""Forward"" = right (east) → blocked after 1 step  
+- ""Right"" = down (south) → direction to move to reach the red ball  
+
+Since we cannot go forward (wall), and the red ball is 1 step right (south), we must move right to reach it.  
+
+No wall is mentioned in the right direction, so it is safe to move.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+20,go right,"We are currently facing right.  
+Observation:  
+- A wall 1 step forward → cannot move forward (blocked)  
+- A red ball is located 1 step right  
+
+In current orientation:  
+- ""Forward"" is right (east) → blocked  
+- ""Right"" is down (south) → direction to reach the red ball  
+
+Since we cannot go forward (blocked by wall), and the red ball is exactly 1 step to the right (south), we must move right to reach it.  
+
+No obstruction is mentioned in the right direction, so moving right is safe.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+21,go right,"We are currently facing right.  
+Observation:  
+- A wall 1 step forward → cannot move forward (blocked)  
+- A red ball is located 1 step right (i.e., 1 step in the ""right"" direction, which is down/south)  
+
+Since we cannot go forward (blocked by wall), we must move in the ""right"" direction to reach the red ball.  
+The red ball is directly 1 step to the right, and there is no indication of a wall in that direction.  
+
+Therefore, the correct action is to go right.  
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+22,go right,"We are currently facing a direction where:
+- There is a wall 1 step forward → cannot move forward
+- A red ball is located 1 step right → we can reach it by moving right
+
+Since we cannot go forward (blocked by wall), the only viable path is to move right to reach the red ball.
+
+No need to pick up or toggle — the goal is simply to reach the red ball.
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+23,go right,"The current observation shows:
+- A wall 1 step forward → cannot move forward
+- A red ball 1 step right → reachable by moving right
+
+Since forward is blocked, the only valid action is to move right to reach the red ball.
+
+No need to pick up or toggle — the goal is to reach the red ball.
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+24,go right,"The current observation shows:
+- A wall 1 step forward → cannot move forward
+- A red ball 1 step right → reachable by moving right
+
+Since forward is blocked, moving right is the only viable path to reach the red ball. There is no need to pick up or toggle — the goal is simply to reach the red ball.
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+25,go right,"The current observation shows:
+- A wall 1 step forward → cannot move forward
+- A red ball 1 step right → is located to the right
+
+Since forward is blocked, the only possible direction to reach the red ball is to move right.
+
+No picking up or toggling is needed — the goal is simply to reach the red ball.
+
+ACTION: go right","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a red ball 1 step right",0,False
+26,turn right,"The current observation shows:
+- A wall 1 step forward → cannot move forward
+- A red ball 1 step right → located to the right of current position
+
+Since forward is blocked, moving forward is not possible. The only viable path is to move right to reach the red ball.
+
+No interaction (like pick up or toggle) is needed because the goal is simply to reach the red ball, and it is directly to the right.
+
+ACTION: turn right","a wall 1 step left
+a red ball 1 step forward",0.6203125,True

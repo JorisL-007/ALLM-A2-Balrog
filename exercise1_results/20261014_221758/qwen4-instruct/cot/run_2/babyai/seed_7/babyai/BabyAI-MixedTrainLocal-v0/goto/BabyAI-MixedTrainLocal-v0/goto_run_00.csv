@@ -1,0 +1,760 @@
+Step,Action,Reasoning,Observation,Reward,Done
+0,"Lets analyze the observation step by step:
+
+Current Observation:
+ A wall  steps forward
+ A wall  steps right
+ A green key  steps left and  steps forward
+
+We need to reach the green key to pick it up
+
+Step : Determine the position of the green key relative to current location
+  steps left and  steps forward means: move  steps left then  steps forward
+
+So from current position:
+ Move  steps left  now facing left
+ Then  steps forward  now in the direction of the green key
+
+But we must be cautious: there are walls that block movement:
+ A wall  steps forward  means directly in front  steps ahead theres a wall So we cannot go forward  steps
+ A wall  steps right   steps to the right is blocked
+
+But the green key is at  left and  forward  so we dont need to go  steps forward or  steps right We just need to go  steps left and  steps forward
+
+Since theres a wall  steps forward that suggests that going forward beyond a certain point is blocked  but the green key is only  steps forward which is within reach since    so we can go forward  steps as long as we dont go beyond
+
+So the path to the green key is:
+ Move  steps left to reach the left side
+ Then move  steps forward to reach the green key
+
+But is there a wall blocking the left path The observation says a wall  steps right not left So left is clear
+
+Therefore we can:
+ Turn left to face left  but we dont need to turn unless were facing the wrong direction
+ We are currently facing forward assumed so to go  steps left we need to turn left first
+
+Wait  we need to go  steps left and then  steps forward So the order is:
+ First move left  steps to get to the correct side
+ Then move forward  steps to reach the green key
+
+But we can only go forward if we are not blocked The wall is  steps forward  meaning at  steps ahead theres a wall So  steps forward is safe
+
+So","Let's analyze the observation step by step:
+
+Current Observation:
+- A wall 6 steps forward
+- A wall 3 steps right
+- A green key 2 steps left and 4 steps forward
+
+We need to reach the green key to pick it up.
+
+Step 1: Determine the position of the green key relative to current location.
+- ""2 steps left and 4 steps forward"" means: move 2 steps left, then 4 steps forward.
+
+So, from current position:
+- Move 2 steps left → now facing left
+- Then 4 steps forward → now in the direction of the green key.
+
+But we must be cautious: there are walls that block movement:
+- A wall 6 steps forward → means directly in front, 6 steps ahead, there's a wall. So we cannot go forward 6 steps.
+- A wall 3 steps right → 3 steps to the right is blocked.
+
+But the green key is at 2 left and 4 forward — so we don’t need to go 6 steps forward or 3 steps right. We just need to go 2 steps left and 4 steps forward.
+
+Since there's a wall 6 steps forward, that suggests that going forward beyond a certain point is blocked — but the green key is only 4 steps forward, which is within reach (since 4 < 6), so we can go forward 4 steps as long as we don't go beyond.
+
+So the path to the green key is:
+- Move 2 steps left (to reach the left side)
+- Then move 4 steps forward (to reach the green key)
+
+But is there a wall blocking the left path? The observation says ""a wall 3 steps right"", not left. So left is clear.
+
+Therefore, we can:
+1. Turn left (to face left) — but we don't need to turn unless we're facing the wrong direction.
+2. We are currently facing forward (assumed), so to go 2 steps left, we need to turn left first.
+
+Wait — we need to go 2 steps left and then 4 steps forward. So the order is:
+- First, move left (2 steps) to get to the correct side
+- Then move forward (4 steps) to reach the green key
+
+But we can only go forward if we are not blocked. The wall is 6 steps forward — meaning at 6 steps ahead, there's a wall. So 4 steps forward is safe.
+
+So","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 5 steps forward
+a wall 3 steps right
+a green key 2 steps left and 3 steps forward",0,False
+1,"Observation:
+ A wall  steps forward  cannot go forward beyond  steps
+ A wall  steps right  cannot go right beyond  steps
+ A green key at  steps left and  steps forward
+
+Goal: Reach and pick up the green key
+
+Stepbystep reasoning:
+ The green key is located  steps left and  steps forward
+ We need to move  steps left to the left side then  steps forward toward the green key
+ There is a wall  steps forward  so going forward  steps is safe   
+ There is a wall  steps right  so we cannot go right beyond that but we are going left so that is not obstructed
+ Therefore we can safely move  steps left then  steps forward to reach the green key
+
+But we must first face the correct direction to move left
+
+Currently we are likely facing forward To move left we need to turn left first
+
+Action plan:
+ Turn left  now facing left
+ Go forward  steps  move to the left side
+ Now turn forward or stay facing forward and go forward  steps to reach the green key
+ Once at the green key pick it up
+
+But note: the green key is  steps left and  steps forward  meaning its not directly in front So we must move left first then forward
+
+We dont need to turn again after moving left  we can just go forward  steps after moving  steps left
+
+So:
+ Turn left  to face left
+ Go forward  steps  now we are  steps left of original position
+ Then go forward  steps  now we are at the green key
+
+But wait  after moving  steps left are we now facing forward Yes  turning left once makes us face left To go forward in the original forward direction we need to turn back to face forward
+
+So correction:
+ Turn left  now facing left
+ Go forward  steps  now at  steps left
+ Turn right  now facing forward
+ Go forward  steps  now at green key
+
+But is that necessary Actually after moving left we are now on the left side To go forward in the original forward direction we need to be facing forward
+
+So","Observation:
+- A wall 5 steps forward → cannot go forward beyond 5 steps
+- A wall 3 steps right → cannot go right beyond 3 steps
+- A green key at 2 steps left and 3 steps forward
+
+Goal: Reach and pick up the green key.
+
+Step-by-step reasoning:
+- The green key is located 2 steps left and 3 steps forward.
+- We need to move 2 steps left (to the left side), then 3 steps forward (toward the green key).
+- There is a wall 5 steps forward — so going forward 3 steps is safe (3 < 5).
+- There is a wall 3 steps right — so we cannot go right beyond that, but we are going left, so that is not obstructed.
+- Therefore, we can safely move 2 steps left, then 3 steps forward to reach the green key.
+
+But we must first face the correct direction to move left.
+
+Currently, we are likely facing forward. To move left, we need to turn left first.
+
+Action plan:
+1. Turn left → now facing left
+2. Go forward (2 steps) → move to the left side
+3. Now, turn forward (or stay facing forward) and go forward 3 steps to reach the green key
+4. Once at the green key, pick it up.
+
+But note: the green key is 2 steps left and 3 steps forward — meaning it's not directly in front. So we must move left first, then forward.
+
+We don't need to turn again after moving left — we can just go forward 3 steps after moving 2 steps left.
+
+So:
+- Turn left → to face left
+- Go forward 2 steps → now we are 2 steps left of original position
+- Then go forward 3 steps → now we are at the green key
+
+But wait — after moving 2 steps left, are we now facing forward? Yes — turning left once makes us face left. To go forward (in the original forward direction), we need to turn back to face forward.
+
+So correction:
+- Turn left → now facing left
+- Go forward 2 steps → now at 2 steps left
+- Turn right → now facing forward
+- Go forward 3 steps → now at green key
+
+But is that necessary? Actually, after moving left, we are now on the left side. To go forward (in the original forward direction), we need to be facing forward.
+
+So","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 4 steps forward
+a wall 3 steps right
+a green key 2 steps left and 2 steps forward",0,False
+2,"Observation:
+ A wall  steps forward  cannot go forward beyond  steps
+ A wall  steps right  cannot go right beyond  steps
+ A green key at  steps left and  steps forward
+
+Goal: Reach the green key and pick it up
+
+Stepbystep reasoning:
+ The green key is  steps left and  steps forward from current position
+ We must move  steps left to the left then  steps forward to reach the key
+ There is a wall  steps forward  so going forward  steps is safe   
+ There is a wall  steps right  no obstruction going left
+ So we can safely move left then forward
+
+To move left we must first turn to face left since we are currently likely facing forward
+
+Actions:
+ Turn left  now facing left
+ Go forward  steps  now we are  steps left of original position
+ Now we are at the correct lateral position The green key is  steps forward from here
+ Turn right  now facing forward to face the green key
+ Go forward  steps  now we are at the green key
+ Pick up the green key
+
+But note: after moving  steps left we are now at a position where the green key is directly in front  steps forward So we dont need to turn back  we just need to face forward
+
+Wait  after turning left and going  steps left we are now facing left To go forward in the original forward direction we need to turn right to face forward
+
+So:
+ Turn left  face left
+ Go forward  steps  now at  steps left
+ Turn right  face forward
+ Go forward  steps  now at green key
+ Pick up the green key
+
+But is there a shorter path
+
+Alternative: Could we go forward first No  the green key is  steps left and  steps forward  not directly in front Going forward would not help
+
+So best path:
+ Turn left
+ Go forward  steps
+ Turn right
+ Go forward  steps
+ Pick up
+
+But wait  after turning left and going  steps left we are now at the correct xposition Then turning right to face forward and going  steps forward brings us to the","Observation:
+- A wall 4 steps forward → cannot go forward beyond 4 steps
+- A wall 3 steps right → cannot go right beyond 3 steps
+- A green key at 2 steps left and 2 steps forward
+
+Goal: Reach the green key and pick it up.
+
+Step-by-step reasoning:
+- The green key is 2 steps left and 2 steps forward from current position.
+- We must move 2 steps left (to the left), then 2 steps forward (to reach the key).
+- There is a wall 4 steps forward — so going forward 2 steps is safe (2 < 4).
+- There is a wall 3 steps right — no obstruction going left.
+- So we can safely move left, then forward.
+
+To move left, we must first turn to face left (since we are currently likely facing forward).
+
+Actions:
+1. Turn left → now facing left
+2. Go forward 2 steps → now we are 2 steps left of original position
+3. Now we are at the correct lateral position. The green key is 2 steps forward from here.
+4. Turn right → now facing forward (to face the green key)
+5. Go forward 2 steps → now we are at the green key
+6. Pick up the green key
+
+But note: after moving 2 steps left, we are now at a position where the green key is directly in front (2 steps forward). So we don’t need to turn back — we just need to face forward.
+
+Wait — after turning left and going 2 steps left, we are now facing left. To go forward (in the original forward direction), we need to turn right to face forward.
+
+So:
+- Turn left → face left
+- Go forward 2 steps → now at 2 steps left
+- Turn right → face forward
+- Go forward 2 steps → now at green key
+- Pick up the green key
+
+But is there a shorter path?
+
+Alternative: Could we go forward first? No — the green key is 2 steps left and 2 steps forward — not directly in front. Going forward would not help.
+
+So best path:
+- Turn left
+- Go forward 2 steps
+- Turn right
+- Go forward 2 steps
+- Pick up
+
+But wait — after turning left and going 2 steps left, we are now at the correct x-position. Then turning right (to face forward) and going 2 steps forward brings us to the","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps forward
+a wall 3 steps right
+a green key 2 steps left and 1 step forward",0,False
+3,turn left,"Observation:
+- A wall 3 steps forward → cannot move forward beyond 3 steps
+- A wall 3 steps right → cannot move right beyond 3 steps
+- A green key located 2 steps left and 1 step forward
+
+Goal: Reach and pick up the green key.
+
+Step-by-step reasoning:
+- The green key is 2 steps left and 1 step forward from current position.
+- We need to move 2 steps left, then 1 step forward to reach it.
+- There is a wall 3 steps forward — so moving forward 1 step is safe (1 < 3).
+- There is a wall 3 steps right — no obstruction going left.
+- Therefore, we can safely move left first, then forward.
+
+Current facing direction: assumed to be forward.
+
+To move left:
+1. Turn left → now facing left
+2. Go forward 2 steps → now at 2 steps left of original position
+3. Now, the green key is 1 step forward in front of us (since it's 1 step forward from original position)
+4. Turn right → now facing forward (to face the green key)
+5. Go forward 1 step → now at the green key
+6. Pick up the green key
+
+But after turning left and moving 2 steps left, we are now at a position where the green key is directly in front (1 step forward). So we just need to turn to face forward and go forward 1 step.
+
+Thus, the minimal sequence:
+- Turn left
+- Go forward 2 steps
+- Turn right
+- Go forward 1 step
+- Pick up
+
+However, after moving 2 steps left, we are now at the correct x-position. The green key is 1 step forward from that point. So we need to go forward 1 step from that position.
+
+But we are currently facing left after the left turn. So we must turn right to face forward before going forward.
+
+Therefore, final actions:
+
+ACTION: turn left","a wall 4 steps forward
+a wall 3 steps right
+a green key 1 step right and 2 steps forward",0,False
+4,turn right,"Observation:
+- A wall 4 steps forward → cannot go forward beyond 4 steps
+- A wall 3 steps right → cannot go right beyond 3 steps
+- A green key at 1 step right and 2 steps forward
+
+Goal: Reach and pick up the green key.
+
+Step-by-step reasoning:
+- The green key is 1 step right and 2 steps forward from current position.
+- We must move 1 step right, then 2 steps forward to reach it.
+- There is a wall 3 steps right → so going 1 step right is safe (1 < 3).
+- There is a wall 4 steps forward → going 2 steps forward is safe (2 < 4).
+- So we can safely move right first, then forward.
+
+Current facing direction: assumed to be forward.
+
+To reach the green key:
+1. Turn right → now facing right
+2. Go forward 1 step → now 1 step right of original position
+3. Turn forward (turn left to face forward) → now facing forward
+4. Go forward 2 steps → now at green key
+5. Pick up the green key
+
+But after turning right and going 1 step right, we are now at the correct x-position. The green key is 2 steps forward from there. So we just need to face forward and go forward 2 steps.
+
+We are currently facing right after the first turn. So we need to turn left (to face forward) before going forward.
+
+Alternatively, we can:
+- Turn right → face right
+- Go forward 1 step → to the right
+- Turn left → face forward
+- Go forward 2 steps → to green key
+- Pick up
+
+But note: after moving right, we are now at a position where the green key is 2 steps forward in front. So we just need to go forward 2 steps once we're facing forward.
+
+So final action sequence:
+
+ACTION: turn right","a wall 3 steps forward
+a wall 3 steps right
+a green key 2 steps left and 1 step forward",0,False
+5,turn left,"Observation:
+- A wall 3 steps forward → cannot go forward beyond 3 steps
+- A wall 3 steps right → cannot go right beyond 3 steps
+- A green key at 2 steps left and 1 step forward
+
+Goal: Reach and pick up the green key.
+
+Step-by-step reasoning:
+- The green key is 2 steps left and 1 step forward from current position.
+- We must move 2 steps left, then 1 step forward to reach it.
+- Wall at 3 steps right → no obstruction going left (left is safe).
+- Wall at 3 steps forward → going 1 step forward is safe (1 < 3).
+- So we can safely move left first, then forward.
+
+Current facing direction: forward.
+
+To reach the green key:
+1. Turn left → now facing left
+2. Go forward 2 steps → now 2 steps left of original position
+3. Turn right → now facing forward (to face the green key)
+4. Go forward 1 step → now at green key
+5. Pick up the green key
+
+But after moving 2 steps left, we are now at a position where the green key is 1 step forward in front. So we just need to face forward and go forward 1 step.
+
+So we need to turn to face forward after moving left.
+
+Therefore:
+- Turn left
+- Go forward 2 steps
+- Turn right
+- Go forward 1 step
+- Pick up
+
+But we only need to pick up once we reach it. We can only pick up if we are directly in front of it or if it's in our current field of view.
+
+However, the green key is at 2 steps left and 1 step forward — so after moving 2 steps left, it is 1 step forward in front. So we just need to go forward 1 step after being aligned.
+
+But we must be facing forward to go forward.
+
+So after turning left and moving 2 steps left, we are now at the correct lateral position. We then turn right to face forward, then go forward 1 step.
+
+Final action sequence:
+
+ACTION: turn left","a wall 4 steps forward
+a wall 3 steps right
+a green key 1 step right and 2 steps forward",0,False
+6,"Observation:
+ A wall  steps forward  cannot move forward beyond  steps
+ A wall  steps right  cannot move right beyond  steps
+ A green key at  step right and  steps forward
+
+Goal: Reach and pick up the green key
+
+Stepbystep reasoning:
+ The green key is  step right and  steps forward from current position
+ We must move  step right then  steps forward to reach it
+ Wall at  steps right  going  step right is safe   
+ Wall at  steps forward  going  steps forward is safe   
+ So movement is possible
+
+Current facing direction: forward
+
+To reach the green key:
+ Turn right  now facing right
+ Go forward  step  now  step right of original position
+ Turn forward or turn left to face forward  now facing forward
+ Go forward  steps  now at green key
+ Pick up the green key
+
+But after turning right and moving  step right we are now aligned with the green key which is  steps forward in front So we just need to go forward  steps after being facing forward
+
+So we must:
+ Turn right
+ Go forward  step
+ Turn left to face forward  or turn right again Wait:
+
+After turning right facing right we go  step right  now we are at the right side The green key is  steps forward from here So we need to turn to face forward
+
+To face forward from facing right we turn left since right  left  forward
+
+So:
+ Turn right  face right
+ Go forward  step  now at  step right
+ Turn left  now face forward
+ Go forward  steps  now at green key
+ Pick up
+
+But is there a shorter or simpler path
+
+Alternatively:
+ Turn left  face left  not useful green key is to the right
+ So must turn right first
+
+Therefore best path:
+ Turn right
+ Go forward  step
+ Turn left
+ Go forward  steps
+ Pick up
+
+But after step  we are at  step right From there turning left from facing right gives us forward direction
+
+So yes
+
+Final","Observation:
+- A wall 4 steps forward → cannot move forward beyond 4 steps
+- A wall 3 steps right → cannot move right beyond 3 steps
+- A green key at 1 step right and 2 steps forward
+
+Goal: Reach and pick up the green key.
+
+Step-by-step reasoning:
+- The green key is 1 step right and 2 steps forward from current position.
+- We must move 1 step right, then 2 steps forward to reach it.
+- Wall at 3 steps right → going 1 step right is safe (1 < 3)
+- Wall at 4 steps forward → going 2 steps forward is safe (2 < 4)
+- So movement is possible.
+
+Current facing direction: forward.
+
+To reach the green key:
+1. Turn right → now facing right
+2. Go forward 1 step → now 1 step right of original position
+3. Turn forward (or turn left to face forward) → now facing forward
+4. Go forward 2 steps → now at green key
+5. Pick up the green key
+
+But after turning right and moving 1 step right, we are now aligned with the green key, which is 2 steps forward in front. So we just need to go forward 2 steps after being facing forward.
+
+So we must:
+- Turn right
+- Go forward 1 step
+- Turn left (to face forward) → or turn right again? Wait:
+
+After turning right (facing right), we go 1 step right → now we are at the right side. The green key is 2 steps forward from here. So we need to turn to face forward.
+
+To face forward from facing right, we turn left (since right → left → forward).
+
+So:
+- Turn right → face right
+- Go forward 1 step → now at 1 step right
+- Turn left → now face forward
+- Go forward 2 steps → now at green key
+- Pick up
+
+But is there a shorter or simpler path?
+
+Alternatively:
+- Turn left → face left → not useful (green key is to the right)
+- So must turn right first
+
+Therefore, best path:
+1. Turn right
+2. Go forward 1 step
+3. Turn left
+4. Go forward 2 steps
+5. Pick up
+
+But after step 2, we are at 1 step right. From there, turning left (from facing right) gives us forward direction.
+
+So yes.
+
+Final","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps forward
+a wall 3 steps right
+a green key 1 step right and 1 step forward",0,False
+7,turn right,"The green key is located 1 step right and 1 step forward from current position.  
+We need to move toward it safely.  
+
+Obstacles:  
+- Wall 3 steps forward → can move forward up to 3 steps → 1 step forward is safe  
+- Wall 3 steps right → can move right up to 3 steps → 1 step right is safe  
+
+Plan:  
+1. Turn right → now facing right  
+2. Go forward 1 step → now at 1 step right  
+3. Turn left → now facing forward  
+4. Go forward 1 step → now at green key  
+5. Pick up the green key  
+
+But after step 2 (moving 1 step right), we are at the correct lateral position. The green key is 1 step forward from there. So we just need to go forward 1 step after turning to face forward.  
+
+So the sequence is:  
+- Turn right  
+- Go forward 1 step  
+- Turn left  
+- Go forward 1 step  
+- Pick up  
+
+But we can optimize: after moving right, we are at the right side, and the green key is directly in front (1 step forward). So we just need to turn to face forward and go forward.  
+
+So:  
+- Turn right  
+- Go forward 1 step  
+- Turn left  
+- Go forward 1 step  
+- Pick up  
+
+However, the game only allows one action at a time.  
+
+We must start with the first action.  
+
+Best first action: **turn right**  
+
+ACTION: turn right","a wall 3 steps forward
+a wall 3 steps left
+a green key 1 step left and 1 step forward",0,False
+8,turn left,"Observation:  
+- A wall 3 steps forward → can move forward up to 3 steps  
+- A wall 3 steps left → can move left up to 3 steps  
+- A green key at 1 step left and 1 step forward  
+
+Goal: Reach and pick up the green key  
+
+Step-by-step reasoning:  
+The green key is 1 step left and 1 step forward from current position.  
+We must move 1 step left, then 1 step forward.  
+
+Current facing direction: forward (assumed)  
+
+To move left:  
+- Turn left → now facing left  
+- Go forward 1 step → now at 1 step left  
+- Now the green key is 1 step forward in front of us → so we need to face forward  
+
+After moving left, we are now at the left side. To go forward, we must face forward.  
+To face forward from facing left, we turn right.  
+
+So full path:  
+1. Turn left → face left  
+2. Go forward 1 step → now at 1 step left  
+3. Turn right → face forward  
+4. Go forward 1 step → reach green key  
+5. Pick up the green key  
+
+But we can simplify: after turning left and going 1 step left, we are at the correct x-position. The green key is directly in front (1 step forward). So we just need to turn to face forward and go forward.  
+
+So:  
+- Turn left  
+- Go forward 1 step  
+- Turn right  
+- Go forward 1 step  
+- Pick up  
+
+But we only need to output the first action.  
+
+Best first action to begin moving toward the green key: **turn left**  
+
+ACTION: turn left","a wall 3 steps forward
+a wall 3 steps right
+a green key 1 step right and 1 step forward",0,False
+9,turn right,"The green key is located 1 step right and 1 step forward from the current position.  
+
+To reach it:  
+- We need to move right first (1 step), then forward (1 step).  
+- There is a wall 3 steps right → so moving 1 step right is safe.  
+- There is a wall 3 steps forward → moving 1 step forward is safe.  
+
+Currently facing forward.  
+To move right, we must first turn right.  
+
+After turning right, we face right and can go forward 1 step to reach the key's x-position. Then, we need to turn left (to face forward) and go forward 1 step to reach the key.  
+
+But the most efficient first action to begin moving toward the key is to turn right.  
+
+ACTION: turn right","a wall 3 steps forward
+a wall 3 steps left
+a green key 1 step left and 1 step forward",0,False
+10,"The green key is located  step left and  step forward from current position  
+
+Currently facing forward  
+To reach the key we must first move left  step then forward  step  
+
+ There is a wall  steps left  moving  step left is safe  
+ There is a wall  steps forward  moving  step forward is safe  
+
+To move left we need to turn left first  
+
+After turning left we face left and can go forward  step to reach the key  
+
+But after moving left we are now at the correct lateral position The key is  step forward in front of us since we are now facing left forward is toward the key  
+
+So:  
+ Turn left to face left  
+ Go forward  step to reach the green key  
+
+However after turning left and going forward  step we will be directly in front of the green key  
+
+But the key is at  step left and  step forward  meaning from original position its  step left and  step forward So after turning left and moving forward we will reach it  
+
+But note: when we turn left we are now facing left Moving forward in that direction will take us  step left Then we are at the correct xposition The green key is  step forward from that point  meaning in the original forward direction  
+
+Wait: confusion in coordinates  
+
+Clarify:  
+The green key is at  step left and  step forward  so from current position:  
+ Move  step left lateral  
+ Then  step forward in original forward direction  
+
+So we must:  
+ Turn left to face left  
+ Go forward  step now at  step left  
+ Turn right to face forward  
+ Go forward  step to reach green key  
+
+But thats inefficient  
+
+Alternative:  
+Can we go forward first No  green key is not directly in front  
+
+Best:  
+Turn left  now facing left  
+Go forward  step  now at  step left  
+Now the green key is  step forward from here in original forward direction  so we need to turn right to face forward and go forward  step  
+
+But after going  step left we are at a new position From","The green key is located 1 step left and 1 step forward from current position.  
+
+Currently facing forward.  
+To reach the key, we must first move left (1 step), then forward (1 step).  
+
+- There is a wall 3 steps left → moving 1 step left is safe.  
+- There is a wall 3 steps forward → moving 1 step forward is safe.  
+
+To move left, we need to turn left first.  
+
+After turning left, we face left and can go forward 1 step to reach the key.  
+
+But after moving left, we are now at the correct lateral position. The key is 1 step forward in front of us (since we are now facing left, forward is toward the key).  
+
+So:  
+- Turn left to face left  
+- Go forward 1 step to reach the green key  
+
+However, after turning left and going forward 1 step, we will be directly in front of the green key.  
+
+But the key is at ""1 step left and 1 step forward"" — meaning from original position, it's 1 step left and 1 step forward. So after turning left and moving forward, we will reach it.  
+
+But note: when we turn left, we are now facing left. Moving forward (in that direction) will take us 1 step left. Then we are at the correct x-position. The green key is 1 step forward from that point — meaning in the original forward direction.  
+
+Wait: confusion in coordinates.  
+
+Clarify:  
+The green key is at ""1 step left and 1 step forward"" → so from current position:  
+- Move 1 step left (lateral)  
+- Then 1 step forward (in original forward direction)  
+
+So we must:  
+1. Turn left to face left  
+2. Go forward 1 step (now at 1 step left)  
+3. Turn right to face forward  
+4. Go forward 1 step to reach green key  
+
+But that’s inefficient.  
+
+Alternative:  
+Can we go forward first? No — green key is not directly in front.  
+
+Best:  
+Turn left → now facing left  
+Go forward 1 step → now at 1 step left  
+Now, the green key is 1 step forward from here (in original forward direction) → so we need to turn right to face forward and go forward 1 step  
+
+But after going 1 step left, we are at a new position. From","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 2 steps forward
+a green key 1 step left",0,False
+11,turn left,"Observation:  
+- A wall 2 steps forward → cannot move forward beyond 2 steps  
+- A green key 1 step left → directly 1 step to the left  
+
+The green key is 1 step left and directly in front of us in the left direction.  
+
+We are currently facing forward. To move left, we must first turn left to face left.  
+
+After turning left, we can go forward 1 step to reach the green key.  
+
+But note: ""1 step left"" means the key is directly to the left — so once we turn left, we can simply move forward (in our new facing direction) to reach it.  
+
+Therefore:  
+- Turn left → now facing left  
+- Go forward → moves 1 step to the green key  
+
+No need to turn back or go further.  
+
+ACTION: turn left","a wall 2 steps right
+a green key 1 step forward",0.83125,True

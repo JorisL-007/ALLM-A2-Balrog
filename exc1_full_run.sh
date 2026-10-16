@@ -19,10 +19,10 @@ STARTUP_TIMEOUT="${STARTUP_TIMEOUT:-1800}"
 VLLM_PID=""
 MODELS=(
     'qwen4-instruct|Qwen/Qwen3-4B-Instruct-2507-FP8|16384'
-    'qwen14-awq|Qwen/Qwen3-14B-AWQ|8192'
-    'phi4-instruct|microsoft/Phi-4-mini-instruct|8192'
+    # 'qwen14-awq|Qwen/Qwen3-14B-AWQ|8192'
+    # 'phi4-instruct|microsoft/Phi-4-mini-instruct|8192'
 )
-AGENTS=(naive cot)
+AGENTS=(cot)
 
 [[ -f "$BALROG_DIR/eval.py" ]] || { echo "Missing $BALROG_DIR/eval.py" >&2; exit 1; }
 for bin in conda curl setsid python3; do
@@ -226,7 +226,7 @@ with (root / 'performance_matrix.csv').open('w', newline='') as handle:
     writer = csv.writer(handle)
     writer.writerow(['model', 'agent', 'benchmark', 'runs', 'episodes_per_run', 'mean_progress_pct', 'sd_progress_pct'])
     for model in ('qwen4-instruct', 'qwen14-awq', 'phi4-instruct'):
-        for agent in ('naive', 'cot'):
+        for agent in ('cot'):
             summaries = [json.loads((root / model / agent / f'run_{r}' / 'summary.json').read_text()) for r in (1, 2, 3)]
             for env in ('babyai', 'crafter', 'babaisai', 'overall'):
                 scores = [s['average_progress'] if env == 'overall' else s['environments'][env]['progression_percentage'] for s in summaries]

@@ -1,0 +1,1009 @@
+Step,Action,Reasoning,Observation,Reward,Done
+0,"Lets analyze the observation step by step:
+
+Current Observation:
+ a wall  steps forward  This suggests that if you go  steps forward youll hit a wall So moving forward  steps is not safe
+ a wall  steps left  If you go  steps to the left youll hit a wall So moving left by  steps is not safe
+
+This implies that both forward and left directions are blocked by walls at specific distances Therefore we cannot go forward or left directly
+
+Since theres no visible object like the yellow key in the observation and no indication of a path or items to pick up or toggle the only logical conclusion is that the yellow key is not immediately visible or accessible
+
+But the goal is to reach the yellow key Since the walls block movement in specific directions we must avoid those directions
+
+The key insight: the walls are blocking paths So we need to find a path around them
+
+However the observation only gives directional wall information not a full map We must consider that the walls may be obstacles to movement and we should avoid going directly into them
+
+But since we cant go forward  steps or left  steps and no other directions are mentioned we must consider that the only safe direction is possibly right or back  which are not mentioned in the wall observations
+
+Therefore the absence of wall information in right or back directions suggests those might be open
+
+So the best next step is to go forward only if its safe  but the observation says a wall  steps forward which implies that going forward  steps leads to a wall That doesnt mean you cant go forward one step  just that after  steps you hit a wall So maybe you can go forward one step and explore
+
+But the observation says a wall  steps forward which is ambiguous It could mean that  steps forward is blocked or that the wall is located  steps ahead
+
+Similarly a wall  steps left suggests left  steps is blocked
+
+Therefore going forward  steps is unsafe But going forward  step might be safe  we just dont know
+
+However without knowing the current position or layout we cant assume anything
+
+But heres a better interpretation: the observation is describing the environment from the current position So:
+
+ If you go forward  steps","Let's analyze the observation step by step:
+
+Current Observation:
+- ""a wall 4 steps forward"" → This suggests that if you go 4 steps forward, you'll hit a wall. So moving forward 4 steps is not safe.
+- ""a wall 3 steps left"" → If you go 3 steps to the left, you'll hit a wall. So moving left by 3 steps is not safe.
+
+This implies that both forward and left directions are blocked by walls at specific distances. Therefore, we cannot go forward or left directly.
+
+Since there's no visible object (like the yellow key) in the observation, and no indication of a path or items to pick up or toggle, the only logical conclusion is that the yellow key is not immediately visible or accessible.
+
+But the goal is to reach the yellow key. Since the walls block movement in specific directions, we must avoid those directions.
+
+The key insight: the walls are blocking paths. So we need to find a path around them.
+
+However, the observation only gives directional wall information, not a full map. We must consider that the walls may be obstacles to movement, and we should avoid going directly into them.
+
+But since we can't go forward (4 steps) or left (3 steps), and no other directions are mentioned, we must consider that the only safe direction is possibly **right** or **back** — which are not mentioned in the wall observations.
+
+Therefore, the absence of wall information in right or back directions suggests those might be open.
+
+So, the best next step is to **go forward** only if it's safe — but the observation says ""a wall 4 steps forward"", which implies that going forward 4 steps leads to a wall. That doesn't mean you can't go forward one step — just that after 4 steps, you hit a wall. So maybe you can go forward one step and explore.
+
+But the observation says ""a wall 4 steps forward"", which is ambiguous. It could mean that 4 steps forward is blocked, or that the wall is located 4 steps ahead.
+
+Similarly, ""a wall 3 steps left"" suggests left 3 steps is blocked.
+
+Therefore, going forward 4 steps is unsafe. But going forward 1 step might be safe — we just don't know.
+
+However, without knowing the current position or layout, we can't assume anything.
+
+But here's a better interpretation: the observation is describing the environment from the current position. So:
+
+- If you go forward 4 steps","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps forward
+a wall 3 steps left",0,False
+1,turn right,"Observation:  
+- ""a wall 3 steps forward"" → Going forward 3 steps leads to a wall.  
+- ""a wall 3 steps left"" → Going left 3 steps leads to a wall.  
+
+This means:  
+- Forward is blocked after 3 steps → we cannot go forward 3 steps.  
+- Left is blocked after 3 steps → we cannot go left 3 steps.  
+
+But we don’t know about right or back. These are not mentioned, so they may be safe.  
+
+Since the goal is to reach the yellow key, and no object is visible, we must find a path to it. The walls suggest that forward and left are restricted.  
+
+Therefore, the only safe directions to explore are:  
+- Right  
+- Back  
+
+But we don’t have any information about right or back. So we should test a safe direction.  
+
+Since going forward or left is blocked at 3 steps, we can try going **back** or **right** to see if we can find a path or the yellow key.  
+
+However, without any indication of the yellow key in the observation, and since the walls are only mentioned in forward and left, the most logical next step is to **turn right** to explore a potentially open path.  
+
+This avoids the blocked directions and explores an untested area.  
+
+ACTION: turn right","a wall 4 steps forward
+a wall 3 steps left",0,False
+2,turn right,"Observation:  
+- ""a wall 4 steps forward"" → Moving forward 4 steps leads to a wall.  
+- ""a wall 3 steps left"" → Moving left 3 steps leads to a wall.  
+
+Analysis:  
+- Forward is blocked after 4 steps → cannot go forward 4 steps.  
+- Left is blocked after 3 steps → cannot go left 3 steps.  
+- Right and back are not mentioned in the wall description → they may be open or safe.  
+- The yellow key is the goal, but it is not visible in the current observation.  
+- We must avoid paths that lead to walls.  
+- Since forward and left are blocked at specific distances, we cannot go in those directions without risk.  
+- Turning left or forward would lead to a wall in a few steps, so those are unsafe.  
+- Turning right or back is not mentioned in the wall info → no immediate obstruction.  
+
+Best next step:  
+Explore a direction that is not blocked. Since right and back are untested, and back might lead to a different area or path, turning right is a safe first move to investigate.  
+
+This avoids immediate danger and expands exploration.  
+
+ACTION: turn right","a wall 4 steps forward
+a wall 3 steps right
+a yellow key 2 steps right and 3 steps forward",0,False
+3,"Observation:  
+ A wall  steps forward  cannot go forward  steps  
+ A wall  steps right  cannot go right  steps  
+ A yellow key  steps right and  steps forward  the yellow key is located at coordinates  right  forward from current position  
+
+Analysis:  
+ The yellow key is not directly in front left or behind  it is at  right  forward  
+ We cannot go forward  steps but going forward  steps might be safe since wall is at  steps so forward  steps is possible  
+ We cannot go right  steps wall at  steps right but going right  steps is safe since wall is at  steps  
+ To reach the yellow key we need to go:  
+    steps right  
+    steps forward  
+ So we can go right  steps safe since wall is at  steps  then go forward  steps safe since wall is at  steps forward  
+
+Therefore the path is:  
+ Turn right to face right  
+ Go forward  steps to reach  steps forward  
+ Then go right  steps to reach  steps right  but wait: the key is at  steps right and  steps forward so we must reach  forward  right  
+
+But we can only go forward  steps from current position  which is safe wall at  steps forward  
+Then from there go right  steps  which is safe wall at  steps right  
+
+So the correct sequence:  
+ Go forward  steps  reach  steps forward  
+ Then go right  steps  reach  steps right  yellow key  
+
+But we need to reach the key at  right  forward So we must first go forward  steps then right  steps  
+
+But we are currently facing a direction  we need to adjust orientation  
+
+Current orientation: we turned right earlier from initial turn right So now we are facing right  
+
+To go forward  steps we need to be facing forward  
+
+So we must:  
+ Turn back to face forward turn left  
+ Then go forward  steps  
+ Then turn","Observation:  
+- A wall 4 steps forward → cannot go forward 4 steps.  
+- A wall 3 steps right → cannot go right 3 steps.  
+- A yellow key 2 steps right and 3 steps forward → the yellow key is located at coordinates (2 right, 3 forward) from current position.  
+
+Analysis:  
+- The yellow key is not directly in front, left, or behind — it is at (2 right, 3 forward).  
+- We cannot go forward 4 steps, but going forward 3 steps might be safe (since wall is at 4 steps), so forward 3 steps is possible.  
+- We cannot go right 3 steps (wall at 3 steps right), but going right 2 steps is safe (since wall is at 3 steps).  
+- To reach the yellow key, we need to go:  
+  - 2 steps right  
+  - 3 steps forward  
+- So we can go right 2 steps (safe, since wall is at 3 steps) → then go forward 3 steps (safe, since wall is at 4 steps forward).  
+
+Therefore, the path is:  
+1. Turn right (to face right)  
+2. Go forward 3 steps (to reach 3 steps forward)  
+3. Then go right 2 steps (to reach 2 steps right) — but wait: the key is at 2 steps right and 3 steps forward, so we must reach (3 forward, 2 right).  
+
+But we can only go forward 3 steps from current position — which is safe (wall at 4 steps forward).  
+Then, from there, go right 2 steps — which is safe (wall at 3 steps right).  
+
+So the correct sequence:  
+- Go forward 3 steps → reach 3 steps forward  
+- Then go right 2 steps → reach 2 steps right → yellow key  
+
+But we need to reach the key at (2 right, 3 forward). So we must first go forward 3 steps, then right 2 steps.  
+
+But we are currently facing a direction — we need to adjust orientation.  
+
+Current orientation: we turned right earlier (from initial turn right). So now we are facing right.  
+
+To go forward 3 steps, we need to be facing forward.  
+
+So we must:  
+- Turn back to face forward (turn left)  
+- Then go forward 3 steps  
+- Then turn","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps forward
+a wall 3 steps right
+a yellow key 2 steps right and 2 steps forward",0,False
+4,turn left,"Let's analyze the current observation carefully:
+
+Observation:
+- A wall 3 steps forward → cannot move forward 3 steps (so going forward 3 is blocked)
+- A wall 3 steps right → cannot move right 3 steps
+- A yellow key 2 steps right and 2 steps forward → the key is located 2 steps forward and 2 steps right from current position
+
+This means:
+- We cannot go forward 3 steps, so we can go forward 1 or 2 steps (safe)
+- We cannot go right 3 steps, so we can go right 1 or 2 steps (safe)
+- The yellow key is at (2 forward, 2 right) — so we need to reach that point
+
+We must reach (2 forward, 2 right). Since we can only go forward up to 2 steps (because wall at 3 steps forward), and right up to 2 steps (wall at 3 steps right), we can safely go:
+
+1. Go forward 2 steps → now at (2 forward)
+2. Then go right 2 steps → now at (2 forward, 2 right) → yellow key
+
+But we need to be facing the correct direction.  
+Currently, we are not told our orientation — but from the previous interaction, we turned right twice, and the observation changed.  
+However, since we are now seeing the key at 2 steps right and 2 steps forward, we can assume we are in a position where we can move in those directions.
+
+So, to reach the key:
+- We must go forward 2 steps (safe, since wall is at 3 steps forward)
+- Then go right 2 steps (safe, since wall is at 3 steps right)
+
+But we must be facing forward to go forward.  
+If we are currently facing right (from previous turn), then going forward would not be possible — we need to turn to face forward.
+
+So the correct sequence:
+1. Turn left → face forward  
+2. Go forward 2 steps  
+3. Turn right → face right  
+4. Go right 2 steps → reach yellow key
+
+But the question asks for only **one action** at the end.
+
+We must pick the **first valid action** that moves us toward the yellow key.
+
+Best first move: turn to face forward, so we can go forward 2 steps.
+
+Therefore, the best initial action is:
+
+ACTION: turn left","a wall 4 steps forward
+a wall 3 steps right",0,False
+5,turn left,"Observation:  
+- A wall 4 steps forward → cannot move forward 4 steps (so safe to go forward 1, 2, or 3 steps)  
+- A wall 3 steps right → cannot move right 3 steps (so safe to go right 1 or 2 steps)  
+- No mention of yellow key in current observation → key is not visible  
+
+But earlier observations indicated the yellow key was at 2 steps right and 2 steps forward — that must be the target.  
+
+We must reach the yellow key at (2 forward, 2 right).  
+
+To do that:  
+- We need to go forward 2 steps (safe, since wall is at 4 steps forward — so 2 is fine)  
+- Then go right 2 steps (safe, since wall is at 3 steps right — so 2 is fine)  
+
+But we must be facing forward to go forward.  
+
+If we are currently facing a direction that is not forward (e.g., right or left), we must turn to face forward first.  
+
+Since the previous actions were turning right, we likely are now facing right.  
+
+Therefore, to go forward, we must first turn to face forward.  
+
+Best first action: turn left to face forward  
+
+Then go forward 2 steps  
+Then turn right to face right  
+Then go right 2 steps  
+
+But we only need to output one action.  
+
+The most logical and necessary first step is to **turn left** to face forward, so we can proceed toward the key.  
+
+ACTION: turn left","a wall 4 steps forward
+a wall 3 steps left",0,False
+6,turn left,"Observation:  
+- A wall 4 steps forward → cannot move forward 4 steps, but can move 1, 2, or 3 steps forward  
+- A wall 3 steps left → cannot move left 3 steps, but can move 1 or 2 steps left  
+- No visible yellow key in current view  
+
+Goal: Reach the yellow key.  
+
+We have no direct information about the yellow key's location in this observation. However, previous observations indicated it was at 2 steps right and 2 steps forward. That likely remains valid.  
+
+Current position: unknown orientation.  
+
+We need to reach a point that is 2 steps forward and 2 steps right.  
+
+To do that:  
+- We must first face forward to go forward.  
+- If we are not currently facing forward, we must turn.  
+
+The only safe directions to move are:  
+- Forward (up to 3 steps)  
+- Right (up to 2 steps)  
+- Left (up to 2 steps)  
+- Back (not mentioned — no wall info, so possibly open)  
+
+But without knowing current facing direction, we assume we are not aligned with forward.  
+
+Best first step: turn left to face forward, so we can move toward the key.  
+
+This allows us to go forward 2 steps safely (wall at 4 steps forward).  
+
+ACTION: turn left","a wall 3 steps forward
+a wall 3 steps left
+a yellow key 2 steps left and 2 steps forward",0,False
+7,turn left,"Observation:  
+- A wall 3 steps forward → cannot go forward 3 steps, so safe to go 1 or 2 steps forward  
+- A wall 3 steps left → cannot go left 3 steps, so safe to go 1 or 2 steps left  
+- Yellow key is located 2 steps left and 2 steps forward  
+
+Current goal: reach the yellow key at (2 left, 2 forward) from current position.  
+
+To reach that point:  
+- Must go 2 steps forward  
+- Must go 2 steps left  
+
+But we need to face the correct direction to move.  
+
+We are currently facing some direction — not specified.  
+
+To move forward, we must be facing forward.  
+
+So first, we should turn to face forward.  
+
+Then go 2 steps forward.  
+
+After that, we can turn left (or face left) and go 2 steps left to reach the yellow key.  
+
+But we must act step by step.  
+
+Best first action: turn left to face forward.  
+
+This allows us to move forward safely (wall at 3 steps forward → 2 steps is safe).  
+
+ACTION: turn left","a wall 3 steps forward
+a wall 3 steps right
+a yellow key 2 steps right and 2 steps forward",0,False
+8,turn left,"We are currently facing an unknown direction. The yellow key is located 2 steps right and 2 steps forward.  
+
+Key constraints:  
+- Wall 3 steps forward → we can go 1 or 2 steps forward (safe)  
+- Wall 3 steps right → we can go 1 or 2 steps right (safe)  
+- Therefore, moving 2 steps forward and 2 steps right is safe.  
+
+To reach the key:  
+1. We must face forward to go forward.  
+2. Then go 2 steps forward.  
+3. Then turn right (or face right) and go 2 steps right.  
+
+But we don’t know current facing.  
+
+Best first step: turn to face forward so we can move forward safely.  
+
+ACTION: turn left","a wall 4 steps forward
+a wall 3 steps right",0,False
+9,turn left,"We are currently in a position where:
+- There is a wall 4 steps forward → we can go up to 3 steps forward safely.
+- There is a wall 3 steps right → we can go up to 2 steps right safely.
+- The yellow key is located 2 steps right and 2 steps forward.
+
+To reach the yellow key:
+- We need to go 2 steps forward and 2 steps right.
+- We must first face forward to move in that direction.
+
+Current facing is unknown. To proceed, we must align ourselves to face forward.
+
+Therefore, the best first action is to turn left (to face forward), assuming that left is the direction toward forward.
+
+ACTION: turn left","a wall 4 steps forward
+a wall 3 steps left",0,False
+10,turn left,"We are currently observing:
+- A wall 4 steps forward → safe to move up to 3 steps forward
+- A wall 3 steps left → cannot go left beyond 2 steps
+- The yellow key is located at 2 steps right and 2 steps forward (from current position)
+
+We need to reach the yellow key at (2 right, 2 forward).
+
+Current facing is not specified, but based on prior turns, we are likely not facing forward.
+
+To move toward the yellow key, we need to face forward so we can go 2 steps forward, then turn right and go 2 steps right.
+
+But we must first face forward.
+
+Looking at walls:
+- Wall 4 steps forward → so we can go up to 3 steps forward → 2 steps forward is safe
+- Wall 3 steps left → we can go up to 2 steps left → but we don’t need to go left
+- Wall 3 steps right → not in current observation, but now we see it in a later update — currently, we only have wall 3 steps left and wall 4 steps forward
+
+Wait — current observation says:
+- Wall 4 steps forward
+- Wall 3 steps left
+
+No wall mentioned on right.
+
+So right is open.
+
+Therefore, we can:
+- Turn to face forward
+- Go 2 steps forward
+- Then turn right
+- Go 2 steps right to reach yellow key
+
+But we must first face forward.
+
+Thus, the best first action is to turn left to face forward.
+
+ACTION: turn left","a wall 3 steps forward
+a wall 3 steps left
+a yellow key 2 steps left and 2 steps forward",0,False
+11,turn left,"We are currently observing:
+- A wall 3 steps forward → so we can go up to 2 steps forward (safe)
+- A wall 3 steps left → we can go up to 2 steps left (safe)
+- The yellow key is located at 2 steps left and 2 steps forward from current position
+
+Our goal is to reach the yellow key.
+
+To reach it, we need to:
+1. Move 2 steps forward (safe, since wall is at 3 steps forward)
+2. Then move 2 steps left (safe, since wall is at 3 steps left)
+
+But we must be facing the correct direction to move forward and left.
+
+Currently, we are likely not facing forward or left. We need to face forward first to move in that direction.
+
+Therefore, the best first step is to turn left to face forward.
+
+After that, we can go forward 2 steps, then turn left again to face left, then go left 2 steps to reach the yellow key.
+
+But since we only need to output one action at a time, and the goal is to move toward the key efficiently:
+
+ACTION: turn left","a wall 3 steps forward
+a wall 3 steps right
+a yellow key 2 steps right and 2 steps forward",0,False
+12,turn left,"We are currently facing an unknown direction, but the observation shows:
+
+- A wall 3 steps forward → so we can go up to 2 steps forward safely
+- A wall 3 steps right → so we can go up to 2 steps right safely
+- A yellow key located at 2 steps right and 2 steps forward
+
+This means the yellow key is in a direction that requires moving both forward and right — but we must first align ourselves properly.
+
+Since we cannot go beyond 2 steps in either direction, and the key is at (2 right, 2 forward), we need to:
+1. Face forward to move toward the key in that direction
+2. Then go forward 2 steps
+3. Then turn right and go right 2 steps (or turn to face right and go)
+
+But we can only take one action at a time.
+
+The most efficient first step is to **turn left** to face forward, so we can then move forward safely toward the key.
+
+ACTION: turn left","a wall 4 steps forward
+a wall 3 steps right",0,False
+13,turn left,"Current Observation:  
+- A wall 4 steps forward → safe to go up to 3 steps forward  
+- A wall 3 steps right → safe to go up to 2 steps right  
+- Yellow key at 2 steps right and 2 steps forward  
+
+We need to reach the yellow key at (2 right, 2 forward).  
+
+Currently, we are facing a direction that is not clearly forward. To move toward the key, we must first face forward so we can go forward 2 steps, then turn right and go right 2 steps.  
+
+But we cannot go forward 4 steps — only up to 3 steps safely. So going forward 2 steps is safe.  
+
+The key is at 2 steps forward and 2 steps right — so we must reach that coordinate.  
+
+We need to face forward first.  
+
+Best first action: turn left to face forward.  
+
+ACTION: turn left","a wall 4 steps forward
+a wall 3 steps left",0,False
+14,turn left,"Current Observation:  
+- A wall 4 steps forward → safe to move up to 3 steps forward  
+- A wall 3 steps left → safe to move up to 2 steps left  
+- Yellow key is at 2 steps right and 2 steps forward (implied from earlier observations, though not directly stated now)  
+
+We need to reach the yellow key at 2 steps right and 2 steps forward.  
+
+Currently, we are facing some direction (from previous turns), but we need to face forward to move toward the key.  
+
+Since the key is 2 steps forward and 2 steps right, we must:  
+1. Face forward  
+2. Move forward 2 steps (safe, since wall is at 4 steps forward)  
+3. Then turn right and move right 2 steps (safe, since wall is at 3 steps right)  
+
+To do this, we must first turn to face forward.  
+
+The only safe and logical first action is to align ourselves with the forward direction.  
+
+ACTION: turn left","a wall 3 steps forward
+a wall 3 steps left
+a yellow key 2 steps left and 2 steps forward",0,False
+15,turn left,"We are currently facing a direction that is not clearly forward. The yellow key is located at:
+
+- 2 steps left and 2 steps forward
+
+This means:
+- We must move forward 2 steps (wall is at 3 steps forward → safe to go 2 steps)
+- Then move left 2 steps (wall is at 3 steps left → safe to go 2 steps)
+
+To reach the key, we must first face forward.
+
+Currently, based on the repeated turns, we are likely not facing forward. So we need to turn to face forward before moving.
+
+Best action: turn left to face forward
+
+ACTION: turn left","a wall 3 steps forward
+a wall 3 steps right
+a yellow key 2 steps right and 2 steps forward",0,False
+16,turn left,"The yellow key is located at 2 steps right and 2 steps forward.  
+
+Current observation shows:
+- A wall 3 steps forward → so we can move forward up to 2 steps safely
+- A wall 3 steps right → so we can move right up to 2 steps safely  
+- The key is at 2 steps right and 2 steps forward → we need to go forward 2 steps, then right 2 steps (or vice versa), depending on orientation.
+
+We must first face forward to move toward the key.  
+
+Since we are currently in a position where we are not facing forward (as seen from repeated turns), we need to align ourselves properly.
+
+Therefore, the best first action is to turn to face forward.
+
+ACTION: turn left","a wall 4 steps forward
+a wall 3 steps right",0,False
+17,turn left,"The yellow key is located 2 steps right and 2 steps forward.  
+
+Current observation:
+- A wall 4 steps forward → so we can go forward up to 3 steps (since 4 is blocked)
+- A wall 3 steps right → so we can go right up to 2 steps (since 3 is blocked)
+
+Therefore, we can safely move:
+- Forward 2 steps (to reach 2 steps forward)
+- Then right 2 steps (to reach 2 steps right)
+
+But we must first face forward to move in that direction.
+
+Currently, we are not facing forward — we have been turning repeatedly, likely due to misalignment.
+
+To reach the key, we must:
+1. Turn to face forward (so we can go forward safely)
+2. Move forward 2 steps
+3. Turn right (to face right)
+4. Move right 2 steps to reach the yellow key
+
+Since we are not currently facing forward, the first necessary action is to align our direction.
+
+ACTION: turn left","a wall 4 steps forward
+a wall 3 steps left",0,False
+18,"We are currently facing a direction that is not aligned with forward The yellow key is located  steps right and  steps forward
+
+Key constraints:
+ A wall  steps forward  cannot go forward beyond  steps
+ A wall  steps left  cannot go left beyond  steps
+ Therefore we can go forward up to  steps and right up to  steps since wall at  steps right blocks that
+
+We need to reach the yellow key at  steps right and  steps forward
+
+To do this:
+ We must face forward to move forward safely
+ Move forward  steps safe since wall is at  steps forward
+ Then turn right to face right
+ Move right  steps safe since wall is at  steps right
+
+Currently the observation shows:
+ Wall  steps forward
+ Wall  steps left
+
+This implies we are not blocked on the right or left yet but we are blocked from going too far in those directions
+
+We need to face forward to proceed
+
+We have been turning left repeatedly  likely to try to align direction
+
+Lets determine current orientation:
+ The last observation had a wall  steps left  so left is not fully blocked
+ But we need to face forward
+
+To face forward we must turn from our current direction
+
+Since we are in a loop of turning left we can assume we are currently facing right or left
+
+Lets try to face forward by turning left if we are currently facing right or right if we are facing left
+
+But without knowing exact orientation we can use the fact that turning left repeatedly will cycle through directions
+
+To reach the key at  steps right and  steps forward we must face forward first
+
+So the best first action is to turn left to face forward if we are currently facing right or turn right if we are facing left But since we dont know we must deduce
+
+Wait  the observation shows a wall  steps left  so we can go left up to  steps That means we are not blocked from going left
+
+But we need to go forward
+
+So we must face forward
+
+If we are currently facing say left then turning right would face us forward
+
+If we are facing right turning left would face us forward
+
+We dont know current orientation
+
+But we can assume that after several turns we are likely not","We are currently facing a direction that is not aligned with forward. The yellow key is located 2 steps right and 2 steps forward.
+
+Key constraints:
+- A wall 4 steps forward → cannot go forward beyond 3 steps
+- A wall 3 steps left → cannot go left beyond 2 steps
+- Therefore, we can go forward up to 3 steps and right up to 2 steps (since wall at 3 steps right blocks that)
+
+We need to reach the yellow key at 2 steps right and 2 steps forward.
+
+To do this:
+1. We must face forward to move forward safely.
+2. Move forward 2 steps (safe, since wall is at 4 steps forward).
+3. Then turn right to face right.
+4. Move right 2 steps (safe, since wall is at 3 steps right).
+
+Currently, the observation shows:
+- Wall 4 steps forward
+- Wall 3 steps left
+
+This implies we are not blocked on the right or left yet, but we are blocked from going too far in those directions.
+
+We need to face forward to proceed.
+
+We have been turning left repeatedly — likely to try to align direction.
+
+Let’s determine current orientation:
+- The last observation had a wall 3 steps left — so left is not fully blocked.
+- But we need to face forward.
+
+To face forward, we must turn from our current direction.
+
+Since we are in a loop of turning left, we can assume we are currently facing right or left.
+
+Let’s try to face forward by turning left (if we are currently facing right), or right (if we are facing left).
+
+But without knowing exact orientation, we can use the fact that turning left repeatedly will cycle through directions.
+
+To reach the key at 2 steps right and 2 steps forward, we must face forward first.
+
+So the best first action is to turn left to face forward (if we are currently facing right), or turn right (if we are facing left). But since we don't know, we must deduce.
+
+Wait — the observation shows a wall 3 steps left — so we can go left up to 2 steps. That means we are not blocked from going left.
+
+But we need to go forward.
+
+So we must face forward.
+
+If we are currently facing, say, left, then turning right would face us forward.
+
+If we are facing right, turning left would face us forward.
+
+We don't know current orientation.
+
+But we can assume that after several turns, we are likely not","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps forward
+a wall 3 steps left",0,False
+19,turn left,"We are currently blocked by a wall 3 steps forward — so we cannot go forward beyond 2 steps.  
+We are also blocked by a wall 3 steps left — so we cannot go left beyond 2 steps.  
+
+The yellow key is located at 2 steps right and 2 steps forward.  
+
+To reach it:
+- We must first face forward to move toward it.
+- We cannot go forward beyond 3 steps, so going forward 2 steps is safe.
+- After that, we need to turn right and go 2 steps to the right (since wall is at 3 steps right — so 2 steps is safe).
+
+But we are not currently facing forward. We need to align our direction.
+
+We have been turning left repeatedly, which cycles through directions. To face forward, we need to turn appropriately.
+
+Let’s determine current orientation:
+- The observation shows walls at 3 steps forward, 3 steps left — so we are not blocked from going forward or left.
+- We need to go forward 2 steps, then right 2 steps.
+
+So we must face forward first.
+
+If we are currently facing, say, right, then turning left would face us forward.
+
+If we are facing left, turning right would face us forward.
+
+But we don’t know current direction. However, the pattern of turning left repeatedly suggests we are cycling through directions.
+
+Let’s assume we are currently facing right (since we turned left multiple times to try to face forward).
+
+Then turning left would face us forward.
+
+Therefore, the best first action is to turn left to face forward.
+
+ACTION: turn left","a wall 3 steps forward
+a wall 3 steps right
+a yellow key 3 steps left and 2 steps forward",0,False
+20,"We are currently facing a direction that is not forward The yellow key is located at:
+
+  steps left and  steps forward
+
+But the observation now says:
+ A wall  steps forward  cannot go forward beyond  steps
+ A wall  steps right  cannot go right beyond  steps
+ A wall  steps left  cannot go left beyond  steps
+
+So we are blocked from going forward left or right beyond  steps
+
+The key is at  steps left and  steps forward  but we cannot go  steps left blocked by wall at  steps left and we cannot go forward beyond  steps
+
+So we cannot reach the key as described  unless the coordinates are relative to current position and orientation
+
+Wait  the observation says: a yellow key  steps left and  steps forward
+
+But if we are blocked by a wall at  steps left then going  steps left is impossible
+
+Therefore this must be an error in interpretation or a misalignment of coordinates
+
+Possibility: The key is not at  steps left and  steps forward  perhaps its in a different orientation
+
+But earlier observations showed:
+ a yellow key  steps left and  steps forward
+ Then  steps right and  steps forward
+
+So the key is consistently at a position that is  steps in one direction and  steps forward
+
+Now current observation says: a yellow key  steps left and  steps forward
+
+This contradicts the earlier pattern and the wall at  steps left
+
+Therefore its likely a misstatement or misalignment due to orientation
+
+We must conclude that the key is at a position reachable only if we face the correct direction
+
+We must first face forward to move safely
+
+We are currently in a loop of turning left which may have caused us to face a direction where the key is visible in a different coordinate system
+
+But the key is at a fixed position relative to the player
+
+So we need to find a path to reach it
+
+Lets reevaluate:
+
+Current observation:
+ Wall  steps forward  cannot go forward beyond  steps
+ Wall  steps right  cannot go right beyond  steps
+ Wall  steps left  cannot go left beyond  steps
+ Yellow key at  steps left and  steps forward
+
+But we cannot go  steps left  blocked by","We are currently facing a direction that is not forward. The yellow key is located at:
+
+- 3 steps left and 2 steps forward
+
+But the observation now says:
+- A wall 3 steps forward → cannot go forward beyond 2 steps
+- A wall 3 steps right → cannot go right beyond 2 steps
+- A wall 3 steps left → cannot go left beyond 2 steps
+
+So we are blocked from going forward, left, or right beyond 2 steps.
+
+The key is at 3 steps left and 2 steps forward — but we cannot go 3 steps left (blocked by wall at 3 steps left), and we cannot go forward beyond 2 steps.
+
+So we cannot reach the key as described — unless the coordinates are relative to current position and orientation.
+
+Wait — the observation says: ""a yellow key 3 steps left and 2 steps forward""
+
+But if we are blocked by a wall at 3 steps left, then going 3 steps left is impossible.
+
+Therefore, this must be an error in interpretation or a misalignment of coordinates.
+
+Possibility: The key is not at 3 steps left and 2 steps forward — perhaps it's in a different orientation.
+
+But earlier observations showed:
+- ""a yellow key 2 steps left and 2 steps forward""
+- Then ""2 steps right and 2 steps forward""
+
+So the key is consistently at a position that is 2 steps in one direction and 2 steps forward.
+
+Now, current observation says: ""a yellow key 3 steps left and 2 steps forward""
+
+This contradicts the earlier pattern and the wall at 3 steps left.
+
+Therefore, it's likely a misstatement or misalignment due to orientation.
+
+We must conclude that the key is at a position reachable only if we face the correct direction.
+
+We must first face forward to move safely.
+
+We are currently in a loop of turning left, which may have caused us to face a direction where the key is visible in a different coordinate system.
+
+But the key is at a fixed position relative to the player.
+
+So we need to find a path to reach it.
+
+Let’s re-evaluate:
+
+Current observation:
+- Wall 3 steps forward → cannot go forward beyond 2 steps
+- Wall 3 steps right → cannot go right beyond 2 steps
+- Wall 3 steps left → cannot go left beyond 2 steps
+- Yellow key at 3 steps left and 2 steps forward
+
+But we cannot go 3 steps left — blocked by","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 2 steps forward
+a wall 3 steps right
+a yellow key 3 steps left and 1 step forward",0,False
+21,"We are now given a new observation:
+
+ A wall  steps forward  cannot go forward beyond  steps  
+ A wall  steps right  cannot go right beyond  steps  
+ A yellow key at  steps left and  step forward  
+
+But we cannot go  steps left blocked by wall at  steps left and we cannot go forward beyond  steps  
+The key is at  steps left and  step forward  which would require going  steps left and  step forward  
+However going  steps left is blocked by a wall at  steps left  
+
+This suggests that either:
+ The coordinate description is relative to current orientation and we are not aligned with the key
+ There is a misalignment in the coordinate system due to our current facing direction
+
+But note: the key is visible in the observation  so it must be in front of us or in a direction we can reach
+
+Since we are in a navigation game the steps leftrightforward are relative to our current facing direction
+
+Therefore if the key is at  steps left and  step forward that means:
+ From our current position if we face a certain direction the key is  units to the left and  unit forward in that coordinate system
+
+But we are blocked from going  steps left  so we cannot reach it by moving left
+
+Thus the only way to reach the key is to turn to face a direction where the key is directly in front or reachable
+
+But the key is described as being at  steps left and  step forward  meaning it is not directly in front
+
+We must first determine our current orientation
+
+We have been turning left repeatedly in previous steps which suggests we are cycling through directions
+
+Lets analyze possible orientations:
+
+ If we are currently facing forward then  steps left and  step forward would mean the key is at a diagonal position  we could go forward  step then turn left and go  steps  but we are blocked from going  steps left
+
+ If we are facing right then  steps left and  step forward means:
+    steps left   steps in the opposite direction of right  so  steps left from current position   steps toward left
+    step forward   step toward right since we are","We are now given a new observation:
+
+- A wall 2 steps forward → cannot go forward beyond 2 steps  
+- A wall 3 steps right → cannot go right beyond 2 steps  
+- A yellow key at 3 steps left and 1 step forward  
+
+But we cannot go 3 steps left (blocked by wall at 3 steps left), and we cannot go forward beyond 2 steps.  
+The key is at ""3 steps left and 1 step forward"" — which would require going 3 steps left and 1 step forward.  
+However, going 3 steps left is blocked by a wall at 3 steps left.  
+
+This suggests that either:
+1. The coordinate description is relative to current orientation, and we are not aligned with the key.
+2. There is a misalignment in the coordinate system due to our current facing direction.
+
+But note: the key is visible in the observation — so it must be in front of us or in a direction we can reach.
+
+Since we are in a navigation game, the ""steps left/right/forward"" are relative to our current facing direction.
+
+Therefore, if the key is at ""3 steps left and 1 step forward"", that means:
+- From our current position, if we face a certain direction, the key is 3 units to the left and 1 unit forward in that coordinate system.
+
+But we are blocked from going 3 steps left — so we cannot reach it by moving left.
+
+Thus, the only way to reach the key is to **turn to face a direction where the key is directly in front or reachable**.
+
+But the key is described as being at 3 steps left and 1 step forward — meaning it is not directly in front.
+
+We must first determine our current orientation.
+
+We have been turning left repeatedly in previous steps, which suggests we are cycling through directions.
+
+Let’s analyze possible orientations:
+
+- If we are currently facing **forward**, then ""3 steps left and 1 step forward"" would mean the key is at a diagonal position — we could go forward 1 step, then turn left and go 3 steps — but we are blocked from going 3 steps left.
+
+- If we are facing **right**, then ""3 steps left and 1 step forward"" means:
+  - 3 steps left = 3 steps in the opposite direction of right → so 3 steps left from current position = 3 steps toward left
+  - 1 step forward = 1 step toward right (since we are","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a wall 3 steps right
+a yellow key 3 steps left",0,False
+22,"We are now given a new observation:
+
+ A wall  step forward  cannot move forward beyond  step  
+ A wall  steps right  cannot move right beyond  steps  
+ A yellow key at  steps left  
+
+This means the yellow key is located  steps to the left of our current position
+
+We are blocked from moving forward by  step and from moving right beyond  steps
+
+But we are not blocked from moving left  only from going forward or right beyond certain limits
+
+The key is at  steps left  so if we can turn to face left we can go left  steps to reach it
+
+However the key is described as  steps left  this implies it is in the left direction relative to our current facing direction
+
+So if we are currently facing forward then  steps left means the key is  steps to the left of us  which is a diagonal or side position
+
+But if we turn to face left then  steps left would mean directly in front of us
+
+Therefore the best action is to turn left so that the key is now directly in front of us in the left direction and then we can go forward to reach it
+
+But wait  is there a wall blocking left movement
+
+The observation says: no wall at left  only wall at  step forward and  steps right
+
+So there is no wall blocking left movement
+
+Therefore we can safely turn left to face the key and then go forward to reach it
+
+Action: turn left","We are now given a new observation:
+
+- A wall 1 step forward → cannot move forward beyond 1 step  
+- A wall 3 steps right → cannot move right beyond 3 steps  
+- A yellow key at 3 steps left  
+
+This means the yellow key is located 3 steps to the left of our current position.
+
+We are blocked from moving forward by 1 step, and from moving right beyond 3 steps.
+
+But we are **not blocked from moving left** — only from going forward or right beyond certain limits.
+
+The key is at 3 steps left — so if we can turn to face left, we can go left 3 steps to reach it.
+
+However, the key is described as ""3 steps left"" — this implies it is in the left direction relative to our current facing direction.
+
+So if we are currently facing forward, then ""3 steps left"" means the key is 3 steps to the left of us — which is a diagonal or side position.
+
+But if we turn to face left, then ""3 steps left"" would mean directly in front of us.
+
+Therefore, the best action is to **turn left** so that the key is now directly in front of us (in the left direction), and then we can go forward to reach it.
+
+But wait — is there a wall blocking left movement?
+
+The observation says: no wall at left — only wall at 1 step forward and 3 steps right.
+
+So there is **no wall blocking left movement**.
+
+Therefore, we can safely turn left to face the key, and then go forward to reach it.
+
+**Action: turn left**","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a wall 3 steps right
+a yellow key 3 steps left",0,False
+23,turn left,"We are currently observing:
+
+- A wall 1 step forward → cannot move forward beyond 1 step  
+- A wall 3 steps right → cannot move right beyond 3 steps  
+- A yellow key at 3 steps left  
+
+The key is 3 steps to the left of our current position. Since there is no wall blocking left movement, we can move left to reach it — but only if we are facing the correct direction.
+
+The description ""3 steps left"" implies the key is in the left direction relative to our current orientation. Therefore, to reach it directly, we must turn so that left becomes forward.
+
+Thus, we should **turn left** to face the key (now directly in front of us), and then go forward to pick it up.
+
+We are not blocked from turning left — no wall mentioned in that direction.
+
+Therefore, the best first action is to align our direction toward the key.
+
+ACTION: turn left","a wall 1 step right
+a yellow key 3 steps forward",0,False
+24,go forward,"Current Observation:
+- A wall 1 step right → cannot move right beyond 1 step  
+- A yellow key at 3 steps forward  
+
+This means the yellow key is 3 steps in the forward direction from our current position.
+
+We are not blocked from moving forward (no wall mentioned in forward direction — only a wall 1 step right), so we can move forward safely.
+
+We do not need to turn — the key is directly in front of us in the forward direction.
+
+We can simply go forward to reach it.
+
+ACTION: go forward","a wall 1 step right
+a yellow key 2 steps forward",0,False
+25,go forward,"Current Observation:  
+- A wall 1 step right → cannot move right beyond 1 step  
+- Yellow key at 2 steps forward  
+
+The yellow key is 2 steps forward from our current position.  
+There is no wall blocking forward movement (only a wall 1 step right, which is irrelevant to forward direction).  
+
+Therefore, we can safely move forward to reach the yellow key.  
+
+ACTION: go forward","a wall 1 step right
+a yellow key 1 step forward",0.6343749999999999,True
