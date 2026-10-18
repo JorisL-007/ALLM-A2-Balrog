@@ -1,5 +1,7 @@
 # BALROG reasoning agent investigation
 
+The completed follow-up harness study is documented in [research/FOLLOWUP_README.md](research/FOLLOWUP_README.md), with results in [research/followup_report.md](research/followup_report.md). Raw calls are sampled in [pilot](research/followup_raw_llm_samples.jsonl) and [held-out](research/followup_heldout_raw_samples.jsonl) files, and the full calls remain beside each episode trajectory.
+
 Exercises 2 and 3 of `docs/Ass2Reasoning.pdf` are implemented in [`BALROG/balrog/agents/custom.py`](BALROG/balrog/agents/custom.py). The same agent has two modes: `planning` uses compact persistent subgoals, observation-supported facts, and an expected next observation; `reflect` adds a bounded critique and plan revision when a specific observed loop is detected. The original supplied agent is saved in `experiments/checkpoints/custom_supplied.py`.
 
 The short conclusion is in [`REPORT.md`](REPORT.md), the adaptation record is in [`research_notes.md`](research_notes.md), a direct [trajectory index](research/trajectory_index.md) points to selected successes and failures, and the per-episode and aggregate data are in [`experiment_results/`](experiment_results/). Full custom-agent prompts and raw model responses are saved as `seed_*/llm_calls.jsonl` in each run folder. [`research/raw_llm_samples.jsonl`](research/raw_llm_samples.jsonl) is a small portable sample for manual inspection.
