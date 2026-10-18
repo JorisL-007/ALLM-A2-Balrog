@@ -10,6 +10,7 @@ for folder in ('exercises', 'analysis', 'integration', 'report'):
     common += [p for p in (ROOT / folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts]
 common += list((ROOT / 'research').glob('*.jsonl'))
 common += list((ROOT / 'research/refactor_verification').glob('*'))
+common += [p for p in (ROOT / 'research/cloud_model').rglob('*') if p.is_file()]
 common += list((ROOT / 'archive/refactor_20261018').glob('*'))
 for exercise in (1, 2, 3):
     evidence = list((ROOT / f'deliverables/Ass2-{exercise}/evidence').rglob('*'))

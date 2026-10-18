@@ -6,7 +6,7 @@ Read the study in order:
 
 | Stage | Question | Guide and reproduction commands |
 |---|---|---|
-| Exercise 1 — baselines | How do three local models behave with supplied agents? | [Baseline study](exercises/exercise1_baselines/README.md) |
+| Exercise 1 — baselines | How do local and cloud models behave with supplied agents? | [Baseline study](exercises/exercise1_baselines/README.md) |
 | Exercise 2 — planning | Do compact plans, observed facts, and better action instructions help? | [Planning study](exercises/exercise2_planning/README.md) |
 | Exercise 3 — reflection | Can an explicit critique change an ineffective action? | [Reflection study](exercises/exercise3_reflection/README.md) |
 
@@ -19,9 +19,30 @@ Each guide follows **observed problem → hypothesis → change → experiment �
 - Correcting the pickup guide did **not** improve the prespecified pickup comparison: **29/60 versus 34/60**, paired difference −8.3 percentage points, 95% interval [−25.0, +8.3], exact McNemar p=0.424.
 - The narrow pickup rule corrected 15 immediate proposals, all followed by successful pickup, but its overall pickup success rate equaled guide-only. Navigation failures remained.
 - The one-call goal-state prompt increased inference cost without a reliable gain. History 4 reduced tokens and showed an exploratory door-task improvement; its prespecified comparison did not survive multiple-comparison adjustment.
-- Crafter transfer and limited other-model checks constrain generalization. CoT was a small development reference; a larger CoT sweep is incomplete. Few-shot and robust variants were not evaluated.
+- Crafter transfer and limited other-model checks constrain generalization. The matched local CoT comparison was a small development reference; a larger local CoT sweep has one complete repetition and an incomplete second. Few-shot and robust variants were not evaluated.
+- The separately imported **cloud-model contribution** verifies GPT-4.1 mini's 41.60% BabyAI score and the reported cloud Crafter scores; GPT's 27.50% BabaIsAI result is supported by summaries only. CoT improved GPT's observed Crafter mean but did not improve Gemini's. These native-budget panels do not test our custom agents and are not pooled with the paired follow-up. [Evidence, settings, and limitations](exercises/exercise1_baselines/README.md#cloud-model-contribution--teammate).
 
-The formal argument, assignment answers, and remaining identity/cloud-evaluation placeholders are in [the LaTeX report](report/Ass2Reasoning_report.tex). Historical metrics remain in [the initial matrix](experiment_results/performance_matrix.csv) and [the follow-up matrix](experiment_results/followup_v1/performance_matrix.csv).
+The formal argument, assignment answers, and remaining identity/submission placeholders are in [the LaTeX report](report/Ass2Reasoning_report.tex). Historical metrics remain in [the initial matrix](experiment_results/performance_matrix.csv) and [the follow-up matrix](experiment_results/followup_v1/performance_matrix.csv).
+
+## Critical assessment and proposed next work
+
+**Strengths.** The study follows inspected failures through a specific change to a matched evaluation. Frozen controls, held-out seeds, explicit action/fallback logging, bounded reflection, inference-cost accounting, paired confidence intervals, and negative findings make its central claims auditable. The 1,760-episode follow-up is substantial for this assignment. The imported cloud baselines broaden model coverage while preserving the original local results.
+
+**Limits.** Most custom-agent evidence comes from one Qwen4 model and short BabyAI tasks. The limited Qwen14/Phi checks already suggest that harness gains do not reliably transfer. Crafter transfer is small, and the initial Crafter critic never triggered, so that panel does not really test the reflection mechanism. There is no adequately matched, held-out CoT comparator for the main custom-agent study; few-shot and robust agents remain untested. The cloud contribution evaluates supplied agents only, with different settings and incomplete logging. Fixed seeds do not eliminate inference variation. High episode SD is expected for binary success near 50%; uncertainty in the **paired improvement** is the relevant target.
+
+The following is a proposal only. No new evaluation, API call, model download, or runner implementation was made as part of integrating the cloud results.
+
+| Priority | Proposed work | Why it adds evidence |
+|---|---|---|
+| 1 — quickest, no inference | Recover the teammate's missing Qwen2B episodes and Baba trajectories if available; summarize the already completed local CoT environment panels, keeping the unfinished overall repetition explicit. | Improves completeness without rerunning evidence we already have. Local CoT already has one complete 180-episode run and a second run with complete BabyAI/Crafter subsets. |
+| 2 — strongest missing control | Add supplied CoT to a matched Qwen4 BabyAI comparison with naive, frozen planning, and frozen action critique. | Tests whether persistent state/selective critique adds anything beyond ordinary step-by-step prompting. Fewer repeated runs are acceptable; prioritize distinct paired seeds over repeatedly solving the same puzzles. |
+| 3 — best expansion | Run those same four agents with one cloud model, preferably the teammate's already-used GPT-4.1 mini if the pinned version is available. | Tests transfer of the **agent improvement within a model**, beyond a table of different models' naive scores. It also shows whether a stronger base model still benefits from our loop intervention. |
+| 4 — cheap focused replication | Freeze history 4 versus history 16 and test a fresh `open` seed panel. | Directly tests the most promising cost-saving finding, which is currently exploratory and did not pass the adjusted primary-panel comparison. |
+| 5 — optional capacity check | Add one model below 3B, such as the teammate's local Qwen3.5-2B setup, to the same agent panel. | Useful if local runtime permits, but a second Qwen-family capacity point provides less model diversity than the cloud transfer. Do not start a large grid of tiny models before completing the CoT control. |
+
+For priorities 2–3, a concrete starting design is **30 fresh seeds × three tasks (`goto`, `pickup`, `open`) × four agents = 360 episodes per model**, or 720 for Qwen4 plus one cloud model. If a short excluded feasibility pilot supports it, choose 60 seeds before evaluation for tighter intervals (720 per model); do not decide to add seeds based on a desirable p-value. Use the same seed list, 32-action cap, observation history, guide, and available output budget within each model. Set and record generation settings explicitly, acknowledging provider constraints. Keep the critic's limits fixed and count its calls. Retain raw prompts/replies, separately executed actions, tokens, elapsed time, and a small repeated-seed subset for inference variability.
+
+Choose the final output cap after checking CoT truncation in the pilot; if it differs from the old protocol, rerun the controls. Compare planning versus CoT and reflection versus planning within each model, using paired success differences and seed-block intervals; adjust the small prespecified family of tests. Comparing those effects across models answers transfer more directly than comparing raw cloud and local scores. Thirty seeds per task is a practical starting panel, not a guarantee of statistical significance. Estimate overnight duration and API spend from measured pilot tokens/latency and current provider prices before scheduling; the old 5.77-hour local result is not a cloud-runtime estimate.
 
 ## Where things live
 
@@ -32,6 +53,7 @@ exercises/exercise3_reflection/ README, reflection agents, historical variants, 
 exercises/common/             variant selection, raw logging, profiles, shared execution
 analysis/                     read-only aggregation and statistical analysis
 research/                     experiment index, portable raw calls, refactor verification
+research/cloud_model/         pinned teammate source/results, provenance, separate analysis
 report/                       canonical LaTeX report
 integration/                  patch against the nested BALROG checkout
 archive/refactor_20261018/     original source/docs and filename migration map
@@ -78,6 +100,7 @@ Analysis reads saved evidence and writes elsewhere; it never launches a model or
 
 ```bash
 python3 analysis/summarize_e1_baselines.py --output experiment_results/refactored_v1/analysis/e1
+python3 analysis/summarize_e1_cloud_models.py --output research/cloud_model/analysis
 python3 analysis/summarize_e2_e3_development.py --output experiment_results/refactored_v1/analysis/development
 python3 analysis/summarize_e2_e3_evaluation.py --output experiment_results/refactored_v1/analysis/evaluation
 python3 analysis/measure_e2_e3_action_loops.py heldout_qwen_naive heldout_qwen_plan heldout_qwen_reflect --output experiment_results/refactored_v1/analysis/loops
@@ -113,7 +136,7 @@ Build refreshed packages directly from canonical files:
 python3 exercises/common/build_submission_archives.py
 ```
 
-They are written separately under `deliverables/refactored_v1/`. These packages include source, integration patch, report, portable raw samples, and selected evidence; the full original results are retained in the workspace and indexed separately. A regenerated E1 package does not establish that an E1 archive was previously submitted or that cloud evaluations were performed.
+They are written separately under `deliverables/refactored_v1/`. These packages include source, integration patch, report, portable raw samples, the pinned cloud contribution, and selected evidence; the full original local results are retained in the workspace and indexed separately. A regenerated E1 package does not establish that an E1 archive was previously submitted. The teammate's imported cloud evaluations have their own source and evidence provenance.
 
 Compile the report with a local TeX installation:
 
