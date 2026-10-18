@@ -15,7 +15,7 @@ from analysis.analyze_e2_e3_followup import paired_test
 from exercises.common.results import result_files, verify
 from exercises.common.transport_audit import read_attempts, spending, verify_calls
 
-MODELS = ("qwen4-instruct", "gpt41mini-cloud", "olmo1b-local")
+MODELS = ("qwen4-instruct", "gpt6luna-cloud", "olmo1b-local")
 CONDITIONS = ("naive", "cot", "plan", "e3")
 
 
@@ -166,9 +166,9 @@ def analyze(root, output, legacy):
     for label in MODELS:
         setup_path = root / "server" / label / "model_setup.json"
         setup = json.loads(setup_path.read_text()) if setup_path.exists() else {}
-        model_id = {"qwen4-instruct": "Qwen/Qwen3-4B-Instruct-2507-FP8", "gpt41mini-cloud": "gpt-4.1-mini-2025-04-14",
+        model_id = {"qwen4-instruct": "Qwen/Qwen3-4B-Instruct-2507-FP8", "gpt6luna-cloud": "gpt-6-luna",
                     "olmo1b-local": "allenai/OLMo-2-0425-1B-Instruct"}[label]
-        precision = setup.get("precision", "API snapshot" if label == "gpt41mini-cloud" else ("FP8" if label == "qwen4-instruct" else "not selected"))
+        precision = setup.get("precision", "API model ID" if label == "gpt6luna-cloud" else ("FP8" if label == "qwen4-instruct" else "not selected"))
         for env, tasks in (("babyai", ("goto", "pickup", "open")), ("crafter", ("default",))):
             for condition in CONDITIONS:
                 for task in tasks:
@@ -252,7 +252,7 @@ def analyze(root, output, legacy):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=ROOT / "experiment_results/refactored_v1/model_transfer_v1")
+    parser.add_argument("--input", type=Path, default=ROOT / "experiment_results/refactored_v1/model_transfer_luna_v1")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--legacy", type=Path, default=ROOT / "exercise1_results/20261014_221758")
     args = parser.parse_args()

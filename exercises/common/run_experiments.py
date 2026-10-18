@@ -123,6 +123,7 @@ def completed_case(target, c):
     settings_match = all(meta.get(key) == c[key] for key in ('panel', 'environment', 'task', 'seed', 'condition', 'budget', 'repeat'))
     if c.get('transfer'):
         settings_match &= all(meta.get(key) == c[key] for key in ('model_label', 'model', 'backend', 'context', 'tokens', 'history', 'pilot'))
+        settings_match &= meta.get('reasoning_effort') == c.get('reasoning_effort')
     return settings_match and verify_case(target, c) is not None
 
 
@@ -169,6 +170,8 @@ def run_case(out, c, port):
     meta = {key: c[key] for key in ('panel', 'environment', 'task', 'seed', 'condition', 'budget', 'repeat')}
     if c.get('transfer'):
         meta.update({key: c[key] for key in ('model_label', 'model', 'backend', 'context', 'tokens', 'history', 'pilot')})
+        if c.get('reasoning_effort'):
+            meta['reasoning_effort'] = c['reasoning_effort']
     meta.update(elapsed_seconds=elapsed, **{key: result[key] for key in ('progression', 'num_steps', 'input_tokens', 'output_tokens')})
     (work / 'complete.json').write_text(json.dumps(meta, indent=2) + '\n')
     work.rename(target)

@@ -3,18 +3,19 @@ import json
 import time
 from pathlib import Path
 
-INPUT_USD_PER_MILLION = 0.40
-OUTPUT_USD_PER_MILLION = 1.60
+INPUT_USD_PER_MILLION = 0.10
+OUTPUT_USD_PER_MILLION = 0.50
 
 
 def audited_request(client, kwargs, path):
     # Persist the start first: even an interrupted/unknown request remains visible.
     request_id = f"{time.time_ns()}"
     prompt_bound = sum(len(str(m["content"]).encode("utf-8")) + 32 for m in kwargs["messages"])
-    bound = (prompt_bound * INPUT_USD_PER_MILLION + kwargs["max_tokens"] * OUTPUT_USD_PER_MILLION) / 1e6
-    cloud = kwargs["model"] == "gpt-4.1-mini-2025-04-14"
+    maximum_output_tokens = kwargs.get("max_completion_tokens", kwargs.get("max_tokens"))
+    bound = (prompt_bound * INPUT_USD_PER_MILLION + maximum_output_tokens * OUTPUT_USD_PER_MILLION) / 1e6
+    cloud = kwargs["model"] == "gpt-6-luna"
     started = dict(event="start", request_id=request_id, model=kwargs["model"],
-                   started_at=time.time(), maximum_output_tokens=kwargs["max_tokens"],
+                   started_at=time.time(), maximum_output_tokens=maximum_output_tokens,
                    request=kwargs,
                    uncertain_cost_usd=bound if cloud else 0)
 
@@ -71,5 +72,8 @@ def verify_calls(work, context):
             and all(call["raw_response"].strip() == attempt["response"]["choices"][0]["message"]["content"].strip()
                     and call["input_tokens"] == attempt["input_tokens"]
                     and call["output_tokens"] == attempt["output_tokens"]
+                    and (attempt["request"].get("reasoning_effort") == "none"
+                         and attempt["request"].get("max_completion_tokens") == 256
+                         if attempt["request"]["model"] == "gpt-6-luna" else True)
                     and attempt["input_tokens"] + attempt["maximum_output_tokens"] <= context
                     for call, attempt in zip(calls, used)))

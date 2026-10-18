@@ -15,7 +15,8 @@ from exercises.common.run_experiments import (check_manifest, completed_case, ep
                                              run_case, target_directory)
 from exercises.common.results import result_files, verify
 from exercises.common.server import ensure_server, served_models, stop_server, serving_versions
-from exercises.common.transport_audit import read_attempts, spending
+from exercises.common.transport_audit import (INPUT_USD_PER_MILLION, OUTPUT_USD_PER_MILLION,
+                                              read_attempts, spending)
 
 
 def digest(path):
@@ -198,7 +199,7 @@ def run_study(args):
         if c["reuse_from"] and not reusable(c):
             c["replacement_reason"] = "historical control missing or incompatible"
             c["reuse_from"] = ""
-    out = (args.out or ROOT / "experiment_results/refactored_v1/model_transfer_v1").resolve()
+    out = (args.out or ROOT / "experiment_results/refactored_v1/model_transfer_luna_v1").resolve()
     labels = [label for label in TRANSFER_MODELS if any(c["model_label"] == label for c in cases)]
     pilots = [c for label in labels for c in transfer_pilots(label)]
     if args.dry_run:
@@ -234,7 +235,7 @@ def run_study(args):
             if all(completed_case(target_directory(branch / label, c), c) for branch, c in worklist):
                 status[label].update(state="complete", missing_evaluation=0)
                 continue
-            if label == "gpt41mini-cloud" and not os.environ.get("OPENAI_API_KEY"):
+            if label == "gpt6luna-cloud" and not os.environ.get("OPENAI_API_KEY"):
                 raise RuntimeError("OPENAI_API_KEY is absent; export it before rerunning the same command")
             for branch, c in worklist:
                 if time.monotonic() >= deadline or (args.limit and done >= args.limit):
@@ -244,7 +245,7 @@ def run_study(args):
                 target = target_directory(model_out, c)
                 if completed_case(target, c):
                     continue
-                if label == "gpt41mini-cloud":
+                if label == "gpt6luna-cloud":
                     cost = spending(out)
                     if cost["estimated_usd"] > args.cloud_stop_usd:
                         status[label].update(state="cloud spending limit", **cost)
@@ -276,10 +277,11 @@ def run_study(args):
                     status[label]["pilot_projected_hours"] = mean_time * upper_steps / 3600
                     status[label]["pilot_cost"] = spending(out / "pilots" / label)
                     status[label]["pilot_projected_evaluation_cost_usd"] = (
-                        sum((m["input_tokens"] * 0.40 + m["output_tokens"] * 1.60) / 1e6 / m["num_steps"]
-                            for m in metadata) / len(metadata) * upper_steps if label == "gpt41mini-cloud" else 0)
+                        sum((m["input_tokens"] * INPUT_USD_PER_MILLION + m["output_tokens"] * OUTPUT_USD_PER_MILLION)
+                            / 1e6 / m["num_steps"] for m in metadata) / len(metadata) * upper_steps
+                        if label == "gpt6luna-cloud" else 0)
                     print(f"{label}: pilot-based ETA {mean_time * upper_steps / 3600:.2f} hours at full action budgets (later context, system load and retries can change this).", flush=True)
-                    if label == "gpt41mini-cloud":
+                    if label == "gpt6luna-cloud":
                         print(f"Cloud pilot-based evaluation estimate: ${status[label]['pilot_projected_evaluation_cost_usd']:.2f}; actual latency, episode length, and retries can change this.", flush=True)
             else:
                 missing = [c for c in selected if not completed_case(target_directory(out / label, c), c)]

@@ -54,7 +54,7 @@ VARIANTS = {
 STUDIES = ("e1_naive", "e1_cot", "e2_development", "e2_evaluation", "e3_development",
            "e3_evaluation", "followup_pilot", "followup_evaluation", "smoke", "model_transfer_v1")
 
-TRANSFER_MODELS = ("qwen4-instruct", "gpt41mini-cloud", "olmo1b-local")
+TRANSFER_MODELS = ("qwen4-instruct", "gpt6luna-cloud", "olmo1b-local")
 OLMO_MODEL = "allenai/OLMo-2-0425-1B-Instruct"
 OLMO_REVISION = "48d788eca847d4d7548f375ad03d3c9312f6139e"
 OLMO_GGUF_REVISION = "62f8c199538474c3e33ed5d7e0580abd66686a27"
@@ -64,10 +64,10 @@ def transfer_case(label, environment, task, seed, condition, budget, pilot=False
     item = case("preflight" if pilot else "primary", environment, task, seed, condition, budget)
     if condition == "cot":
         item.update(agent="cot", variant="")
-    item.update(transfer=True, model_label=label, backend="openai" if label == "gpt41mini-cloud" else "vllm",
+    item.update(transfer=True, model_label=label, backend="openai" if label == "gpt6luna-cloud" else "vllm",
                 episode_timeout=1800, pilot=pilot, reuse_from="")
-    if label == "gpt41mini-cloud":
-        item.update(model="gpt-4.1-mini-2025-04-14", context=8192)
+    if label == "gpt6luna-cloud":
+        item.update(model="gpt-6-luna", context=8192, reasoning_effort="none")
     elif label == "olmo1b-local":
         item.update(model=OLMO_MODEL, context=4096)
     elif not pilot and condition != "cot" and (environment == "babyai" or condition == "plan"):
