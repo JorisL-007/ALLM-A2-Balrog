@@ -99,3 +99,9 @@ python3 analysis/analyze_e2_e3_followup.py --input experiment_results/followup_v
 ```
 
 See E2 for the exact seeds, task budgets, history comparisons, multiplicity correction, and repeatability findings. The repeated seeds are kept separate from independent task evidence. Full prompts and all critic/actor token totals remain beside every recorded trajectory; [portable raw samples](../../research/raw_llm_samples.jsonl) include both helpful and harmful critiques.
+
+## Step05: compare the frozen critic across models
+
+[The coordinated CoT/model-transfer runner](../../README.md#step-05-cot-control-and-model-transfer) includes `action_critique_v2` with its existing prompts, triggers, bounded lessons, and reflection limits. It compares reflection versus planning on180 BabyAI episodes per model and ten Crafter episodes, alongside supplied naive and half-sized CoT panels. All critique calls, including replies without an action, remain counted. Request retries and returned token usage are separately auditable. New evaluation interpretation is pending; an automatically generated inspection index does not count as manual trajectory reading.
+
+The [OLMo short door pilot](../../research/model_transfer_verification/live/olmo1b-local/babyai_open_e3_seed21/llm_calls.jsonl) exercised one real critique at call6 after repeated forward actions left a wall visible. It returned prose without `ACTION`; the ordinary actor then returned the invalid `pick up the green key.` and BALROG executed fallback forward. Thus eight executed actions used **nine calls**, all counted. The [Crafter pilot](../../research/model_transfer_verification/live/olmo1b-local/crafter_default_e3_seed21/llm_calls.jsonl) repeatedly proposed `Place Furnace` with an explicitly empty inventory; the frozen trigger did not fire. These inspected failures establish logging and expose mechanism limits; they do not estimate the effect of reflection on OLMo.

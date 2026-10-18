@@ -52,7 +52,52 @@ VARIANTS = {
     "guide_goal": "goal_state_reflection_v1",
 }
 STUDIES = ("e1_naive", "e1_cot", "e2_development", "e2_evaluation", "e3_development",
-           "e3_evaluation", "followup_pilot", "followup_evaluation", "smoke")
+           "e3_evaluation", "followup_pilot", "followup_evaluation", "smoke", "model_transfer_v1")
+
+TRANSFER_MODELS = ("qwen4-instruct", "gpt41mini-cloud", "olmo1b-local")
+OLMO_MODEL = "allenai/OLMo-2-0425-1B-Instruct"
+OLMO_REVISION = "48d788eca847d4d7548f375ad03d3c9312f6139e"
+OLMO_GGUF_REVISION = "62f8c199538474c3e33ed5d7e0580abd66686a27"
+
+
+def transfer_case(label, environment, task, seed, condition, budget, pilot=False):
+    item = case("preflight" if pilot else "primary", environment, task, seed, condition, budget)
+    if condition == "cot":
+        item.update(agent="cot", variant="")
+    item.update(transfer=True, model_label=label, backend="openai" if label == "gpt41mini-cloud" else "vllm",
+                episode_timeout=1800, pilot=pilot, reuse_from="")
+    if label == "gpt41mini-cloud":
+        item.update(model="gpt-4.1-mini-2025-04-14", context=8192)
+    elif label == "olmo1b-local":
+        item.update(model=OLMO_MODEL, context=4096)
+    elif not pilot and condition != "cot" and (environment == "babyai" or condition == "plan"):
+        item["reuse_from"] = (f"experiment_results/followup_v1/episodes/{environment}/{task}/"
+                              f"{condition}/seed_{seed:03d}/rep_0")
+    return item
+
+
+def transfer_pilots(label):
+    # Excluded development seeds; all actors and both environments are exercised.
+    values = [("babyai", "goto", "naive", 20), ("babyai", "pickup", "cot", 20),
+              ("babyai", "open", "plan", 20), ("babyai", "open", "e3", 21),
+              ("crafter", "default", "cot", 20), ("crafter", "default", "e3", 21)]
+    return [transfer_case(label, env, task, seed, condition, 8, pilot=True)
+            for env, task, condition, seed in values]
+
+
+def transfer_cases():
+    cases = []
+    for label in TRANSFER_MODELS:
+        for seed in range(30, 90):
+            for task in ("goto", "pickup", "open"):
+                for condition in ("naive", "cot", "plan", "e3"):
+                    if condition != "cot" or seed % 2 == 0:
+                        cases.append(transfer_case(label, "babyai", task, seed, condition, 32))
+        for seed in range(120, 130):
+            for condition in ("naive", "cot", "plan", "e3"):
+                if condition != "cot" or seed % 2 == 0:
+                    cases.append(transfer_case(label, "crafter", "default", seed, condition, 50))
+    return cases
 
 
 def case(panel, environment, task, seed, condition, budget, repeat=0):
@@ -65,6 +110,8 @@ def case(panel, environment, task, seed, condition, budget, repeat=0):
 
 
 def study_cases(study):
+    if study == "model_transfer_v1":
+        return transfer_cases()
     if study.startswith("followup"):
         panels = ("pilot",) if study == "followup_pilot" else ("primary", "broad", "crafter", "repeat")
         return [case(panel, *values) for panel in panels for values in panel_cases(panel)]

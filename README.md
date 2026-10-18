@@ -30,19 +30,55 @@ The formal argument, assignment answers, and remaining identity/submission place
 
 **Limits.** Most custom-agent evidence comes from one Qwen4 model and short BabyAI tasks. The limited Qwen14/Phi checks already suggest that harness gains do not reliably transfer. Crafter transfer is small, and the initial Crafter critic never triggered, so that panel does not really test the reflection mechanism. There is no adequately matched, held-out CoT comparator for the main custom-agent study; few-shot and robust agents remain untested. The cloud contribution evaluates supplied agents only, with different settings and incomplete logging. Fixed seeds do not eliminate inference variation. High episode SD is expected for binary success near 50%; uncertainty in the **paired improvement** is the relevant target.
 
-The following is a proposal only. No new evaluation, API call, model download, or runner implementation was made as part of integrating the cloud results.
+The next CoT-control and model-transfer study is now implemented as Step 05 below. Its evaluation results remain pending. The historical CoT panels have been recovered without extending the old sweep.
 
 | Priority | Proposed work | Why it adds evidence |
 |---|---|---|
-| 1 — quickest, no inference | Recover the teammate's missing Qwen2B episodes and Baba trajectories if available; summarize the already completed local CoT environment panels, keeping the unfinished overall repetition explicit. | Improves completeness without rerunning evidence we already have. Local CoT already has one complete 180-episode run and a second run with complete BabyAI/Crafter subsets. |
+| 1 — quickest, no inference | Historical local CoT panels are now recovered; obtaining the teammate's missing Qwen2B episodes and Baba trajectories remains useful. | The recovery retains all 245 CoT episodes and distinguishes complete environment panels from the partial BabaIsAI repetition. |
 | 2 — strongest missing control | Add supplied CoT to a matched Qwen4 BabyAI comparison with naive, frozen planning, and frozen action critique. | Tests whether persistent state/selective critique adds anything beyond ordinary step-by-step prompting. Fewer repeated runs are acceptable; prioritize distinct paired seeds over repeatedly solving the same puzzles. |
 | 3 — best expansion | Run those same four agents with one cloud model, preferably the teammate's already-used GPT-4.1 mini if the pinned version is available. | Tests transfer of the **agent improvement within a model**, beyond a table of different models' naive scores. It also shows whether a stronger base model still benefits from our loop intervention. |
 | 4 — cheap focused replication | Freeze history 4 versus history 16 and test a fresh `open` seed panel. | Directly tests the most promising cost-saving finding, which is currently exploratory and did not pass the adjusted primary-panel comparison. |
-| 5 — optional capacity check | Add one model below 3B, such as the teammate's local Qwen3.5-2B setup, to the same agent panel. | Useful if local runtime permits, but a second Qwen-family capacity point provides less model diversity than the cloud transfer. Do not start a large grid of tiny models before completing the CoT control. |
+| 5 — additional model family | Step 05 includes OLMo-2-0425-1B-Instruct, preferring the official Q8_0 quantization. | This adds a small model from a different family to the same core-agent comparison. |
 
-For priorities 2–3, a concrete starting design is **30 fresh seeds × three tasks (`goto`, `pickup`, `open`) × four agents = 360 episodes per model**, or 720 for Qwen4 plus one cloud model. If a short excluded feasibility pilot supports it, choose 60 seeds before evaluation for tighter intervals (720 per model); do not decide to add seeds based on a desirable p-value. Use the same seed list, 32-action cap, observation history, guide, and available output budget within each model. Set and record generation settings explicitly, acknowledging provider constraints. Keep the critic's limits fixed and count its calls. Retain raw prompts/replies, separately executed actions, tokens, elapsed time, and a small repeated-seed subset for inference variability.
+The chosen panel uses the existing **60 evaluation seeds per BabyAI task**, with CoT on a fixed half-sized subset. It adds the missing Qwen CoT control while reusing compatible Qwen evidence, then applies all four agents to GPT-4.1 mini and OLMo. Reusing an existing evaluation seed panel tests transfer without adding independent new Qwen puzzles. Compare effects within each model and retain the earlier repeatability findings as a limitation.
 
-Choose the final output cap after checking CoT truncation in the pilot; if it differs from the old protocol, rerun the controls. Compare planning versus CoT and reflection versus planning within each model, using paired success differences and seed-block intervals; adjust the small prespecified family of tests. Comparing those effects across models answers transfer more directly than comparing raw cloud and local scores. Thirty seeds per task is a practical starting panel, not a guarantee of statistical significance. Estimate overnight duration and API spend from measured pilot tokens/latency and current provider prices before scheduling; the old 5.77-hour local result is not a cloud-runtime estimate.
+## Step 05: CoT control and model transfer
+
+Preview the complete schedule without writes, downloads, or inference:
+
+```bash
+bash exercises/common/run_e2_e3_step05_cot_and_model_transfer.sh --dry-run
+```
+
+With `OPENAI_API_KEY` exported and the local GPU available, launch all three stages in order:
+
+```bash
+nohup bash exercises/common/run_e2_e3_step05_cot_and_model_transfer.sh > model_transfer.log 2>&1 < /dev/null &
+```
+
+The fixed schedule contains **1,445 new evaluation episodes**, **550 referenced Qwen controls**, and **18 excluded short pilots**. BabyAI `goto`/`pickup`/`open`: seeds30–89, 32 actions; CoT uses even seeds30–88. Crafter: seeds120–129, 50 actions; CoT uses even seeds120–128. All conditions use temperature0, history16, no images, one worker, and 256 output tokens per call. The frozen planner and action critic keep their existing prompts, limits, and reset behavior. The supplied CoT prompt and its one-entry reasoning history are preserved. CoT truncation is measured rather than prompting it differently.
+
+Outputs are separate under `experiment_results/refactored_v1/model_transfer_v1/`. The script recovers historical CoT panels first, runs Qwen → GPT → OLMo, and analyzes after each stage. The default invocation limit is48 hours, checked between episodes. Repeating the command resumes verified unfinished work; `--hours`, `--limit` (counts new pilots too), `--out`, `--port` (default8097), `--model`, and `--condition` are available. Scientific settings/source changes are rejected; filtered schedules require their own output directory. Only owned servers are stopped. Failed/interrupted attempts are retained. Persistent stage failures allow later models to proceed; exit2 means the selected study remains incomplete.
+
+Cloud generation uses `gpt-4.1-mini-2025-04-14` and the existing OpenAI client. **$10 is a target; execution continues until the cumulative estimate exceeds $20**, then proceeds to OLMo. The guard includes pilots, incomplete attempts, and retries across resumes. Known usage is estimated at $0.40/M input and $1.60/M output without cache discounts; unknown/interrupted requests receive conservative provisional charges. These are estimates, not invoices. `--cloud-target-usd` and `--cloud-stop-usd` change operational limits without changing the scientific panel. All request attempts have full payloads/replies, finish reasons, timing, and available usage in `api_attempts.jsonl`; SDK retries are disabled so BALROG's three attempts remain visible. Requests time out after60 seconds and episodes after30 minutes.
+
+Reused controls retain their original actor/critic logs and measured times. Their older logs lack transport-level audits, so unavailable retry/truncation counts remain blank. Newly incurred cloud spending is calculated from the new request ledger.
+
+OLMo prefers the cached official Q8_0 GGUF, official tokenizer, and native4096 context. Startup incompatibility permits official BF16 before any pilot/evaluation, with missing files downloaded through `hf` into the study's server directory. The selection and artifact hashes are pinned across resumes; quality or evaluation outcomes never trigger a precision switch. Serving requires a free dedicated port at first startup. The script reports pilot-based time/cost estimates; the old5.77-hour Qwen follow-up is not a runtime estimate for this study.
+
+Local setup records also pin vLLM, Transformers, PyTorch, and Python versions. A changed serving environment or model artifact is rejected before restarting inference. The final version-pin check made no model calls; its earlier prepared references and source checkpoint were retained separately before initializing the final study namespace.
+
+Analysis is independent and can recover the old CoT evidence without running models:
+
+```bash
+python3 analysis/analyze_e2_e3_model_transfer.py \
+  --input experiment_results/refactored_v1/model_transfer_v1 \
+  --output experiment_results/refactored_v1/model_transfer_v1/analysis
+```
+
+Read `historical_panels.csv`, `historical_matched_panels.csv`, `historical_matrix.csv`, `overall_matrix.csv`, `performance_matrix.csv`, `coverage.csv`, `paired_comparisons.csv`, `status.json`, and `inspection_index.csv`. CoT comparisons restrict controls to its exact seed subset. Four overall BabyAI contrasts per model use the original seed-block bootstrap/permutation methods, seed0, and Holm adjustment across twelve tests; per-task and Crafter scores are descriptive. Reused episode times remain original and are distinguished from newly incurred time. Missing episodes remain missing. Automated sample selection leaves manual review explicitly pending. [Verification evidence](research/model_transfer_verification) records which checks and live pilots actually completed.
+
+Implementation verification completed six real Qwen and six real OLMo pilots: **91 actions and92 LLM calls**, including an OLMo critique without an `ACTION` followed by a separately counted actor call. All twelve full trajectories and raw calls were personally inspected and preserved in [the inspection table](research/model_transfer_verification/live_inspection.csv). Qwen navigation/pickup succeeded; its CoT calls truncated4/15 times. OLMo had no pilot successes and showed rotation, wall-collision, and failed-crafting loops; these are eight-action integration checks, not transfer-effect estimates. Q8 startup failed in vLLM0.31.0, so OLMo's tested precision is **BF16**. The six GPT pilots remain blocked by the absent environment API key. Transport replay and disposable control-flow checks verified token accounting, retries, completed-run skips, interrupted-attempt retention, source/settings rejection, and the10/20-dollar spending rules. The prepared main namespace contains only the550 referenced controls; no new bulk evaluation has been started.
 
 ## Where things live
 
@@ -65,7 +101,7 @@ Existing `exercise1_results/`, `experiment_results/`, raw-log samples, manifests
 
 ## Setup and integration
 
-Use the existing `balrog` and `vllm` conda environments, locally cached models, and NVIDIA GPU. The development model is `Qwen/Qwen3-4B-Instruct-2507-FP8`. The baseline profiles also use `Qwen/Qwen3-14B-AWQ` and `microsoft/Phi-4-mini-instruct`. No model downloads are launched by the runners (`HF_HUB_OFFLINE=1`).
+Use the existing `balrog` and `vllm` conda environments, locally cached models, and NVIDIA GPU. The development model is `Qwen/Qwen3-4B-Instruct-2507-FP8`. The baseline profiles also use `Qwen/Qwen3-14B-AWQ` and `microsoft/Phi-4-mini-instruct`. Earlier runners use cached models only (`HF_HUB_OFFLINE=1`). Step05 may download missing pinned OLMo artifacts before serving; it requires the `hf` CLI and an exported API key for its cloud stage.
 
 The nested BALROG checkout is based on commit `b7afe79e3e4265811cfa985ed7c95c4d1a11e3f5`. On a **clean checkout at that commit**, install the tracked research integration:
 

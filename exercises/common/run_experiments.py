@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import shlex
+import signal
 import subprocess
 import sys
 import time
@@ -57,7 +58,7 @@ def episode_command(c, work, port):
                f'envs.names={c["environment"]}', f'envs.env_kwargs.seed={c["seed"]}',
                f'eval.num_episodes.{c["environment"]}=1', f'eval.num_workers={c["workers"]}',
                f'eval.max_steps_per_episode={null(c["budget"])}', 'eval.save_trajectories=True',
-               f'eval.resume_from={work}', 'client.client_name=vllm', f'client.model_id={c["model"]}',
+               f'eval.resume_from={work}', f'client.client_name={c.get("backend", "vllm")}', f'client.model_id={c["model"]}',
                f'client.base_url=http://127.0.0.1:{port}/v1',
                f'client.generate_kwargs.temperature={null(c["temperature"])}',
                f'client.generate_kwargs.max_tokens={c["tokens"]}', 'client.generate_kwargs.thinking_budget=null']
@@ -69,6 +70,9 @@ def episode_command(c, work, port):
              'BALROG_CUSTOM_GATE': str(c['gate']), 'BALROG_CUSTOM_GOAL_STATE': str(c['goal']),
              'BALROG_CUSTOM_MODE': 'reflect' if 'critique' in c['variant'] else 'planning',
              'BALROG_LLM_LOG': str(work / 'llm_calls.jsonl'), 'HF_HUB_OFFLINE': '1'}
+    if c.get('transfer'):
+        command += ['client.timeout=60', 'client.max_retries=3', 'client.delay=2']
+        flags['BALROG_API_AUDIT'] = str(work / 'api_attempts.jsonl')
     return command, flags
 
 
@@ -77,6 +81,17 @@ def verify_case(work, c):
         condition = 'e3' if 'critique' in c['variant'] else c['condition']
         result = verify(work, c['environment'], c['task'], condition)
         if result and result.get('seed') == c['seed']:
+            if c.get('transfer'):
+                from exercises.common.transport_audit import verify_calls
+                client = result['client']
+                if (client['model_id'] != c['model'] or client['client_name'] != c['backend']
+                        or client['generate_kwargs']['temperature'] != c['temperature']
+                        or client['generate_kwargs']['max_tokens'] != c['tokens']
+                        or result['agent']['max_text_history'] != c['history']
+                        or result['num_steps'] > c['budget']):
+                    return None
+                if not verify_calls(work, c['context']):
+                    return None
             return result
         return None
     # E1 runs all configured tasks for one seed with four workers, as originally.
@@ -106,6 +121,8 @@ def completed_case(target, c):
         return False
     meta = json.loads(path.read_text())
     settings_match = all(meta.get(key) == c[key] for key in ('panel', 'environment', 'task', 'seed', 'condition', 'budget', 'repeat'))
+    if c.get('transfer'):
+        settings_match &= all(meta.get(key) == c[key] for key in ('model_label', 'model', 'backend', 'context', 'tokens', 'history', 'pilot'))
     return settings_match and verify_case(target, c) is not None
 
 
@@ -117,18 +134,41 @@ def run_case(out, c, port):
         raise SystemExit(f'Final directory failed verification; retained for inspection: {target}')
     work = target.with_name(target.name + '.working')
     if work.exists():
+        if c.get('transfer') and completed_case(work, c):
+            # A process may have finished saving just before an interrupted rename.
+            work.rename(target)
+            return 'skip', 0
         work.rename(work.with_name(target.name + f'.incomplete_{time.time_ns()}'))
     work.mkdir(parents=True)
     command, flags = episode_command(c, work, port)
     (work / 'command.json').write_text(json.dumps({'command': command, 'environment': flags}, indent=2) + '\n')
     start = time.monotonic()
     with (work / 'console.log').open('w') as log:
-        process = subprocess.run(command, cwd=ROOT / 'BALROG', env=dict(os.environ, **flags), stdout=log, stderr=subprocess.STDOUT)
+        if c.get('transfer'):
+            process = subprocess.Popen(command, cwd=ROOT / 'BALROG', env=dict(os.environ, **flags),
+                                       stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+            try:
+                process.wait(timeout=c['episode_timeout'])
+            except (subprocess.TimeoutExpired, KeyboardInterrupt):
+                os.killpg(process.pid, signal.SIGKILL)
+                process.wait()
+                if sys.exc_info()[0] is KeyboardInterrupt:
+                    raise
+                (work / 'failure.json').write_text(json.dumps({'reason': 'episode timeout', 'seconds': c['episode_timeout']}) + '\n')
+                raise RuntimeError(f'Episode timed out; retained at {work}')
+        else:
+            process = subprocess.run(command, cwd=ROOT / 'BALROG', env=dict(os.environ, **flags), stdout=log, stderr=subprocess.STDOUT)
     elapsed = time.monotonic() - start
     result = verify_case(work, c) if process.returncode == 0 else None
     if result is None:
+        if c.get('transfer'):
+            (work / 'failure.json').write_text(json.dumps({'reason': 'execution or evidence verification failed',
+                                                         'returncode': process.returncode}) + '\n')
+            raise RuntimeError(f'Episode failed verification; attempt retained at {work}')
         raise SystemExit(f'Episode failed verification; attempt retained at {work}')
     meta = {key: c[key] for key in ('panel', 'environment', 'task', 'seed', 'condition', 'budget', 'repeat')}
+    if c.get('transfer'):
+        meta.update({key: c[key] for key in ('model_label', 'model', 'backend', 'context', 'tokens', 'history', 'pilot')})
     meta.update(elapsed_seconds=elapsed, **{key: result[key] for key in ('progression', 'num_steps', 'input_tokens', 'output_tokens')})
     (work / 'complete.json').write_text(json.dumps(meta, indent=2) + '\n')
     work.rename(target)
@@ -139,13 +179,19 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--study', choices=STUDIES, required=True)
     parser.add_argument('--out', type=Path)
-    parser.add_argument('--hours', type=float, default=8)
+    parser.add_argument('--hours', type=float)
     parser.add_argument('--limit', type=int, default=0)
     parser.add_argument('--port', type=int, default=8088)
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--model', help='Optional model label filter')
     parser.add_argument('--condition', help='Optional historical condition filter')
+    parser.add_argument('--cloud-target-usd', type=float, default=10)
+    parser.add_argument('--cloud-stop-usd', type=float, default=20)
     args = parser.parse_args()
+    args.hours = args.hours if args.hours is not None else (48 if args.study == 'model_transfer_v1' else 8)
+    if args.study == 'model_transfer_v1':
+        from exercises.common.model_transfer import run_study
+        return run_study(args)
     cases = [c for c in study_cases(args.study) if (not args.model or c['model_label'] == args.model)
              and (not args.condition or c['condition'] == args.condition)]
     if not cases:
@@ -191,4 +237,4 @@ def main():
     print(f'Finished invocation: {done} new cases. Evidence: {out}')
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

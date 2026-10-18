@@ -54,6 +54,22 @@ python3 analysis/summarize_e1_baselines.py --input exercise1_results/20261014_22
 
 This reproduction profile requests three fresh Qwen4 CoT repetitions; it does not label the historic incomplete run complete. `run_status.csv` lists complete, incomplete, and unrun repetitions separately. The analyzer accepts independent `--input` and `--output` paths and never launches models.
 
+### Recovered complete environment panels
+
+Step05's independent analyzer now recovers **all245 saved CoT episodes** without finishing the missing native-budget runs. Completeness is checked per environment, so a partial BabaIsAI sweep does not discard complete BabyAI/Crafter panels.
+
+| Environment / repetition | Episodes each | Corresponding naive | Supplied CoT |
+|---|---:|---:|---:|
+| BabyAI /1 |50 |36.00% |46.00% |
+| BabyAI /2 |50 |26.00% |54.00% |
+| Crafter /1 |10 |15.45% |7.27% |
+| Crafter /2 |10 |18.64% |9.09% |
+| BabaIsAI /1 |120 |2.50% |16.67% |
+
+The two CoT BabyAI run means average50.00% (sample SD5.66 percentage points); Crafter averages8.18% (run-mean SD1.29 points). BabaIsAI has only one complete CoT repetition, so no run-mean SD is estimated. The remaining five BabaIsAI episodes are retained as partial evidence. These comparisons use the older `20261014_221758` naive sweep, model-default temperature, native action budgets, and caps128 for naive versus512 for CoT. They do not establish an equal-token causal advantage or replace the new32-action control. Repeated seeds remain identified by repetition.
+
+Run only the recovery/analysis with the command in [Step05](../../README.md#step-05-cot-control-and-model-transfer). Its `historical_matched_panels.csv` pairs corresponding repetitions, and `historical_matrix.csv` states each environment's number of complete repetitions. The broader native-budget runner above remains available but is not part of the new study.
+
 ## Cloud-model contribution — teammate
 
 This is a separate Exercise 1 contribution from [Ovitch87/AgenticBALROG](https://github.com/Ovitch87/AgenticBALROG/tree/dc8b49f2848f4b35df87e727f21319f9bcead036), imported on 18 October 2026 at commit `dc8b49f2848f4b35df87e727f21319f9bcead036`. Attribution is to the teammate's GitHub account; personal names remain report placeholders. The [source and result snapshot](../../research/cloud_model/upstream_snapshot.tar.gz) preserves the original scripts, BALROG implementation, configuration, all committed results, and MIT license. [Provenance](../../research/cloud_model/provenance.json) records settings and archive hash; the [member manifest](../../research/cloud_model/snapshot_manifest.csv) hashes every archived file. We did not execute the imported scripts or merge their evaluator into the local implementation.
