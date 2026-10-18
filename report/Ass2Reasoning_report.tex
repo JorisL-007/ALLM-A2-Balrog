@@ -1,0 +1,204 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.4cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{url}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black,citecolor=blue!55!black}
+\urlstyle{same}
+\newcommand{\missing}[1]{\textbf{[PLACEHOLDER: #1]}}
+\newcommand{\BabyAI}{\textsc{BabyAI}}
+
+\title{Assignment 2: Reasoning and Self-Reflection in BALROG\\
+\large Compact Planning, Feedback-Triggered Critique, and Grounded Actions}
+\author{\missing{Student name and student number}\\Leiden University}
+\date{\missing{Submission date}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report answers the three exercises in the assignment and investigates whether a compact, persistent plan and feedback-triggered self-reflection help a local language model act in BALROG. A small initial evaluation suggested a planning gain on \BabyAI{} (6/15 successes versus 2/15 for the naive agent), while reflection reduced a measured turn-loop pattern without improving the 6/15 completion count. A larger, frozen follow-up evaluated 1,760 episodes. On its primary paired \BabyAI{} pickup comparison, correcting a contradictory action guide gave 29/60 successes versus 34/60 for frozen planning (difference $-8.3$ percentage points; 95\% paired interval $[-25.0,+8.3]$). A narrow pickup rule corrected individual wrong actions but did not raise overall success. A four-observation history used substantially fewer tokens and showed an exploratory door-task gain; a one-call goal-state reflection prompt increased cost without a reliable gain. The evidence supports a careful distinction between fixing local behavior and improving mission completion.
+\end{abstract}
+
+\section{Question, benchmark, and evaluation}
+
+The central question is whether lightweight reasoning state and selective critique improve task completion and reduce unproductive action loops at a tolerable inference cost. BALROG tests interactive agents across games with different action spaces and progression measures \cite{balrog}. The course assignment asks for model--benchmark matrices, a custom reasoning agent, a self-reflection extension, multiple runs, and manual inspection of trajectories \cite{assignment}. The course book's discussion of planning and reflection motivated the initial agent design \cite{book}.
+
+BALROG progression is environment-specific. In the \BabyAI{} tasks studied here it is binary mission completion; a result of 100\% means the mission was solved within the episode budget, and 0\% means it was not. In Crafter, progression is unlocked achievements divided by 22. Consequently, neither a Crafter percentage nor the mean of different benchmarks is interchangeable with \BabyAI{} success probability. We report sample standard deviations at the unit specified in each table, action budgets, input and output tokens, and elapsed wall time. Zero reward or a repeated action alone is not treated as proof of failed reasoning.
+
+\section{Exercise 1: running the benchmark}
+
+\subsection{Models, tasks, and performance matrix}
+
+The recorded Exercise 1 sweep used the supplied naive agent with three locally served, open models: Qwen3-4B-Instruct-2507-FP8, Qwen3-14B-AWQ, and Phi-4-mini-instruct. These provided small, larger, and different instruction-model comparisons without API charges. The sweep covered five \BabyAI{} tasks (\path{goto}, \path{pickup}, \path{open}, \path{putnext}, \path{pick_up_seq_go_to}), Crafter's \path{default} task, and all 40 configured BabaIsAI task variants (listed under \path{babaisai_tasks} in \path{BALROG/balrog/config/config.yaml}). There were three runs per model and benchmark, with 50, 10, and 120 episodes per run respectively; the same environment seed panel was repeated in each run. Table~\ref{tab:e1} comes from all nine completed run summaries. Its SD is across the \emph{three run-level means}, not across individual binary \BabyAI{} episodes. An overall mean across benchmarks would mix progression definitions and should not be interpreted as a single task success rate.
+
+\begin{table}[htbp]
+\centering
+\caption{Exercise 1 naive-agent progression, mean $\pm$ SD across three runs. Parentheses show episodes per run.}
+\label{tab:e1}
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Model and hosting & \BabyAI{} (50) & Crafter (10) & BabaIsAI (120) \\
+\midrule
+Qwen3-4B, local & $32.00\pm2.00$\% & $18.94\pm2.62$\% & $2.22\pm1.27$\% \\
+Qwen3-14B-AWQ, local & $21.33\pm1.15$\% & $9.55\pm1.20$\% & $5.83\pm0.83$\% \\
+Phi-4-mini, local & $3.33\pm1.15$\% & $2.73\pm0.91$\% & $7.50\pm0.00$\% \\
+Cloud-hosted model & \multicolumn{3}{c}{\missing{Add results only if such a run is available}} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+No cloud-hosted evaluation is present in the repository, so this part of the assignment remains unverified; no cloud result is invented. The later, smaller E2/E3 model checks (Table~\ref{tab:modelcheck}) use different tasks and action budgets and must not be pooled with this sweep. The run settings and outputs are under \path{exercise1_results/20261015_072525/}; the complete derived matrix is \path{performance_matrix_all_models.csv}, generated by \path{experiments/summarize_exercise1_naive.py}. The original \path{performance_matrix.csv} summarized only Qwen3-4B and remains as a historical artifact. The available sweep script is \path{exc1_full_run.sh}. The requested Exercise 1 zip location is \missing{Ass2-1 archive path, if submitted}.
+
+\subsection{What the baseline shows}
+
+The gaps across tasks and models show that performance depends strongly on both, even before changing the agent. They do not isolate an intrinsic reasoning ability: the prompts, action semantics, task horizons, and denominators differ. In the later matched \BabyAI{} panel, inspected naive failures included turns that restored the same view and proposed actions that did not match a visible obstacle or target. Such cases motivated compact plans, observation-supported memory, and explicit feedback checks. The practical difficulty was that aggregate progression can hide invalid proposed actions and fallback moves; the evaluator was therefore updated to log both the model proposal and BALROG's executed action. No claim of benchmark-wide reasoning competence follows from this task selection.
+
+\section{Exercise 2: compact persistent planning}
+
+\paragraph{Idea in two sentences.} The agent stores at most two short subgoals, two facts copied from observations, and the expected visible outcome of its next action. On each step it compares that expectation with the current observation and returns a single legal action in a fixed \path{SUBGOALS/FACTS/EXPECTED/ACTION} format.
+
+The implementation begins with BALROG's supplied \path{custom.py} planning agent and retains its prompt builder, client, environment wrappers, and evaluator. Plan, facts, and expectation reset at each episode. This is a largely generic prompt and memory change, developed for Qwen3-4B on \BabyAI{}; one short pickup hint is \BabyAI{}-specific. It is not a learned policy. The supplied planner's free-form \path{PLAN} field could remain unchanged while its actions failed. In development seed 3 \path{goto}, it produced invalid action text on steps 11--26; BALROG's fallback kept moving forward into a visible wall. Compact planning turned a paired seed 3 \path{pickup} failure into an eight-action success, but another seed retained a left/right turn cycle. The six-episode development panel rose from 4/6 supplied-planner successes to 5/6 compact-planner successes; built-in CoT also solved 5/6 but made 22 invalid proposals. A larger Exercise 1 CoT sweep was started but not completed, so it cannot support a full-panel comparison. Few-shot and robust CoT were not evaluated. A stricter expectation instruction reduced compact planning to 3/6 and was reverted. These observations guided the frozen design, not a general efficacy claim.
+
+The first held-out panel used Qwen3-4B, seeds 11--15 for each of \path{goto}, \path{pickup}, and \path{open}, text observations, temperature zero, a 16-entry text history, and a 32-action cap. All three conditions shared task seeds and budgets. The naive output cap was 128 tokens and structured conditions used 256; measured usage appears in Table~\ref{tab:initial}. There were 15 distinct task--seed episodes per condition. The matrix reports the binary \BabyAI{} progression mean and episode-level sample SD.
+
+\begin{table}[htbp]
+\centering
+\caption{Initial held-out \BabyAI{} comparison: Qwen3-4B, 15 episodes per condition. Tokens are mean input/output per episode; time is total panel time.}
+\label{tab:initial}
+\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Condition & Success & Progression & Mean steps & Input / output & Time (s) \\
+\midrule
+Naive & 2/15 & $13.33\pm35.19$\% & 30.13 & 17,909 / 89 & 25 \\
+Compact planning (E2) & 6/15 & $40.00\pm50.71$\% & 28.33 & 21,573 / 1,201 & 142 \\
+Triggered reflection (E3) & 6/15 & $40.00\pm50.71$\% & 26.13 & 19,749 / 1,220 & 146 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Planning gained five paired successes and lost one against naive on this small panel. It used about 27\% more total input-plus-output tokens per episode and 5.7 times the panel wall time. Thus the completion gain was promising but expensive in latency. In Crafter at 50 actions on seeds 11--13, naive reached $10.61\pm6.94$\% progression, while planning reached $4.55\pm0$\%; the \BabyAI{} spatial prompt did not transfer. In one inspected Crafter trajectory the planner repeatedly predicted wood collection while using \path{Do} facing grass. These comparisons address the assignment's question about generality: the harness is reusable, but its useful action knowledge and the observed benefit were task-specific.
+
+\section{Exercise 3: feedback-triggered self-reflection}
+
+\paragraph{Idea in two sentences.} The agent invokes a critic only when an unchanged observation follows repeated interaction with a visible front obstacle, or when alternating left/right turns return to the same two views twice. The critic revises subgoals, stores a short lesson, predicts a visible outcome, and chooses the next action directly; reflection is limited to three calls per episode, six steps apart, with two retained lessons.
+
+This is a harness-level critique and revision mechanism related to verbal reflection methods such as Reflexion \cite{reflexion}, rather than a reproduction of that method. Repeated action or zero reward by itself cannot trigger it. A first design let the critic diagnose the loop but delegated the next action back to the normal actor; on development seed 1 \path{goto}, that actor immediately repeated a turn. Letting the critic choose the action broke that specific loop. A wider locked-door trigger was tried after a failed \path{open} trajectory, made eight critiques in three episodes, and solved none; it was reverted. These rejected variants are retained in the checkpoints and research notes.
+
+In the initial held-out panel, E3 matched E2's 6/15 completion count. Relative to E2 it gained one \path{goto} success, lost one \path{pickup} success, and tied on 13 episodes. The 20 critique calls are included in Table~\ref{tab:initial}'s token totals. Overlapping alternating-turn windows fell from 145 to 22, while blocked-forward pairs rose from 37 to 51 and unchanged locked-door toggle pairs stayed at 51 versus 48. These windows describe behavior within trajectories; they are not independent statistical observations. In \path{goto} seed 11, a critique selected forward movement after a turn cycle and the goal was reached on action 32. In \path{pickup} seed 13, a critique recommended forward movement despite a front wall and the episode failed. Reflection altered behavior, but its revisions were not consistently correct.
+
+\begin{table}[htbp]
+\centering
+\caption{Initial E2/E3 performance matrix: mean progression $\pm$ episode-level sample SD (percent). \BabyAI{} rows show binary mission completion; Crafter counts achievements. The 14B/Phi-4 rows are limited checks on \texttt{goto}/\texttt{pickup} seeds 11--13.}
+\label{tab:modelcheck}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}llrccc@{}}
+\toprule
+Local model & Benchmark & $n$ & Naive & E2 planning & E3 reflection \\
+\midrule
+Qwen3-4B & \BabyAI{} & 15 & $13.33\pm35.19$ & $40.00\pm50.71$ & $40.00\pm50.71$ \\
+Qwen3-4B & Crafter & 3 & $10.61\pm6.94$ & $4.55\pm0$ & $4.55\pm0$ \\
+Qwen3-14B-AWQ & \BabyAI{} & 6 & $66.67\pm51.64$ & $16.67\pm40.82$ & $33.33\pm51.64$ \\
+Phi-4-mini-instruct & \BabyAI{} & 6 & $0\pm0$ & $33.33\pm51.64$ & $16.67\pm40.82$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+The model check shows brittleness rather than a model-independent gain. Qwen3-14B planning often alternated between two views for a whole episode; one critique rescued \path{goto} seed 12, but naive still did better overall. Phi-4's critic turned away from a key directly ahead in \path{pickup} seed 12, changing a planning success into a reflective failure. The first action in both runs was a malformed compound proposal and BALROG executed a separate fallback action. In Crafter the E3 trigger never fired; equal E2/E3 progression there is not evidence that a Crafter critique helps. The complete trajectory index is \path{research/trajectory_index.md}.
+
+\paragraph{Optional reflection question.} Human and LLM reflection can both compare a planned outcome with observed feedback and change a future action. In this experiment the LLM's ``lesson'' was a short text state inside an engineered loop, without an independent check that its diagnosis was true; the harmful critiques show why that distinction matters.
+
+\section{Frozen follow-up: grounded actions, history, and goal state}
+
+The initial results motivated a more powerful paired study. The supplied \BabyAI{} guide described pickup as acting on an object ``below'' the agent and suggested \path{toggle} for pickup, while the installed MiniGrid implementation picks up a portable object in the front cell \cite{minigrid}. Three off-by-default changes were tested against the frozen E2/E3 controls: a corrected guide, a narrow target-pickup substitution, and a one-call \path{STATE_VS_GOAL} line. The last is inspired by ReflAct's goal-state reflection \cite{reflact}, not a reproduction of its full method. The narrow rule substitutes \path{pick up} only if the mission begins with \path{pick up}, the named target is observed one step forward, the agent is not carrying it, and the model proposed \path{go forward} or \path{toggle}. History retains 4, 16, or 32 observations.
+
+The 75-episode pilot used seeds 20--24 on three tasks. Manual inspection confirmed that the corrected guide appeared in full prompts, the pickup rule fired only on the specified target, and the largest history-32 input call was 1,689 tokens, below the 8,192-token server context. On pilot \path{pickup} seed 24, the model proposed \path{go forward} with the grey box directly ahead; the rule executed \path{pick up} and the next observation reported carrying the box. Other pilot trajectories exposed turn loops untouched by this rule. Agent prompts and action logic were then frozen before evaluation.
+
+The primary panel paired 60 new seeds (30--89) for each of three \BabyAI{} tasks and eight conditions, with 32 actions per episode, Qwen3-4B, temperature zero, text observations, and a 256-token output cap. Table~\ref{tab:primary} gives all 1,440 primary episodes. Tokens are input plus output across 180 episodes per condition; wall time is the sum of episode times, not an isolated speed benchmark.
+
+\begin{table}[htbp]
+\centering
+\caption{Primary follow-up matrix: successes out of 60 per task. All conditions share task seeds and a 32-action budget.}
+\label{tab:primary}
+\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Condition & \path{goto} & \path{pickup} & \path{open} & Tokens (M) & Time (min) \\
+\midrule
+Naive & 28 & 26 & 4 & 2.46 & 7.5 \\
+Frozen E2 plan & 40 & 34 & 1 & 3.21 & 25.9 \\
+Frozen E3 critic & 45 & 35 & 0 & 3.24 & 27.7 \\
+Corrected guide, history 4 & 39 & 33 & 13 & 2.14 & 25.0 \\
+Corrected guide, history 16 & 40 & 29 & 3 & 3.45 & 27.3 \\
+Corrected guide, history 32 & 38 & 26 & 2 & 4.04 & 27.3 \\
+Guide + pickup rule & 38 & 29 & 5 & 3.42 & 26.6 \\
+Guide + goal-state line & 39 & 29 & 3 & 3.71 & 37.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The predeclared primary estimand was corrected-guide minus frozen-plan success on paired \path{pickup} seeds: $29/60-34/60=-8.3$ percentage points, with 10 guide gains, 15 losses, 35 ties, a 95\% paired seed-bootstrap interval of $[-25.0,+8.3]$ points, and exact McNemar $p=0.424$. The data do not support a pickup success gain from the corrected guide. The guide also changed \path{goto} and \path{open} behavior, so even a locally accurate instruction can alter navigation elsewhere.
+
+Secondary results were equally cautious. Guide plus pickup rule and guide alone each solved 29/60 pickup episodes (three paired gains, three losses, exact McNemar $p=1$), even though the rule made 15 logged primary substitutions, each followed by a carry observation and success. The rule fixes an eligible local wrong action; activation is selected by the agent's state and cannot estimate its overall causal effect. The one-call goal-state line changed three-task success by $-0.6$ points relative to guide history 16 (95\% seed-block interval $[-7.2,+6.1]$, Holm-adjusted $p=1$) and increased tokens from 3.45M to 3.71M and time from 27.3 to 37.3 minutes. Four-entry history changed three-task success by $+7.2$ points (interval $[0,+14.4]$; Holm-adjusted $p=0.320$) and used 2.14M rather than 3.45M tokens. Its \path{open} result, 13/60 versus 3/60 at history 16, is exploratory and should be replicated. History 32 changed three-task success by $-3.3$ points (interval $[-8.9,+1.7]$; Holm-adjusted $p=0.941$) while using 4.04M tokens. The large binary-outcome SD is expected; the paired differences and intervals are more informative than a request for low episode-level SD.
+
+On the same primary panel the frozen E3 critic solved 80/180 missions versus 75/180 for frozen E2 planning. It used 197 reflection-mode calls and 3.24M tokens versus 3.21M tokens for E2, with 27.7 versus 25.9 minutes of episode time. Triggered critiques selected actions directly, so their calls replaced ordinary action calls rather than adding a second call that step. Overlapping alternating-turn windows fell from 1,210 to 156. This is a substantial observed loop-pattern reduction with only a small, task-dependent completion difference (\path{goto}: 45 versus 40; \path{pickup}: 35 versus 34; \path{open}: 0 versus 1).
+
+Invalid model proposals were uncommon compared with long, legal but unproductive trajectories: among 180 primary episodes per condition, frozen E2 had 2, frozen E3 had 1, guide history 16 had 7, and guide plus pickup rule had 7. The rule's 15 logged substitutions are counted separately from these invalid proposals. The turn-loop windows overlap within episodes and must not be treated as independent evidence of failure.
+
+\begin{table}[htbp]
+\centering
+\caption{Broader \BabyAI{} transfer: 12 new seeds per task, at most 128 actions. Entries are successes out of 12.}
+\label{tab:broad}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+Condition & \path{goto} & \path{pickup} & \path{open} & \path{putnext} & \path{pick_up_seq_go_to} & Total / 60 & Tokens (M) \\
+\midrule
+Frozen E2 plan & 10 & 7 & 1 & 0 & 2 & 20 & 4.59 \\
+Corrected guide & 8 & 8 & 1 & 0 & 4 & 21 & 4.61 \\
+Guide + pickup rule & 6 & 7 & 1 & 0 & 6 & 20 & 4.79 \\
+Guide + goal-state line & 7 & 4 & 1 & 0 & 1 & 13 & 5.43 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+The broader panel (Table~\ref{tab:broad}) shows a \path{putnext} floor in all conditions, even at 128 actions; the goal-state prompt performed worse overall. On Crafter seeds 120--129 at 50 actions, frozen planning reached $0.0591\pm0.0307$ achievement progression and the goal-state version $0.0500\pm0.0144$ (sample SD across episodes); the paired difference was $-0.0091$ of the 22-achievement scale, with a seed-bootstrap 95\% interval $[-0.0227,0]$. It used 734,350 rather than 696,416 tokens and 247 rather than 185 seconds. This small transfer panel gives no evidence that its extra cost is worthwhile.
+
+To audit temperature-zero repeatability, five \path{goto} and five \path{pickup} seeds were run three further times for frozen planning and guide plus rule. Across the three consecutive repeats, success did not vary within any of the 20 task--seed--condition cells. Comparing those repeats with the earlier primary rollout, success changed in 3/20 cells and executed action sequences differed in 12/20. For \path{pickup} seed 31, identical initial prompts yielded different first actions and flipped the frozen planner from a primary success to three repeat failures. Thus paired seeds control environment instances, but one rollout per condition still contains inference variation.
+
+\section{Interpretation, limitations, and next steps}
+
+The initial 15-episode E2 gain did not imply that every planner modification would help. In the larger follow-up, the corrected guide was semantically right but reduced pickup success on average; the narrow action rule produced observable local corrections without a net success gain; and the ReflAct-inspired line added cost while still sometimes describing a loop without escaping it. The E3 critic was most effective at the specific alternating-turn pattern it targeted. It was less reliable on door geometry and did not produce a large overall completion gain. Harness design is therefore difficult mainly because a useful diagnosis must be converted into a correct action in the current coordinate frame.
+
+The \BabyAI{} success variable is binary and noisy, some tasks have near-zero completion, and multiple prompt variants were examined. The prespecified primary test and Holm-adjusted secondary tests reduce selective interpretation but do not remove temperature-zero inference variation. The 12-seed task-transfer and 10-seed Crafter panels remain descriptive. Different action budgets prevent direct comparison between the 32-action primary panel and 128-action broader panel. The local token and elapsed-time measures capture inference cost on this machine, not paid API cost. The next focused test should predeclare an independent \path{open} panel for the history-4 result and audit inference repeatability; after that, a front-cell and door-geometry policy is a more plausible improvement than adding more ungrounded reflective prose.
+
+Agentic LLMs can use short plans and targeted critiques to solve some grounded tasks, but these experiments show brittle spatial action selection and prompt sensitivity. Reflection is useful when its trigger identifies a genuine loop and its chosen action changes the state; an inaccurate critique can actively harm an otherwise successful path. The evidence supports bounded, observation-grounded reflection rather than treating introspective text as evidence of progress.
+
+\section{Reproducibility and inspected evidence}
+
+The E2/E3 agent and prompts are in \path{BALROG/balrog/agents/custom.py}; exercise-specific packages are \path{deliverables/Ass2-2.zip} and \path{deliverables/Ass2-3.zip}, with READMEs. The initial matrix is \path{experiment_results/performance_matrix.csv}; the follow-up matrices and paired tests are \path{experiment_results/followup_v1/performance_matrix.csv} and \path{paired_comparisons.csv}. The latter directory's \path{manifest.json} pins settings and behavior-affecting hashes. Reproduce the frozen follow-up with \path{bash experiments/run_followup_overnight.sh}; the command resumes verified episodes and took 5.77 wall hours for 1,760 final episodes. It logged 55,963 LLM calls, 44.57M input tokens, and 2.51M output tokens across all panels. The pilot and adaptation logs are \path{research_notes.md} and \path{research/followup_notes.md}.
+
+For manual inspection, each custom-agent episode has a complete \path{llm_calls.jsonl} containing full prompts, raw replies, call roles, and input/output tokens, beside BALROG's CSV trajectory. Portable raw-call samples are \path{research/raw_llm_samples.jsonl}, \path{research/followup_raw_llm_samples.jsonl}, and \path{research/followup_heldout_raw_samples.jsonl}. The CSV separates the model's proposed action, any harness substitution and its reason, and BALROG's finally executed fallback action. Specific inspected examples are \href{run:../experiment_results/followup_v1/episodes/babyai/pickup/guide_gate/seed_033/rep_0/llm_calls.jsonl}{pickup seed 33, rule success}; \href{run:../experiment_results/followup_v1/episodes/babyai/pickup/guide/seed_034/rep_0/llm_calls.jsonl}{pickup seed 34, guide failure}; \href{run:../experiment_results/followup_v1/episodes/babyai/open/guide_h4/seed_035/rep_0/llm_calls.jsonl}{open seed 35, history-4 success}; and \href{run:../experiment_results/followup_v1/episodes/babyai/goto/guide_goal/seed_031/rep_0/llm_calls.jsonl}{goto seed 31, goal-state loop}. The exact paired paths, other successes and failures, and observations are indexed in \path{research/followup_report.md} and \path{research/trajectory_index.md}. These examples explain mechanisms; the paired panels estimate outcome differences.
+
+\begin{thebibliography}{9}
+\bibitem{assignment} Leiden University. \emph{Agentic LLM Assignment 2: Reasoning}. Course handout, June 2, 2026. Local copy: \path{docs/Ass2Reasoning.pdf}.
+\bibitem{book} M. van Duijn, M. van der Meer, A. Plaat, and N. van Stein. \emph{Agentic Large Language Models}. Course book, 2026. Local copy: \path{docs/Agentic_LLM_Book-full.pdf}.
+\bibitem{balrog} D. Paglieri et al. ``BALROG: Benchmarking Agentic LLM and VLM Reasoning On Games.'' ICLR, 2025. \url{https://arxiv.org/abs/2411.13543}.
+\bibitem{reflexion} N. Shinn et al. ``Reflexion: Language Agents with Verbal Reinforcement Learning.'' \emph{NeurIPS} 36, 2024. \url{https://arxiv.org/abs/2303.11366}.
+\bibitem{reflact} J. Kim et al. ``ReflAct: World-Grounded Decision Making in LLM Agents via Goal-State Reflection.'' EMNLP, 2025. \url{https://arxiv.org/abs/2505.15182}.
+\bibitem{minigrid} Farama Foundation. ``MiniGridEnv.step'', MiniGrid source code. \url{https://github.com/Farama-Foundation/Minigrid/blob/main/minigrid/minigrid_env.py}.
+\end{thebibliography}
+
+\end{document}
