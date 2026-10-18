@@ -1,0 +1,192 @@
+diff --git a/balrog/agents/chain_of_thought.py b/balrog/agents/chain_of_thought.py
+index 496e695..e737e5c 100644
+--- a/balrog/agents/chain_of_thought.py
++++ b/balrog/agents/chain_of_thought.py
+@@ -1,4 +1,6 @@
+ import copy
++import json
++import os
+ import re
+ 
+ from balrog.agents.base import BaseAgent
+@@ -50,6 +52,16 @@ Finally, provide a single output action at the end of the message in the form of
+         # Extract the final answer from the CoT reasoning
+         final_answer = self._extract_final_answer(cot_reasoning)
+ 
++        log_path = os.environ.get("BALROG_LLM_LOG")
++        if log_path:
++            with open(log_path, "a") as file:
++                file.write(json.dumps({
++                    "role": "action", "messages": [{"role": m.role, "content": m.content} for m in messages],
++                    "raw_response": cot_reasoning.completion,
++                    "model_action": final_answer.completion, "harness_action": final_answer.completion,
++                    "override_reason": "", "input_tokens": cot_reasoning.input_tokens,
++                    "output_tokens": cot_reasoning.output_tokens,
++                }) + "\n")
+         return final_answer
+ 
+     def _extract_final_answer(self, reasoning):
+diff --git a/balrog/agents/custom.py b/balrog/agents/custom.py
+index b785347..594545a 100644
+--- a/balrog/agents/custom.py
++++ b/balrog/agents/custom.py
+@@ -1,71 +1,12 @@
+-import re
++"""BALROG entry point; research implementations live in exercises/."""
+ 
+-from balrog.agents.base import BaseAgent
++import sys
++from pathlib import Path
+ 
++# Also support invoking BALROG/eval.py directly from its own checkout.
++sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
++from exercises.common.agent_registry import create_research_agent
+ 
+-class CustomAgent(BaseAgent):
+-    """An agent that generates actions and plans based on observations with a customizable approach."""
+ 
+-    def __init__(self, client_factory, prompt_builder):
+-        super().__init__(client_factory, prompt_builder)
+-        self.client = client_factory()
+-        self.plan = None
+-
+-    def act(self, obs, prev_action=None):
+-        """Generate the next action and update the plan based on the current observation.
+-
+-        Args:
+-            obs (dict): The current observation in the environment.
+-            prev_action (str, optional): The previous action taken.
+-
+-        Returns:
+-            LLMResponse: The response containing the updated plan and selected action.
+-        """
+-        if prev_action:
+-            self.prompt_builder.update_action(prev_action)
+-        self.prompt_builder.update_observation(obs)
+-
+-        plan_text = f"Current Plan:\n{self.plan}\n" if self.plan else "You have no plan yet.\n"
+-
+-        planning_instructions = """
+-Review the current plan above if present. Decide whether to continue with it or make changes.
+-If you make changes, provide the updated plan. Then, provide the next action to take.
+-You must output an action at every step.
+-Format your answer in the following way:
+-PLAN: <your updated plan if changed, or "No changes to the plan." if the current plan is good>
+-ACTION: <your next action>
+-        """.strip()
+-
+-        messages = self.prompt_builder.get_prompt()
+-        if messages and messages[-1].role == "user":
+-            messages[-1].content += "\n\n" + plan_text + "\n" + planning_instructions
+-
+-        response = self.client.generate(messages)
+-
+-        # Extract the plan and action from the LLM's response
+-        plan, action = self._extract_plan_and_action(response.completion)
+-
+-        # Update the internal plan if it has changed
+-        if plan != "No changes to the plan.":
+-            self.plan = plan
+-
+-        # Save the plan in the response.reasoning field and the action in response.completion
+-        response = response._replace(reasoning=plan, completion=action)
+-        return response
+-
+-    def _extract_plan_and_action(self, response_text):
+-        """Extract the plan and action from the LLM's response text.
+-
+-        Args:
+-            response_text (str): The response text from the LLM.
+-
+-        Returns:
+-            tuple: A tuple containing the extracted plan and action.
+-        """
+-        plan_match = re.search(r"PLAN:\s*(.*?)(?=\nACTION:|\Z)", response_text, re.IGNORECASE | re.DOTALL)
+-        action_match = re.search(r"ACTION:\s*(.*)", response_text, re.IGNORECASE | re.DOTALL)
+-
+-        plan = plan_match.group(1).strip() if plan_match else "No changes to the plan."
+-        action = action_match.group(1).strip() if action_match else None
+-
+-        return plan, action
++def CustomAgent(client_factory, prompt_builder):
++    return create_research_agent(client_factory, prompt_builder)
+diff --git a/balrog/agents/naive.py b/balrog/agents/naive.py
+index 1d09f24..647da18 100644
+--- a/balrog/agents/naive.py
++++ b/balrog/agents/naive.py
+@@ -1,4 +1,6 @@
+ import copy
++import json
++import os
+ import re
+ 
+ from balrog.agents.base import BaseAgent
+@@ -40,6 +42,20 @@ You always have to output one of the above actions at a time and no other text.
+ 
+         final_answer = self._extract_final_answer(response)
+ 
++        log_path = os.environ.get("BALROG_LLM_LOG")
++        if log_path:
++            with open(log_path, "a") as file:
++                file.write(json.dumps({
++                    "role": "action",
++                    "messages": [{"role": m.role, "content": m.content} for m in messages],
++                    "raw_response": response.completion,
++                    "model_action": final_answer.completion,
++                    "harness_action": final_answer.completion,
++                    "override_reason": "",
++                    "input_tokens": response.input_tokens,
++                    "output_tokens": response.output_tokens,
++                }) + "\n")
++
+         return final_answer
+ 
+     def _extract_final_answer(self, answer):
+diff --git a/balrog/evaluator.py b/balrog/evaluator.py
+index a9a937a..b626f89 100644
+--- a/balrog/evaluator.py
++++ b/balrog/evaluator.py
+@@ -286,7 +286,8 @@ class Evaluator:
+         # Open the CSV file and write the header
+         with open(csv_filename, mode="w", newline="", encoding="utf-8") as csv_file:
+             csv_writer = csv.writer(csv_file, escapechar="˘", quoting=csv.QUOTE_MINIMAL)
+-            csv_writer.writerow(["Step", "Action", "Reasoning", "Observation", "Reward", "Done"])
++            csv_writer.writerow(["Step", "Action", "Executed Action", "Reasoning", "Observation", "Reward", "Done",
++                                 "Model Action", "Override Reason"])
+ 
+             # If the agent is an FewShotAgent, load the in-context learning episode
+             if isinstance(agent, FewShotAgent):
+@@ -307,7 +308,8 @@ class Evaluator:
+             action = None
+             for step in range(max_steps_per_episode):
+                 response = agent.act(obs, prev_action=action)
+-                action = env.check_action_validity(response.completion)
++                proposed_action = response.completion
++                action = env.check_action_validity(proposed_action)
+                 reasoning = response.reasoning if hasattr(response, "reasoning") else ""
+ 
+                 episode_log["action_frequency"][action] += 1
+@@ -323,19 +325,21 @@ class Evaluator:
+                 obs["text"]["long_term_context"] = (
+                     f"\n\nYour previous output did not contain a valid action. Defaulted to action: {action}\n\nObservation:\n"
+                     + obs["text"]["long_term_context"]
+-                    if (action != response.completion) and (self.config.eval.feedback_on_invalid_action)
++                    if (action != proposed_action) and (self.config.eval.feedback_on_invalid_action)
+                     else obs["text"]["long_term_context"]
+                 )
+-                action = response.completion
+                 # Write the step data to the CSV file
+                 csv_writer.writerow(
+                     [
+                         step,
++                        proposed_action,
+                         action,
+                         reasoning,
+                         obs["text"]["long_term_context"],
+                         reward,
+                         done,
++                        getattr(response, "model_action", proposed_action),
++                        getattr(response, "override_reason", ""),
+                     ]
+                 )
+ 
