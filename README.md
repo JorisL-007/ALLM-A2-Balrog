@@ -4,6 +4,8 @@
 
 For result folders, summaries, and raw episode logs, see [Results guide](RESULTS_GUIDE.md).
 
+The [assignment report outline](REPORT_OUTLINE.md) maps the research and completed results to the assignment questions.
+
 Read the study in order:
 
 | Stage | Question | Guide and reproduction commands |
