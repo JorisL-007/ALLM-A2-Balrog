@@ -1,0 +1,45 @@
+{
+    "task": "BabyAI-MixedTrainLocal-v0/open",
+    "action_frequency": {
+        "go forward": 4,
+        "turn right": 1,
+        "pick up": 1,
+        "turn left": 1,
+        "toggle": 1
+    },
+    "input_tokens": 4123,
+    "output_tokens": 1131,
+    "done": true,
+    "episode_return": 0.94375,
+    "num_steps": 8,
+    "failed_candidates": [
+        "Lets analyze the observation step by step:\n\nCurrent Observation:\n A wall  steps left\n A locked blue door  steps forward\n A blue key  step right and  step forward\n\nStep : Identify the goal  open the door The door is locked so we likely need a key to open it\n\nStep : Locate the key The blue key is at  step right and  step forward from the current position That means we need to move toward the key to pick it up\n\nStep : To pick up the key we must first move to the position where the key is located The key is not directly in front so we need to navigate there\n\nStep : The wall is  steps left  we cannot go left as that would lead into a wall So we must avoid going left\n\nThe door is  steps forward  we can go forward but we need the key first to open it\n\nSo the path to the key:\n From current position go  step right  now at right\n Then go  step forward  now at right and forward where the key is\n\nWe can go right then"
+    ],
+    "mission": "open the door",
+    "progression": 1.0,
+    "process_num": null,
+    "seed": 58,
+    "agent": {
+        "type": "cot",
+        "remember_cot": true,
+        "max_text_history": 16,
+        "max_image_history": 0,
+        "max_cot_history": 1,
+        "max_icl_history": 1000,
+        "cache_icl": false
+    },
+    "client": {
+        "client_name": "vllm",
+        "model_id": "Qwen/Qwen3-4B-Instruct-2507-FP8",
+        "base_url": "http://127.0.0.1:8097/v1",
+        "generate_kwargs": {
+            "temperature": 0,
+            "max_tokens": 256,
+            "thinking_budget": null
+        },
+        "timeout": 60,
+        "max_retries": 3,
+        "delay": 2,
+        "alternate_roles": false
+    }
+}

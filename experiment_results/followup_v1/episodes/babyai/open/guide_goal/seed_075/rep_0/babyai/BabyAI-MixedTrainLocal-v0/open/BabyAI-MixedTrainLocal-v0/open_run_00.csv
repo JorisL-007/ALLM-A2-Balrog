@@ -1,0 +1,270 @@
+Step,Action,Executed Action,Reasoning,Observation,Reward,Done,Model Action,Override Reason
+0,go forward,go forward,"SUBGOALS: get yellow key, open yellow door  
+FACTS: a locked yellow door 1 step left and 2 steps forward; a yellow key 3 steps right and 1 step forward  
+EXPECTED: reach yellow key to pick it up  
+STATE_VS_GOAL: key not in possession; door not opened  
+ACTION: go forward
+[stored subgoals: get yellow key, open yellow door; facts: a locked yellow door 1 step left and 2 steps forward; a yellow key 3 steps right and 1 step forward]","a wall 1 step forward
+a wall 3 steps left
+a locked yellow door 1 step left and 1 step forward
+a yellow key 3 steps right",0,False,go forward,
+1,turn right,turn right,"SUBGOALS: get yellow key, open yellow door  
+FACTS: a wall 1 step forward; a locked yellow door 1 step left and 1 step forward; a yellow key 3 steps right  
+EXPECTED: reach yellow key to pick it up  
+STATE_VS_GOAL: door still locked, key not picked up; previous action did not achieve goal  
+ACTION: turn right
+[stored subgoals: get yellow key, open yellow door; facts: a wall 1 step forward; a locked yellow door 1 step left and 1 step forward]","a wall 1 step left
+a yellow key 3 steps forward",0,False,turn right,
+2,go forward,go forward,"SUBGOALS: pick up yellow key, open yellow door  
+FACTS: a yellow key 3 steps forward; a locked yellow door 1 step left and 1 step forward  
+EXPECTED: reach and pick up yellow key  
+STATE_VS_GOAL: key not in reach; door still locked; previous turn did not achieve goal  
+ACTION: go forward
+[stored subgoals: pick up yellow key, open yellow door; facts: a yellow key 3 steps forward; a locked yellow door 1 step left and 1 step forward]","a wall 1 step left
+a yellow key 2 steps forward",0,False,go forward,
+3,turn left,turn left,"SUBGOALS: pick up yellow key, open yellow door  
+FACTS: a wall 1 step left; a yellow key 2 steps forward  
+EXPECTED: reach yellow key in front  
+STATE_VS_GOAL: key is not in front; subgoal unmet  
+ACTION: turn left
+[stored subgoals: pick up yellow key, open yellow door; facts: a wall 1 step left; a yellow key 2 steps forward]","a wall 1 step forward
+a locked yellow door 2 steps left and 1 step forward
+a yellow key 2 steps right",0,False,turn left,
+4,turn right,turn right,"SUBGOALS: pick up yellow key, open yellow door  
+FACTS: a wall 1 step forward; a yellow key 2 steps right  
+EXPECTED: reach yellow key in front  
+STATE_VS_GOAL: key not in front; door still locked; previous turn did not advance key acquisition  
+ACTION: turn right
+[stored subgoals: pick up yellow key, open yellow door; facts: a wall 1 step forward; a yellow key 2 steps right]","a wall 1 step left
+a yellow key 2 steps forward",0,False,turn right,
+5,go forward,go forward,"SUBGOALS: pick up yellow key, open yellow door  
+FACTS: a wall 1 step left; a yellow key 2 steps forward  
+EXPECTED: reach and pick up yellow key  
+STATE_VS_GOAL: yellow key not in front; subgoal not met; action needed  
+ACTION: go forward
+[stored subgoals: pick up yellow key, open yellow door; facts: a wall 1 step left; a yellow key 2 steps forward]","a wall 1 step left
+a yellow key 1 step forward",0,False,go forward,
+6,pick up,pick up,"SUBGOALS: pick up yellow key, open yellow door  
+FACTS: a wall 1 step left; a yellow key 1 step forward  
+EXPECTED: pick up yellow key  
+STATE_VS_GOAL: yellow key is in front; not picked up yet; subgoal not met  
+ACTION: pick up
+[stored subgoals: pick up yellow key, open yellow door; facts: a wall 1 step left; a yellow key 1 step forward]","You carry a yellow key
+a wall 2 steps forward
+a wall 1 step left",0,False,pick up,
+7,turn left,turn left,"SUBGOALS: open yellow door, go to yellow door  
+FACTS: a wall 1 step left; a yellow key 1 step forward  
+EXPECTED: reach yellow door with key  
+STATE_VS_GOAL: key picked up, not at door; goal not met  
+ACTION: turn left
+[stored subgoals: open yellow door, go to yellow door; facts: a wall 1 step left; a yellow key 1 step forward]","You carry a yellow key
+a wall 1 step forward
+a wall 2 steps right
+a locked yellow door 3 steps left and 1 step forward",0,False,turn left,
+8,turn left,turn left,"SUBGOALS: open yellow door  
+FACTS: a wall 1 step forward; a locked yellow door 3 steps left and 1 step forward  
+EXPECTED: reach door to toggle it  
+STATE_VS_GOAL: door is locked, not reachable; key is carried but not used  
+ACTION: turn left
+[stored subgoals: open yellow door; facts: a wall 1 step forward; a locked yellow door 3 steps left and 1 step forward]","You carry a yellow key
+a wall 5 steps forward
+a wall 1 step right
+a locked yellow door 1 step right and 3 steps forward",0,False,turn left,
+9,go forward,go forward,"SUBGOALS: reach yellow door, use yellow key to open it  
+FACTS: a wall 1 step forward; a locked yellow door 1 step right and 3 steps forward  
+EXPECTED: door becomes open after key is toggled  
+STATE_VS_GOAL: door still locked, key carried but not used  
+ACTION: go forward
+[stored subgoals: reach yellow door, use yellow key to open it; facts: a wall 1 step forward; a locked yellow door 1 step right and 3 steps forward]","You carry a yellow key
+a wall 4 steps forward
+a wall 1 step right
+a locked yellow door 1 step right and 2 steps forward",0,False,go forward,
+10,turn right,turn right,"SUBGOALS: reach yellow door, use yellow key to open it  
+FACTS: You carry a yellow key; a locked yellow door 1 step right and 2 steps forward  
+EXPECTED: toggle to open the door  
+STATE_VS_GOAL: door is still locked; key is held but not used  
+ACTION: turn right
+[stored subgoals: reach yellow door, use yellow key to open it; facts: You carry a yellow key; a locked yellow door 1 step right and 2 steps forward]","You carry a yellow key
+a wall 1 step forward
+a wall 3 steps right
+a locked yellow door 2 steps left and 1 step forward",0,False,turn right,
+11,toggle,toggle,"SUBGOALS: reach yellow door, open it with yellow key  
+FACTS: You carry a yellow key; a locked yellow door 1 step right and 2 steps forward  
+EXPECTED: toggle to open the door  
+STATE_VS_GOAL: door is locked, key is carried, not yet used  
+ACTION: toggle
+[stored subgoals: reach yellow door, open it with yellow key; facts: You carry a yellow key; a locked yellow door 1 step right and 2 steps forward]","You carry a yellow key
+a wall 1 step forward
+a wall 3 steps right
+a locked yellow door 2 steps left and 1 step forward",0,False,toggle,
+12,go forward,go forward,"SUBGOALS: reach yellow door, open it with yellow key  
+FACTS: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward  
+EXPECTED: door opens when toggled  
+STATE_VS_GOAL: door still locked; toggle did not open it  
+ACTION: go forward
+[stored subgoals: reach yellow door, open it with yellow key; facts: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward]","You carry a yellow key
+a wall 1 step forward
+a wall 3 steps right
+a locked yellow door 2 steps left and 1 step forward",0,False,go forward,
+13,toggle,toggle,"SUBGOALS: open yellow door with yellow key  
+FACTS: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward  
+EXPECTED: toggle to open the door  
+STATE_VS_GOAL: door remains locked; key is carried but not used  
+ACTION: toggle
+[stored subgoals: open yellow door with yellow key; facts: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward]","You carry a yellow key
+a wall 1 step forward
+a wall 3 steps right
+a locked yellow door 2 steps left and 1 step forward",0,False,toggle,
+14,toggle,toggle,"SUBGOALS: open yellow door with yellow key  
+FACTS: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward  
+EXPECTED: door becomes unlocked or open after toggle  
+STATE_VS_GOAL: Door remains locked; toggle did not open it  
+ACTION: toggle
+[stored subgoals: open yellow door with yellow key; facts: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward]","You carry a yellow key
+a wall 1 step forward
+a wall 3 steps right
+a locked yellow door 2 steps left and 1 step forward",0,False,toggle,
+15,toggle,toggle,"SUBGOALS: open yellow door with yellow key  
+FACTS: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward  
+EXPECTED: door becomes unlocked after toggle  
+STATE_VS_GOAL: door remains locked; subgoal not met; toggle failed to open  
+ACTION: toggle
+[stored subgoals: open yellow door with yellow key; facts: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward]","You carry a yellow key
+a wall 1 step forward
+a wall 3 steps right
+a locked yellow door 2 steps left and 1 step forward",0,False,toggle,
+16,go forward,go forward,"SUBGOALS: use yellow key to open yellow door  
+FACTS: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward  
+EXPECTED: door becomes unlocked after key is used  
+STATE_VS_GOAL: locked door remains; key is available but not used  
+ACTION: go forward
+[stored subgoals: use yellow key to open yellow door; facts: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward]","You carry a yellow key
+a wall 1 step forward
+a wall 3 steps right
+a locked yellow door 2 steps left and 1 step forward",0,False,go forward,
+17,turn left,turn left,"SUBGOALS: use yellow key to open yellow door  
+FACTS: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward  
+EXPECTED: door becomes unlocked after key is used  
+STATE_VS_GOAL: door remains locked; key is held but not used on door  
+ACTION: turn left
+[stored subgoals: use yellow key to open yellow door; facts: You carry a yellow key; a locked yellow door 2 steps left and 1 step forward]","You carry a yellow key
+a wall 4 steps forward
+a wall 1 step right
+a locked yellow door 1 step right and 2 steps forward",0,False,turn left,
+18,toggle,toggle,"SUBGOALS: use yellow key to open yellow door  
+FACTS: You carry a yellow key; a locked yellow door 1 step right and 2 steps forward  
+EXPECTED: door becomes unlocked after key is used  
+STATE_VS_GOAL: door remains locked; subgoal not met; no progress  
+ACTION: toggle
+[stored subgoals: use yellow key to open yellow door; facts: You carry a yellow key; a locked yellow door 1 step right and 2 steps forward]","You carry a yellow key
+a wall 4 steps forward
+a wall 1 step right
+a locked yellow door 1 step right and 2 steps forward",0,False,toggle,
+19,go forward,go forward,"SUBGOALS: use yellow key to open yellow door  
+FACTS: You carry a yellow key; a locked yellow door 1 step right and 2 steps forward  
+EXPECTED: door becomes unlocked after key is used  
+STATE_VS_GOAL: door remains locked; key is held but not used on door  
+ACTION: go forward
+[stored subgoals: use yellow key to open yellow door; facts: You carry a yellow key; a locked yellow door 1 step right and 2 steps forward]","You carry a yellow key
+a wall 3 steps forward
+a wall 1 step right
+a locked yellow door 1 step right and 1 step forward",0,False,go forward,
+20,toggle,toggle,"SUBGOALS: use yellow key to open yellow door  
+FACTS: You carry a yellow key; a locked yellow door 1 step right and 1 step forward  
+EXPECTED: door becomes unlocked after toggle  
+STATE_VS_GOAL: door still locked; subgoal not met; action needed  
+ACTION: toggle
+[stored subgoals: use yellow key to open yellow door; facts: You carry a yellow key; a locked yellow door 1 step right and 1 step forward]","You carry a yellow key
+a wall 3 steps forward
+a wall 1 step right
+a locked yellow door 1 step right and 1 step forward",0,False,toggle,
+21,toggle,toggle,"SUBGOALS: use yellow key to open yellow door  
+FACTS: You carry a yellow key; a locked yellow door 1 step right and 1 step forward  
+EXPECTED: door becomes unlocked after using key  
+STATE_VS_GOAL: door remains locked; key is available but not used  
+ACTION: toggle
+[stored subgoals: use yellow key to open yellow door; facts: You carry a yellow key; a locked yellow door 1 step right and 1 step forward]","You carry a yellow key
+a wall 3 steps forward
+a wall 1 step right
+a locked yellow door 1 step right and 1 step forward",0,False,toggle,
+22,toggle,toggle,"SUBGOALS: use yellow key to open yellow door  
+FACTS: You carry a yellow key; a locked yellow door 1 step right and 1 step forward  
+EXPECTED: door becomes unlocked after key is used  
+STATE_VS_GOAL: locked door remains; key is held but not applied to door  
+ACTION: toggle
+[stored subgoals: use yellow key to open yellow door; facts: You carry a yellow key; a locked yellow door 1 step right and 1 step forward]","You carry a yellow key
+a wall 3 steps forward
+a wall 1 step right
+a locked yellow door 1 step right and 1 step forward",0,False,toggle,
+23,go forward,go forward,"SUBGOALS: use yellow key to open yellow door  
+FACTS: You carry a yellow key; a locked yellow door 1 step right and 1 step forward  
+EXPECTED: door becomes unlocked after key is used  
+STATE_VS_GOAL: locked door remains; key is held but not used on door  
+ACTION: go forward
+[stored subgoals: use yellow key to open yellow door; facts: You carry a yellow key; a locked yellow door 1 step right and 1 step forward]","You carry a yellow key
+a wall 2 steps forward
+a locked yellow door 1 step right",0,False,go forward,
+24,toggle,toggle,"SUBGOALS: use yellow key to open yellow door  
+FACTS: You carry a yellow key; a locked yellow door 1 step right  
+EXPECTED: door opens after toggle  
+STATE_VS_GOAL: locked door remains; key available but not used  
+ACTION: toggle
+[stored subgoals: use yellow key to open yellow door; facts: You carry a yellow key; a locked yellow door 1 step right]","You carry a yellow key
+a wall 2 steps forward
+a locked yellow door 1 step right",0,False,toggle,
+25,toggle,toggle,"SUBGOALS: open yellow door using yellow key  
+FACTS: You carry a yellow key; a locked yellow door 1 step right  
+EXPECTED: door opens after toggle  
+STATE_VS_GOAL: door remains locked; subgoal not met; action needed  
+ACTION: toggle
+[stored subgoals: open yellow door using yellow key; facts: You carry a yellow key; a locked yellow door 1 step right]","You carry a yellow key
+a wall 2 steps forward
+a locked yellow door 1 step right",0,False,toggle,
+26,toggle,toggle,"SUBGOALS: open yellow door using yellow key  
+FACTS: You carry a yellow key; a locked yellow door 1 step right  
+EXPECTED: door opens after toggle  
+STATE_VS_GOAL: door remains locked; subgoal not met; action needed  
+ACTION: toggle
+[stored subgoals: open yellow door using yellow key; facts: You carry a yellow key; a locked yellow door 1 step right]","You carry a yellow key
+a wall 2 steps forward
+a locked yellow door 1 step right",0,False,toggle,
+27,toggle,toggle,"SUBGOALS: open yellow door using yellow key  
+FACTS: You carry a yellow key; a locked yellow door 1 step right  
+EXPECTED: door opens after toggle  
+STATE_VS_GOAL: door remains locked; subgoal not met; action needed  
+ACTION: toggle
+[stored subgoals: open yellow door using yellow key; facts: You carry a yellow key; a locked yellow door 1 step right]","You carry a yellow key
+a wall 2 steps forward
+a locked yellow door 1 step right",0,False,toggle,
+28,toggle,toggle,"SUBGOALS: open yellow door using yellow key  
+FACTS: You carry a yellow key; a locked yellow door 1 step right  
+EXPECTED: door opens after toggle  
+STATE_VS_GOAL: locked door remains; key is available but not used; no progress  
+ACTION: toggle
+[stored subgoals: open yellow door using yellow key; facts: You carry a yellow key; a locked yellow door 1 step right]","You carry a yellow key
+a wall 2 steps forward
+a locked yellow door 1 step right",0,False,toggle,
+29,toggle,toggle,"SUBGOALS: open yellow door using yellow key  
+FACTS: You carry a yellow key; a locked yellow door 1 step right  
+EXPECTED: door opens after toggle  
+STATE_VS_GOAL: locked door remains; key is available but not used  
+ACTION: toggle
+[stored subgoals: open yellow door using yellow key; facts: You carry a yellow key; a locked yellow door 1 step right]","You carry a yellow key
+a wall 2 steps forward
+a locked yellow door 1 step right",0,False,toggle,
+30,toggle,toggle,"SUBGOALS: open yellow door using yellow key  
+FACTS: You carry a yellow key; a locked yellow door 1 step right  
+EXPECTED: door opens after toggle  
+STATE_VS_GOAL: locked door remains unopened; key is available but not used on door  
+ACTION: toggle
+[stored subgoals: open yellow door using yellow key; facts: You carry a yellow key; a locked yellow door 1 step right]","You carry a yellow key
+a wall 2 steps forward
+a locked yellow door 1 step right",0,False,toggle,
+31,toggle,toggle,"SUBGOALS: open yellow door using yellow key  
+FACTS: You carry a yellow key; a locked yellow door 1 step right  
+EXPECTED: door opens after toggle  
+STATE_VS_GOAL: door remains locked; subgoal not met; no progress  
+ACTION: toggle
+[stored subgoals: open yellow door using yellow key; facts: You carry a yellow key; a locked yellow door 1 step right]","You carry a yellow key
+a wall 2 steps forward
+a locked yellow door 1 step right",0,False,toggle,

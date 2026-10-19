@@ -1,0 +1,293 @@
+Step 05 post-run analysis and manual trajectory reading (2026-10-19)
+
+The first section records the interrupted invocation as it stood then. The
+completed-panel addendum at the end supersedes its Luna counts and conclusions.
+
+Coverage and failure
+--------------------
+The invocation ended with 1,545/1,995 verified evaluation episodes and 18/18
+excluded pilots. Qwen and OLMo each completed 665/665 scheduled evaluation
+observations; Qwen's 550 old controls were verified by reference, leaving 115
+new Qwen evaluations. GPT-6 Luna completed 215/665: 215 BabyAI observations,
+no Crafter evaluation. The 245 recovered historical Qwen CoT episodes are
+separate native-budget evidence. There were zero invalid verified episodes.
+
+Luna stopped in CoT/pickup seed 50, action 17, when the API returned HTTP 400
+invalid_prompt. This was a provider refusal, not a BabyAI failure. The full
+request, 16 preceding successful calls, exception, and incomplete trajectory
+remain in:
+experiment_results/refactored_v1/model_transfer_luna_v1/gpt6luna-cloud/episodes/babyai/pickup/cot/seed_050/rep_0.working/
+The last request looked like ordinary navigation text; the saved data do not
+identify why it was flagged. The study runner treats this 400 as fatal for the
+cloud stage. The next invocation would retry this case, so the remaining
+450 cloud episodes require an explicitly versioned resumption protocol that
+records this refusal as missing and continues; the present source manifest
+must not be edited in place to bypass its hash check.
+
+BabyAI performance (goto, pickup, open; cap 32)
+------------------------------------------------
+                              naive       CoT         planning    critique
+Qwen3-4B (complete)           58/180      41/90       75/180      80/180
+GPT-6 Luna (partial)          43/62       14/31       11/61       36/61
+OLMo-2-1B BF16 (complete)     0/180       0/90        3/180       3/180
+
+Qwen CoT is only on even seeds. On its exact 90 matched task-seed cases:
+naive 27/90, CoT 41/90, planning 36/90, critique 38/90. Across the full
+180 matched Qwen cases, planning minus naive is +9.44 percentage points,
+seed-block bootstrap 95% CI [+1.11,+17.78], raw permutation p=.0416 and
+Holm-adjusted p=.416. Critique minus planning is +2.78 points, CI
+[-2.78,+8.33], raw p=.446, Holm p=1. CoT minus naive on the 90 exact
+matched cases is +15.56 points, CI [+1.11,+30.00], raw p=.0712, Holm p=.503.
+Planning minus CoT is -5.56 points, CI [-18.89,+7.78], Holm p=1. No Qwen
+overall contrast passes the prespecified twelve-test Holm adjustment.
+
+For Luna, the common complete block is only seeds 30-49 (60 task-seed
+cases; CoT uses 30 even-seed cases). Here naive is 41/60, planning 10/60,
+critique 35/60; on the even subset naive is 20/30 and CoT 13/30.
+Planning minus naive is -51.67 points and critique minus planning is
++41.67 points. Their provisional seed-block CIs are [-65.0,-38.3] and
+[26.7,56.7] points, respectively. The analyzer reports Holm p<.001 for
+both, but these are an interrupted prefix of the prespecified 60-seed panel,
+so they are exploratory and do not establish the intended full-panel effect.
+Critique remains 6/60 below naive on the common block. Luna's raw 43/62,
+11/61, 36/61 denominators should not be compared directly as paired data.
+
+OLMo has a task floor: naive and CoT had zero wins. Planning and critique
+won the same three cases (goto seeds 53/85, pickup seed 85). All 180
+planning-versus-critique outcomes tied. This says little about the quality
+of reflection above the model's action-parsing and navigation floor.
+
+Task patterns and inference cost
+--------------------------------
+Qwen goto: naive 28/60, CoT 26/30, planning 40/60, critique 45/60.
+Qwen pickup: 26/60, 7/30, 34/60, 35/60. Qwen open: 4/60, 8/30,
+1/60, 0/60. The planner's overall gain masks an open-task regression.
+Qwen CoT produced 816 length-limited BabyAI replies in 2,202 calls;
+816 lacked ACTION. BALROG then often executed fallback go forward.
+Its mean output was 4,541 tokens/episode and mean episode time 32.2 s;
+on the same even-seed block naive used 73 output tokens and 2.5 s,
+planning 996 and 8.9 s, critique 1,093 and 9.6 s. Reused-control elapsed
+times came from the earlier run, so cross-run wall time is descriptive.
+
+Across all 180 Qwen BabyAI cases, planning had 1,210 alternating-turn
+windows and critique 156. Critique made 197 LLM calls as part of its
+4,031 total calls, with almost the same mean input and about 8.6% more
+mean output tokens per episode than planning (1,044 versus 961).
+The loop reduction is clear; the extra five successes are uncertain.
+
+In Luna's common 60 cases, planning had 873 alternating-turn windows,
+critique 75, naive 17. Critique used 63 critique calls across its
+61 completed BabyAI episodes. Planning averaged 22,707 input and 1,317
+output tokens per episode; critique 15,552 and 998 on the matched block,
+because its episodes ended sooner. Naive averaged 9,540 and 91.
+
+OLMo planning had 1,478 invalid BabyAI proposals and 4,836 repeated
+same-observation forward/pickup/toggle pairs. Critique had 462 critique
+calls, but only two yielded a parsed action; the other 460 caused an
+additional actor call. Mean output rose from 1,738 to 1,941 tokens per
+episode with no success gain. The alternating-left/right metric misses
+four consecutive same-direction turns; the actual naive logs show that loop.
+
+Crafter transfer (50 actions, descriptive)
+-----------------------------------------
+Qwen mean achievement progression: naive .1091 (10 seeds), CoT .0636
+(five even seeds), planning .0591 (10), critique .0636 (10). On the five
+even seeds, CoT did not show a clear transfer benefit. Neither Qwen nor
+OLMo's frozen Crafter critique triggered in evaluation. OLMo achieved
+zero progression in all 35 Crafter cases. Luna Crafter remains unrun.
+
+Luna cloud expenditure: $0.4290267 known token estimate plus $0.000586
+provisional for the rejected request, $0.4296127 total, including six
+pilots and incomplete attempts. This uses $0.10/M input and $0.50/M
+output with no cache discounts; it is not an API invoice.
+
+Personally inspected raw prompts, replies, observations, actions, outcomes
+--------------------------------------------------------------------------
+Paths below are relative to the repository. The CSV Observation column is
+the result after the row's action; the call log's last user message is the
+observation before that action. I read both files for each example.
+
+Qwen naive success: followup_v1/episodes/babyai/goto/naive/seed_033/rep_0
+under experiment_results; turns and moves to a yellow key in four steps.
+Qwen naive failure: same prefix, goto/naive/seed_030/rep_0; repeated
+forward attempts at a visible wall through step 32.
+Qwen CoT success: model_transfer_luna_v1/qwen4-instruct/episodes/babyai/open/
+cot/seed_032/rep_0; after some truncated replies and fallback forwards,
+it carries the purple key and toggles the adjacent locked door at step 22.
+Qwen CoT failure: same root, pickup/cot/seed_034/rep_0; many 256-token
+replies omit ACTION, then fallback forward keeps the yellow ball one cell
+ahead without picking it up.
+Qwen planning success: followup_v1/episodes/babyai/pickup/plan/seed_034/
+rep_0; after several blocked forward moves it finally chooses pick up
+when the yellow ball is one step forward (step 12).
+Qwen planning failure: same prefix, goto/plan/seed_046/rep_0; repeated
+left/right turns lose most of the budget before the purple key is found.
+Qwen critique success: followup_v1/episodes/babyai/goto/e3/seed_046/rep_0;
+the critic diagnoses repeated alternating views and selects go forward at
+step 4; the agent reaches the key on the last available steps.
+Qwen critique failure: same prefix, open/e3/seed_032/rep_0; it carries
+the purple key but toggles while the locked door is three steps ahead.
+
+Luna naive success: model_transfer_luna_v1/gpt6luna-cloud/episodes/babyai/
+pickup/naive/seed_034/rep_0; picks up the yellow ball in nine steps.
+Luna naive failure: same root, goto/naive/seed_030/rep_0; 32 actions,
+including repeated forward moves into nearby walls.
+Luna CoT success: same root, goto/cot/seed_034/rep_0; its own text notices
+an alternation and moves forward, reaching the target in 14 steps.
+Luna CoT failure: same root, pickup/cot/seed_030/rep_0; text recognizes
+alternating views once but repeatedly returns to turning, 32 actions.
+Luna planning success: same root, open/plan/seed_035/rep_0; gets key and
+toggles the adjacent door at step 25 despite a long early turn loop.
+Luna planning failure: same root, pickup/plan/seed_034/rep_0; left/right
+turns alternate for all 32 actions without moving toward the ball.
+Luna critique success: same root, pickup/e3/seed_034/rep_0; critics at
+steps 4 and 10 diagnose alternating views and choose go forward; ball
+pickup succeeds at step 13. The critic's revised wording still wrongly
+says to pick up the object when below the player; the actor eventually
+uses pick up from the front cell.
+Luna critique failure: same root, open/e3/seed_030/rep_0; many turns revisit
+the same scene, one late critic intervention, key carried but door unopened.
+
+OLMo has no naive or CoT BabyAI success to inspect. Naive failure:
+model_transfer_luna_v1/olmo1b-local/episodes/babyai/goto/naive/seed_030/
+rep_0; 32 right turns cycle through four views. CoT failure: same root,
+pickup/cot/seed_030/rep_0; repeated go forward leaves a wall one step
+ahead. Planning success: pickup/plan/seed_085/rep_0; nine failed forward
+attempts in front of a key, then pick up succeeds at step 11. Critique
+success: pickup/e3/seed_085/rep_0; two critiques describe the stall but
+neither yields a parsed action; the ordinary actor eventually picks up at
+the same step as planning. Critique failure: crafter/default/e3/seed_120/
+rep_0; 50 Place Furnace actions with empty inventory, no critic trigger.
+
+Qwen Crafter success and failure were also inspected at seed 120 for all
+four agents, and CoT seed 122: model_transfer_luna_v1/qwen4-instruct/
+episodes/crafter/default/. Naive reaches four achievements on seed 120;
+planning and critique collect wood but stay on the narrow early goal;
+CoT seed 122 emits many 256-token replies without ACTION, executes Noop,
+and ends with no achievements. OLMo Crafter seed 120 naive and critique
+were read: naive attempts unsupported crafting/movement, while critique
+repeats Place Furnace without ingredients.
+
+Interpretation and decision
+---------------------------
+On Qwen, compact planning has a modest positive paired mean, and critique
+greatly reduces observed turn loops at a small marginal token cost, but
+neither overall gain survives the twelve-test adjustment. CoT helps goto
+under its half-sized seed subset but is very costly and frequently truncated
+at 256 tokens; pickup is worse than naive. OLMo lacks enough basic success
+to demonstrate useful transfer. The partial Luna data show that the frozen
+planner can harm a stronger base model by inducing turn loops; bounded
+critique breaks many of those loops but does not exceed naive overall.
+Crafter shows no reliable transfer benefit from these BabyAI mechanisms.
+
+The intended full three-model significance panel is incomplete until the
+450 missing Luna episodes, including all Crafter episodes, are handled in a
+new source-pinned continuation. Keep the one refused CoT case missing; do
+not count it as a task loss. The current note is evidence-based for the
+completed panels and descriptive for the interrupted Luna prefix.
+
+Completed Luna panel addendum (2026-10-19)
+========================================
+Coverage and protocol
+---------------------
+The source-pinned continuation finished 448 further Luna episodes without
+changing prompts, agents, seeds, or budgets. It retained both provider refusals
+as .working raw evidence: BabyAI pickup/CoT seed 50 and Crafter/CoT seed 122.
+Neither is counted as a task loss. The final study has 1,993/1,995 verified
+evaluation observations, 550 Qwen controls reused by reference, all 18 pilots,
+and zero invalid completed episodes. Luna has 663/665: all 180 BabyAI cases
+each for naive, planning, and critique; 89/90 CoT; all ten Crafter cases each
+for naive, planning, and critique; and four/five Crafter CoT. The full output
+was reproduced byte-identically in analysis_completed/ from saved evidence.
+
+BabyAI task success at 32 actions (goto / pickup / open / total):
+  naive:     47/60, 47/60, 34/60 = 128/180 (71.1%)
+  CoT:       22/30, 11/29,  5/30 =  38/89  (42.7%)
+  planning:  13/60, 13/60,  2/60 =  28/180 (15.6%)
+  critique:  40/60, 45/60, 20/60 = 105/180 (58.3%)
+
+Prespecified paired seed-block tests (10,000 bootstrap samples, 100,000
+permutations, seed0; Holm adjustment over twelve cross-model comparisons):
+  planning - naive:  -55.6 points, 95% CI [-63.9,-47.2], 2 gains/102 losses,
+                     Holm p=.00012, 60 complete seed blocks (180 pairs).
+  critique - planning: +42.8 points, CI [+33.9,+51.7], 77 gains/0 losses,
+                     Holm p=.00012, 60 blocks (180 pairs).
+  CoT - naive:      -24.1 points, CI [-37.9,-10.3], 9 gains/30 losses,
+                     Holm p=.0358, 29 complete even-seed blocks (87 pairs).
+  planning - CoT:   -31.0 points, CI [-42.5,-18.4], 3 gains/30 losses,
+                     Holm p=.0010, the same 29 blocks.
+The CoT analysis excludes all three tasks for seed 50 as one seed block; it
+does not turn the refused pickup episode into a failure. On that exact
+87-case subset, naive solved 58, CoT 37, planning 10, and critique 43. Critique
+versus naive was not a prespecified test: descriptively, critique solved
+105/180 versus 128/180, with 15 gains and 38 losses. Thus recovery from a
+weak planning policy does not establish a benefit over the supplied naive
+agent. Qwen's adjusted contrasts remain inconclusive; OLMo remains at a
+near-zero floor. The Holm p-values changed slightly from the interrupted
+analysis because the family now includes the complete Luna comparisons.
+
+Behavior and cost
+-----------------
+Luna planning made 2,266 alternating-turn windows, compared with 270 for
+critique and 42 for naive. Critique issued 196 extra reflection calls within
+3,737 total calls; planning used 5,033 calls, because it exhausted more
+budgets. Of the 77 planning-loss/critique-win pairs, 76 critique episodes
+made at least one reflection call; one won without triggering, so paired
+outcomes alone should not be read as a pure causal effect of a critic call.
+Mean BabyAI episode input/output tokens and elapsed seconds were:
+  naive 9,400 / 90 / 18.5 s; CoT 16,415 / 1,032 / 39.4 s;
+  planning 22,365 / 1,288 / 38.4 s; critique 15,555 / 989 / 29.6 s.
+CoT's mean includes 89 completed episodes; other means use 180. Planning
+cost about $0.00288 per BabyAI episode at the recorded rate estimate,
+critique $0.00205, and naive $0.00099. Critique's lower total cost than
+planning reflects shorter episodes, not a free reflection call. The study's
+entire Luna expenditure estimate is $1.53746, including pilots, retries,
+and $0.00115 uncertain charges from the two rejected requests. It is not
+an API invoice. Luna CoT had one length-limited BabyAI reply and two replies
+without a parsed ACTION across 2,244 calls; unlike Qwen CoT, its poor result
+is not mainly explained by 256-token truncation.
+
+Manually read new prompt/reply logs and matching trajectories:
+  * pickup/plan/seed_051: a visible green box stayed to the left/right while
+    the planner alternated turns for all 32 actions. Its SUBGOALS stayed at
+    "Find the green box" and EXPECTED was merely to face another direction.
+  * pickup/e3/seed_051: the critic at step 4 explicitly noted that alternating
+    turns revisited two observations and chose go forward; the actor picked
+    up the green box at step 7. The critic still wrote the wrong "beneath
+    you" pickup instruction. Naive solved the same puzzle in four steps,
+    so the critic repaired a planner failure without beating the baseline.
+  * pickup/e3/seed_064: it turned left 32 times through four recurring views;
+    no critic fired. Naive moved to the blue key and picked it up at step 20.
+    This is a concrete trigger gap: the present loop detector catches
+    alternation but can miss same-direction orientation cycles.
+  * open/naive/seed_064: the agent picked up the purple key from the front
+    cell at step 5 and toggled the adjacent locked door at step 17. This
+    confirms that the misleading supplied pickup text did not prevent
+    every successful naive rollout.
+  * Crafter/default/seed_120: CoT collected six achievements in 50 actions
+    (progression .273), while planning and critique each collected one
+    (.045). The planner's first SUBGOALS were collect wood/place table but
+    its first ACTION moved west although its FACTS placed a tree east.
+    Critique issued no extra calls in this Crafter run.
+  * Crafter/default/cot/seed_124: the raw reply named wood/table/tool goals;
+    the trajectory earned seven achievements (progression .318). This is
+    a positive CoT example on a small, selected subset, not an overall
+    transfer claim.
+
+Crafter's ten-seed mean achievement progression was naive .1682,
+planning .0545, and critique .0727; planning lost to naive on 9 seeds and
+tied one. CoT averaged .2500 on its four completed even seeds, versus
+.1591 naive on those same four. No Luna Crafter critic fired in evaluation,
+so the critique condition there measures actor prompt behavior rather than
+an actual reflection intervention. The CoT seed122 refusal occurred after
+six saved model calls; its request and prior trajectory remain in the
+.working folder. Four seeds and a missing fifth give no reliable Crafter
+CoT effect estimate.
+
+Decision: the full model-transfer panel strongly rejects a general claim
+that frozen compact planning improves BabyAI success. Its turn-loop
+failure is pronounced on Luna; bounded reflection repairs many of those
+failures but still underperforms the supplied naive policy and costs more.
+The smaller Qwen planning gain and OLMo floor therefore do not transfer as
+a consistent improvement. Keep the original frozen agents and both refusal
+records intact; any next change belongs in a new development study.

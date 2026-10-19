@@ -1,0 +1,262 @@
+Step,Action,Executed Action,Reasoning,Observation,Reward,Done,Model Action,Override Reason
+0,turn right,turn right,"SUBGOALS: reach the door  
+FACTS: a wall 4 steps forward; a wall 3 steps left  
+EXPECTED: clear path to door  
+STATE_VS_GOAL: blocked by walls; door not visible; no progress  
+ACTION: turn right
+[stored subgoals: reach the door; facts: a wall 4 steps forward; a wall 3 steps left]","a wall 4 steps forward
+a wall 3 steps right
+a green key 2 steps right and 3 steps forward",0,False,turn right,
+1,turn right,turn right,"SUBGOALS: reach the door; pick up green key  
+FACTS: a wall 4 steps forward; a green key 2 steps right and 3 steps forward  
+EXPECTED: access key to unlock door  
+STATE_VS_GOAL: wall blocks forward path; key is reachable but not collected; progress stalled  
+ACTION: turn right
+[stored subgoals: reach the door; pick up green key; facts: a wall 4 steps forward; a green key 2 steps right and 3 steps forward]","a wall 3 steps forward
+a wall 3 steps right
+a green key 3 steps left and 2 steps forward
+a locked green door 2 steps right and 3 steps forward",0,False,turn right,
+2,go forward,go forward,"SUBGOALS: pick up green key; reach locked green door  
+FACTS: a green key 3 steps left and 2 steps forward; a locked green door 2 steps right and 3 steps forward  
+EXPECTED: key in hand to unlock door  
+STATE_VS_GOAL: key not picked up; door not accessible  
+ACTION: go forward
+[stored subgoals: pick up green key; reach locked green door; facts: a green key 3 steps left and 2 steps forward; a locked green door 2 steps right and 3 steps forward]","a wall 2 steps forward
+a wall 3 steps right
+a green key 3 steps left and 1 step forward
+a locked green door 2 steps right and 2 steps forward",0,False,go forward,
+3,turn left,turn left,"SUBGOALS: pick up green key; reach locked green door  
+FACTS: a green key 3 steps left and 1 step forward; a locked green door 2 steps right and 2 steps forward  
+EXPECTED: key in hand to unlock door  
+STATE_VS_GOAL: key not picked up; door still locked; previous action did not advance goal  
+ACTION: turn left
+[stored subgoals: pick up green key; reach locked green door; facts: a green key 3 steps left and 1 step forward; a locked green door 2 steps right and 2 steps forward]","a wall 4 steps forward
+a wall 2 steps right
+a green key 1 step right and 3 steps forward",0,False,turn left,
+4,go forward,go forward,"SUBGOALS: pick up green key; reach locked green door  
+FACTS: a green key 1 step right and 3 steps forward; a locked green door 2 steps right and 2 steps forward  
+EXPECTED: key in hand to unlock door  
+STATE_VS_GOAL: key not picked up; door still locked; action needed to collect key  
+ACTION: go forward
+[stored subgoals: pick up green key; reach locked green door; facts: a green key 1 step right and 3 steps forward; a locked green door 2 steps right and 2 steps forward]","a wall 3 steps forward
+a wall 2 steps right
+a green key 1 step right and 2 steps forward",0,False,go forward,
+5,turn right,turn right,"SUBGOALS: pick up green key; reach locked green door  
+FACTS: a green key 1 step right and 2 steps forward; a locked green door 2 steps right and 2 steps forward  
+EXPECTED: key in hand to unlock door  
+STATE_VS_GOAL: key not picked up; door still out of reach  
+ACTION: turn right
+[stored subgoals: pick up green key; reach locked green door; facts: a green key 1 step right and 2 steps forward; a locked green door 2 steps right and 2 steps forward]","a wall 2 steps forward
+a wall 3 steps left
+a green key 2 steps left and 1 step forward
+a locked green door 3 steps right and 2 steps forward",0,False,turn right,
+6,go forward,go forward,"SUBGOALS: pick up green key; unlock locked green door  
+FACTS: a green key 2 steps left and 1 step forward; a locked green door 3 steps right and 2 steps forward  
+EXPECTED: key in hand to reach and toggle door  
+STATE_VS_GOAL: key not in hand; door not accessible; previous action did not advance goal  
+ACTION: go forward
+[stored subgoals: pick up green key; unlock locked green door; facts: a green key 2 steps left and 1 step forward; a locked green door 3 steps right and 2 steps forward]","a wall 1 step forward
+a green key 2 steps left
+a locked green door 3 steps right and 1 step forward",0,False,go forward,
+7,turn left,turn left,"SUBGOALS: pick up green key; toggle locked green door  
+FACTS: a green key 2 steps left; a locked green door 3 steps right and 1 step forward  
+EXPECTED: reach green key in front to pick it up  
+STATE_VS_GOAL: key not in hand; door still locked; progress stalled  
+ACTION: turn left
+[stored subgoals: pick up green key; toggle locked green door; facts: a green key 2 steps left; a locked green door 3 steps right and 1 step forward]","a wall 1 step right
+a green key 2 steps forward",0,False,turn left,
+8,go forward,go forward,"SUBGOALS: pick up green key; toggle locked green door  
+FACTS: a wall 1 step right; a green key 2 steps forward  
+EXPECTED: green key in front to pick up  
+STATE_VS_GOAL: green key not in front; subgoal unmet  
+ACTION: go forward
+[stored subgoals: pick up green key; toggle locked green door; facts: a wall 1 step right; a green key 2 steps forward]","a wall 1 step right
+a green key 1 step forward",0,False,go forward,
+9,pick up,pick up,"SUBGOALS: pick up green key; toggle locked green door  
+FACTS: a wall 1 step right; a green key 1 step forward  
+EXPECTED: green key in front to pick up  
+STATE_VS_GOAL: green key is now in front; subgoal to pick it up is met  
+ACTION: pick up
+[stored subgoals: pick up green key; toggle locked green door; facts: a wall 1 step right; a green key 1 step forward]","You carry a green key
+a wall 2 steps forward
+a wall 1 step right",0,False,pick up,
+10,go forward,go forward,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a wall 1 step right  
+EXPECTED: green door to toggle  
+STATE_VS_GOAL: key picked up, door still locked; subgoal not met  
+ACTION: go forward
+[stored subgoals: toggle locked green door; facts: You carry a green key; a wall 1 step right]","You carry a green key
+a wall 1 step forward
+a wall 1 step right",0,False,go forward,
+11,go forward,go forward,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a wall 1 step right  
+EXPECTED: green door in front to toggle  
+STATE_VS_GOAL: green door not visible; key held but not used on door  
+ACTION: go forward
+[stored subgoals: toggle locked green door; facts: You carry a green key; a wall 1 step right]","You carry a green key
+a wall 1 step forward
+a wall 1 step right",0,False,go forward,
+12,go forward,go forward,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a wall 1 step right  
+EXPECTED: green door in front to toggle  
+STATE_VS_GOAL: green door not in front; key held but not used on door  
+ACTION: go forward
+[stored subgoals: toggle locked green door; facts: You carry a green key; a wall 1 step right]","You carry a green key
+a wall 1 step forward
+a wall 1 step right",0,False,go forward,
+13,turn right,turn right,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a wall 1 step forward  
+EXPECTED: green door in front to toggle  
+STATE_VS_GOAL: wall blocks door access; door not visible or reachable  
+ACTION: turn right
+[stored subgoals: toggle locked green door; facts: You carry a green key; a wall 1 step forward]","You carry a green key
+a wall 1 step forward
+a wall 1 step left",0,False,turn right,
+14,go forward,go forward,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a wall 1 step forward  
+EXPECTED: green door in front to toggle  
+STATE_VS_GOAL: green door not visible; subgoal unmet; no progress  
+ACTION: go forward
+[stored subgoals: toggle locked green door; facts: You carry a green key; a wall 1 step forward]","You carry a green key
+a wall 1 step forward
+a wall 1 step left",0,False,go forward,
+15,turn right,turn right,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a wall 1 step forward  
+EXPECTED: green door in front to toggle  
+STATE_VS_GOAL: green door not visible; key held but not used on door  
+ACTION: turn right
+[stored subgoals: toggle locked green door; facts: You carry a green key; a wall 1 step forward]","You carry a green key
+a wall 6 steps forward
+a wall 1 step left
+a locked green door 1 step left and 5 steps forward",0,False,turn right,
+16,turn left,turn left,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a locked green door 1 step left and 5 steps forward  
+EXPECTED: door in front to toggle with key  
+STATE_VS_GOAL: Door not in front; key held but not used on door  
+ACTION: turn left
+[stored subgoals: toggle locked green door; facts: You carry a green key; a locked green door 1 step left and 5 steps forward]","You carry a green key
+a wall 1 step forward
+a wall 1 step left",0,False,turn left,
+17,go forward,go forward,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a locked green door 1 step left and 5 steps forward  
+EXPECTED: door opens when toggled  
+STATE_VS_GOAL: Door not accessible; key held but not used on door  
+ACTION: go forward
+[stored subgoals: toggle locked green door; facts: You carry a green key; a locked green door 1 step left and 5 steps forward]","You carry a green key
+a wall 1 step forward
+a wall 1 step left",0,False,go forward,
+18,go forward,go forward,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a locked green door 1 step left and 5 steps forward  
+EXPECTED: door opens when toggled  
+STATE_VS_GOAL: Door still locked; key held but not used on door  
+ACTION: go forward
+[stored subgoals: toggle locked green door; facts: You carry a green key; a locked green door 1 step left and 5 steps forward]","You carry a green key
+a wall 1 step forward
+a wall 1 step left",0,False,go forward,
+19,go forward,go forward,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a locked green door 1 step left and 5 steps forward  
+EXPECTED: door opens when toggled  
+STATE_VS_GOAL: door still locked; no progress toward opening it  
+ACTION: go forward
+[stored subgoals: toggle locked green door; facts: You carry a green key; a locked green door 1 step left and 5 steps forward]","You carry a green key
+a wall 1 step forward
+a wall 1 step left",0,False,go forward,
+20,go forward,go forward,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a locked green door 1 step left and 5 steps forward  
+EXPECTED: door opens when toggled  
+STATE_VS_GOAL: Door still locked; key held but not used on door  
+ACTION: go forward
+[stored subgoals: toggle locked green door; facts: You carry a green key; a locked green door 1 step left and 5 steps forward]","You carry a green key
+a wall 1 step forward
+a wall 1 step left",0,False,go forward,
+21,turn left,turn left,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a locked green door 1 step left and 5 steps forward  
+EXPECTED: door opens when toggled  
+STATE_VS_GOAL: Door still locked; key held but not used on door  
+ACTION: turn left
+[stored subgoals: toggle locked green door; facts: You carry a green key; a locked green door 1 step left and 5 steps forward]","You carry a green key
+a wall 1 step forward
+a wall 1 step right",0,False,turn left,
+22,go forward,go forward,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a locked green door 1 step left and 5 steps forward  
+EXPECTED: door opens when toggled  
+STATE_VS_GOAL: Door still locked; key held but not used on door  
+ACTION: go forward
+[stored subgoals: toggle locked green door; facts: You carry a green key; a locked green door 1 step left and 5 steps forward]","You carry a green key
+a wall 1 step forward
+a wall 1 step right",0,False,go forward,
+23,turn left,turn left,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a locked green door 1 step left and 5 steps forward  
+EXPECTED: door opens when toggled  
+STATE_VS_GOAL: door still locked; subgoal not met; no progress  
+ACTION: turn left
+[stored subgoals: toggle locked green door; facts: You carry a green key; a locked green door 1 step left and 5 steps forward]","You carry a green key
+a wall 6 steps forward
+a wall 1 step right",0,False,turn left,
+24,go forward,go forward,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a locked green door 1 step left and 5 steps forward  
+EXPECTED: door opens when toggled  
+STATE_VS_GOAL: door is locked, key is carried, position not aligned with door  
+ACTION: go forward
+[stored subgoals: toggle locked green door; facts: You carry a green key; a locked green door 1 step left and 5 steps forward]","You carry a green key
+a wall 5 steps forward
+a wall 1 step right",0,False,go forward,
+25,turn left,turn left,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a locked green door 1 step left and 5 steps forward  
+EXPECTED: door opens when toggled  
+STATE_VS_GOAL: Door still locked; not yet opened  
+ACTION: turn left
+[stored subgoals: toggle locked green door; facts: You carry a green key; a locked green door 1 step left and 5 steps forward]","You carry a green key
+a wall 6 steps forward
+a wall 2 steps left
+a locked green door 2 steps left and 5 steps forward",0,False,turn left,
+26,toggle,toggle,"SUBGOALS: toggle locked green door  
+FACTS: You carry a green key; a locked green door 2 steps left and 5 steps forward  
+EXPECTED: door opens when toggled  
+STATE_VS_GOAL: door is locked, not yet opened; subgoal not met  
+ACTION: toggle
+[stored subgoals: toggle locked green door; facts: You carry a green key; a locked green door 2 steps left and 5 steps forward]","You carry a green key
+a wall 6 steps forward
+a wall 2 steps left
+a locked green door 2 steps left and 5 steps forward",0,False,toggle,
+27,go forward,go forward,"SUBGOALS: open the door  
+FACTS: You carry a green key; a locked green door 2 steps left and 5 steps forward  
+EXPECTED: door becomes unlocked or open  
+STATE_VS_GOAL: door is still locked; subgoal not met  
+ACTION: go forward
+[stored subgoals: open the door; facts: You carry a green key; a locked green door 2 steps left and 5 steps forward]","You carry a green key
+a wall 5 steps forward
+a wall 2 steps left
+a locked green door 2 steps left and 4 steps forward",0,False,go forward,
+28,turn left,turn left,"SUBGOALS: open the door  
+FACTS: You carry a green key; a locked green door 2 steps left and 4 steps forward  
+EXPECTED: door becomes unlocked  
+STATE_VS_GOAL: door still locked; subgoal not met; no progress  
+ACTION: turn left
+[stored subgoals: open the door; facts: You carry a green key; a locked green door 2 steps left and 4 steps forward]","You carry a green key
+a wall 2 steps forward
+a wall 2 steps left",0,False,turn left,
+29,toggle,toggle,"SUBGOALS: open the door  
+FACTS: You carry a green key; a locked green door 2 steps left and 4 steps forward  
+EXPECTED: door becomes unlocked  
+STATE_VS_GOAL: door remains locked; subgoal not met  
+ACTION: toggle
+[stored subgoals: open the door; facts: You carry a green key; a locked green door 2 steps left and 4 steps forward]","You carry a green key
+a wall 2 steps forward
+a wall 2 steps left",0,False,toggle,
+30,go forward,go forward,"SUBGOALS: unlock the door, go to the door  
+FACTS: You carry a green key; a locked green door 2 steps left and 4 steps forward  
+EXPECTED: door becomes unlocked  
+STATE_VS_GOAL: door remains locked; subgoal not met; action did not advance  
+ACTION: go forward
+[stored subgoals: unlock the door, go to the door; facts: You carry a green key; a locked green door 2 steps left and 4 steps forward]","You carry a green key
+a wall 1 step forward
+a wall 2 steps left",0,False,go forward,
+31,toggle,toggle,"SUBGOALS: unlock the door, go to the door  
+FACTS: You carry a green key; a wall 1 step forward; a wall 2 steps left  
+EXPECTED: door becomes unlocked when toggled  
+STATE_VS_GOAL: door still locked; not yet reached or unlocked  
+ACTION: toggle
+[stored subgoals: unlock the door, go to the door; facts: You carry a green key; a wall 1 step forward]","You carry a green key
+a wall 1 step forward
+a wall 2 steps left",0,False,toggle,

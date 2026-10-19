@@ -1,0 +1,813 @@
+Step,Action,Executed Action,Reasoning,Observation,Reward,Done,Model Action,Override Reason
+0,"Lets analyze the observation step by step:
+
+ Observe the environment:
+    A wall is  steps to the left  this is an obstacle so we cannot go that way
+    A locked green door is  steps forward  this is the goal we need to open it
+    A green key is  steps right and  steps forward  this is likely needed to open the green door
+
+ Determine the required object:
+    The door is locked and the only object mentioned that could unlock it is the green key
+    Therefore we need to get the green key
+
+ Plan the path to the green key:
+    The key is located at  steps right and  steps forward
+    We need to move toward it: first go forward  steps then turn right or adjust direction to reach it
+    However we dont have a clear path yet  we need to move toward the key
+
+ Can we pick up the key:
+    The key is not directly in front of us It is  steps right and  steps forward
+    We need to move to that",go forward,"Let's analyze the observation step by step:
+
+1. **Observe the environment**:
+   - A wall is 3 steps to the left — this is an obstacle, so we cannot go that way.
+   - A locked green door is 5 steps forward — this is the goal (we need to open it).
+   - A green key is 3 steps right and 3 steps forward — this is likely needed to open the green door.
+
+2. **Determine the required object**:
+   - The door is locked, and the only object mentioned that could unlock it is the green key.
+   - Therefore, we need to get the green key.
+
+3. **Plan the path to the green key**:
+   - The key is located at 3 steps right and 3 steps forward.
+   - We need to move toward it: first go forward 3 steps, then turn right (or adjust direction) to reach it.
+   - However, we don't have a clear path yet — we need to move toward the key.
+
+4. **Can we pick up the key?**:
+   - The key is not directly in front of us. It is 3 steps right and 3 steps forward.
+   - We need to move to that","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps left
+a locked green door 4 steps forward
+a green key 3 steps right and 2 steps forward",0,False,"Lets analyze the observation step by step:
+
+ Observe the environment:
+    A wall is  steps to the left  this is an obstacle so we cannot go that way
+    A locked green door is  steps forward  this is the goal we need to open it
+    A green key is  steps right and  steps forward  this is likely needed to open the green door
+
+ Determine the required object:
+    The door is locked and the only object mentioned that could unlock it is the green key
+    Therefore we need to get the green key
+
+ Plan the path to the green key:
+    The key is located at  steps right and  steps forward
+    We need to move toward it: first go forward  steps then turn right or adjust direction to reach it
+    However we dont have a clear path yet  we need to move toward the key
+
+ Can we pick up the key:
+    The key is not directly in front of us It is  steps right and  steps forward
+    We need to move to that",
+1,"We are currently facing a situation where:
+
+ Theres a wall  steps to the left  cannot go that way
+ A locked green door is  steps forward  our goal is to open this door
+ A green key is located  steps right and  steps forward  this key can likely unlock the green door
+
+We need to:
+ Move toward the green key to pick it up
+ Then go back to the door and use the key to open it
+
+But first we must determine the best path to reach the key
+
+Current position: origin 
+
+Key location:  steps right x  steps forward y  
+
+We cant go left wall so we must avoid that direction
+
+Best path:
+ Go forward  steps to reach y same row as key
+ Then turn right facing east go forward  steps to reach the key
+
+But we can only take one action at a time
+
+So first action: go forward to move toward the keys ycoordinate
+
+After going forward  steps well be at  and the key will be",go forward,"We are currently facing a situation where:
+
+- There's a wall 3 steps to the left → cannot go that way.
+- A locked green door is 4 steps forward → our goal is to open this door.
+- A green key is located 3 steps right and 2 steps forward → this key can likely unlock the green door.
+
+We need to:
+1. Move toward the green key to pick it up.
+2. Then go back to the door and use the key to open it.
+
+But first, we must determine the best path to reach the key.
+
+Current position: origin (0,0)
+
+Key location: 3 steps right (x+3), 2 steps forward (y+2) → (3,2)
+
+We can't go left (wall), so we must avoid that direction.
+
+Best path:
+- Go forward 2 steps to reach y=2 (same row as key).
+- Then turn right (facing east), go forward 3 steps to reach the key.
+
+But we can only take one action at a time.
+
+So, first action: go forward (to move toward the key's y-coordinate).
+
+After going forward 2 steps, we’ll be at (0,2), and the key will be 3","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps left
+a locked green door 3 steps forward
+a green key 3 steps right and 1 step forward",0,False,"We are currently facing a situation where:
+
+ Theres a wall  steps to the left  cannot go that way
+ A locked green door is  steps forward  our goal is to open this door
+ A green key is located  steps right and  steps forward  this key can likely unlock the green door
+
+We need to:
+ Move toward the green key to pick it up
+ Then go back to the door and use the key to open it
+
+But first we must determine the best path to reach the key
+
+Current position: origin 
+
+Key location:  steps right x  steps forward y  
+
+We cant go left wall so we must avoid that direction
+
+Best path:
+ Go forward  steps to reach y same row as key
+ Then turn right facing east go forward  steps to reach the key
+
+But we can only take one action at a time
+
+So first action: go forward to move toward the keys ycoordinate
+
+After going forward  steps well be at  and the key will be",
+2,go forward,go forward,"We are currently at the origin.
+
+Observation:
+- A wall 3 steps left → cannot go left.
+- A locked green door 3 steps forward → our goal is to open it.
+- A green key is located 3 steps right and 1 step forward → at position (3,1).
+
+We need to:
+1. Reach the green key to pick it up.
+2. Then go to the door (3 steps forward) and use the key to unlock it.
+
+But we can't go left (wall), so we must move forward and right.
+
+Current position: (0,0)
+
+Step-by-step plan:
+- First, go forward 1 step → now at (0,1)
+- Now, the key is 3 steps right and 0 steps forward → at (3,1), so we are one step behind it.
+- Then turn right (facing east), go forward 3 steps to reach the key.
+
+But we can only take one action at a time.
+
+So, first action: go forward
+
+ACTION: go forward","a wall 3 steps left
+a locked green door 2 steps forward
+a green key 3 steps right",0,False,go forward,
+3,"We are at the starting position
+
+Observation:
+ A wall  steps left  cannot go left
+ A locked green door  steps forward  we want to open it eventually
+ A green key is  steps right  so its at  if we are at 
+
+We need the key to open the door So we must go to the key
+
+But we cant go left wall so we can only go forward or right
+
+Currently the door is  steps forward The key is  steps right
+
+So if we go forward the door moves closer to  step forward and the key remains  steps right
+
+But we cant reach the key by going forward only  we need to go right
+
+So we must go forward first to get closer to the door but we still need to get to the key
+
+Wait  the key is at  steps right and  steps forward Or is it  steps right and  step forward
+
+Original observation: a green key  steps right and  step forward  so at 
+
+After one forward step we are at",go forward,"We are at the starting position.
+
+Observation:
+- A wall 3 steps left → cannot go left.
+- A locked green door 2 steps forward → we want to open it eventually.
+- A green key is 3 steps right → so it's at (3,0) if we are at (0,0).
+
+We need the key to open the door. So we must go to the key.
+
+But we can't go left (wall), so we can only go forward or right.
+
+Currently, the door is 2 steps forward. The key is 3 steps right.
+
+So, if we go forward, the door moves closer (to 1 step forward), and the key remains 3 steps right.
+
+But we can't reach the key by going forward only — we need to go right.
+
+So, we must go forward first to get closer to the door, but we still need to get to the key.
+
+Wait — the key is at 3 steps right and 0 steps forward? Or is it 3 steps right and 1 step forward?
+
+Original observation: ""a green key 3 steps right and 1 step forward"" → so at (3,1)
+
+After one forward step, we are at (0,1).","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps left
+a locked green door 1 step forward",0,False,"We are at the starting position
+
+Observation:
+ A wall  steps left  cannot go left
+ A locked green door  steps forward  we want to open it eventually
+ A green key is  steps right  so its at  if we are at 
+
+We need the key to open the door So we must go to the key
+
+But we cant go left wall so we can only go forward or right
+
+Currently the door is  steps forward The key is  steps right
+
+So if we go forward the door moves closer to  step forward and the key remains  steps right
+
+But we cant reach the key by going forward only  we need to go right
+
+So we must go forward first to get closer to the door but we still need to get to the key
+
+Wait  the key is at  steps right and  steps forward Or is it  steps right and  step forward
+
+Original observation: a green key  steps right and  step forward  so at 
+
+After one forward step we are at",
+4,"We are currently at a position where:
+
+ Theres a wall  steps left  cannot go left
+ A locked green door is  step forward  very close
+ A green key is  steps right and  step forward  at position  if we are at 
+
+We need the key to open the door But we are currently at  or near it
+
+We cannot go left wall so only options are forward right or toggle if something is in front
+
+Currently the door is  step forward  so if we go forward we reach the door but its locked We need the key
+
+The key is at  So we need to go right to reach it
+
+But we cant go right directly if theres no path  we need to check if we can move
+
+Wait  the key is at  steps right and  step forward So if we go forward to  then we are at  and the key is  steps right  at  So we can go right from  to",go forward,"We are currently at a position where:
+
+- There's a wall 3 steps left → cannot go left.
+- A locked green door is 1 step forward → very close.
+- A green key is 3 steps right and 1 step forward → at position (3,1) if we are at (0,0).
+
+We need the key to open the door. But we are currently at (0,0) or near it.
+
+We cannot go left (wall), so only options are forward, right, or toggle (if something is in front).
+
+Currently, the door is 1 step forward — so if we go forward, we reach the door, but it's locked. We need the key.
+
+The key is at (3,1). So we need to go right to reach it.
+
+But we can't go right directly if there's no path — we need to check if we can move.
+
+Wait — the key is at 3 steps right and 1 step forward. So if we go forward to (0,1), then we are at (0,1), and the key is 3 steps right → at (3,1). So we can go right from (0,1) to (1,1), (2","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps left
+a locked green door 1 step forward",0,False,"We are currently at a position where:
+
+ Theres a wall  steps left  cannot go left
+ A locked green door is  step forward  very close
+ A green key is  steps right and  step forward  at position  if we are at 
+
+We need the key to open the door But we are currently at  or near it
+
+We cannot go left wall so only options are forward right or toggle if something is in front
+
+Currently the door is  step forward  so if we go forward we reach the door but its locked We need the key
+
+The key is at  So we need to go right to reach it
+
+But we cant go right directly if theres no path  we need to check if we can move
+
+Wait  the key is at  steps right and  step forward So if we go forward to  then we are at  and the key is  steps right  at  So we can go right from  to",
+5,"We are currently facing a locked green door  step forward There is a green key located  steps right and  step forward That means the key is at a position one step forward and three steps to the right of our current position
+
+Since we cannot go left blocked by a wall and the key is not directly in front we need to:
+
+ Move forward to get closer to the door which is  step away
+ Then we need to go right to reach the key  steps right
+ Pick up the green key
+ Then go back to the door and use the key to unlock it
+
+But we cant go right yet  we need to first move forward to position  then go right
+
+However the current observation shows only the door and the wall The key is not visible in front  its  steps right and  step forward
+
+So to reach the key we must go forward first then turn right and move step by step
+
+But the key is not in front of us  its not directly visible So we must move to reach it
+
+Best plan:
+
+ Go forward to get closer to the door  step forward",go forward,"We are currently facing a locked green door 1 step forward. There is a green key located 3 steps right and 1 step forward. That means the key is at a position one step forward and three steps to the right of our current position.
+
+Since we cannot go left (blocked by a wall), and the key is not directly in front, we need to:
+
+1. Move forward to get closer to the door (which is 1 step away).
+2. Then, we need to go right to reach the key (3 steps right).
+3. Pick up the green key.
+4. Then go back to the door and use the key to unlock it.
+
+But we can't go right yet — we need to first move forward to position (0,1), then go right.
+
+However, the current observation shows only the door and the wall. The key is not visible in front — it's 3 steps right and 1 step forward.
+
+So, to reach the key, we must go forward first, then turn right and move step by step.
+
+But the key is not in front of us — it's not directly visible. So we must move to reach it.
+
+Best plan:
+
+- Go forward to get closer to the door (1 step forward).","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps left
+a locked green door 1 step forward",0,False,"We are currently facing a locked green door  step forward There is a green key located  steps right and  step forward That means the key is at a position one step forward and three steps to the right of our current position
+
+Since we cannot go left blocked by a wall and the key is not directly in front we need to:
+
+ Move forward to get closer to the door which is  step away
+ Then we need to go right to reach the key  steps right
+ Pick up the green key
+ Then go back to the door and use the key to unlock it
+
+But we cant go right yet  we need to first move forward to position  then go right
+
+However the current observation shows only the door and the wall The key is not visible in front  its  steps right and  step forward
+
+So to reach the key we must go forward first then turn right and move step by step
+
+But the key is not in front of us  its not directly visible So we must move to reach it
+
+Best plan:
+
+ Go forward to get closer to the door  step forward",
+6,go forward,go forward,"The locked green door is 1 step forward. The green key is 3 steps right and 1 step forward, meaning it is diagonally ahead and to the right. Since we are currently facing the door, we need to first move forward to get closer to it, but we cannot reach the key without turning.
+
+However, the key is not in front of us — it's to the right and one step forward. So, to access it, we must:
+
+1. Move forward to get to the position where the key is at (1 step forward).
+2. Then turn right and move 3 steps to reach the key.
+3. Pick up the key.
+4. Then go back to the door (which is now at a different position) and use the key to unlock it.
+
+But the observation only shows the door and wall — the key is not visible in front. So, we must first move forward to get to the position where the key is located.
+
+Therefore, the best immediate action is to go forward to get closer to the key and the door.
+
+ACTION: go forward","a wall 3 steps left
+a locked green door 1 step forward",0,False,go forward,
+7,go forward,go forward,"The current observation shows that the locked green door is 1 step forward, and there is a green key located 3 steps right and 1 step forward. This means the key is diagonally ahead and to the right.
+
+Since the key is not directly in front of us, we need to move forward to get closer to it. Once we are at the position where the key is (1 step forward), we can turn right and move 3 steps to reach it, then pick it up.
+
+However, we cannot pick it up yet because it is not in front of us. The only action we can take now is to move forward to get closer to the key's location.
+
+Therefore, the best next step is to go forward.
+
+ACTION: go forward","a wall 3 steps left
+a locked green door 1 step forward",0,False,go forward,
+8,"We are currently facing a locked green door that is  step forward There is a green key located  steps right and  step forward  meaning it is in the same row as the door but  steps to the right
+
+Since the key is not in front of us we cannot pick it up or toggle it yet To reach the key we need to move toward it However the key is not directly in front  its to the right
+
+But note: the door is only  step forward If we go forward we will reach the door which is locked and requires a key to open We dont have the key yet
+
+We must get the key To do that we need to move to the position where the key is  which is  steps right and  step forward But we are currently at a position where the door is  step forward So to reach the key we need to:
+
+ Move forward to get to the doors position  step forward
+ Then turn right and move  steps to reach the key
+
+But we cant move right yet  we are not at the keys location
+
+Alternatively we can try to move toward",go forward,"We are currently facing a locked green door that is 1 step forward. There is a green key located 3 steps right and 1 step forward — meaning it is in the same row as the door, but 3 steps to the right.
+
+Since the key is not in front of us, we cannot pick it up or toggle it yet. To reach the key, we need to move toward it. However, the key is not directly in front — it's to the right.
+
+But note: the door is only 1 step forward. If we go forward, we will reach the door, which is locked and requires a key to open. We don’t have the key yet.
+
+We must get the key. To do that, we need to move to the position where the key is — which is 3 steps right and 1 step forward. But we are currently at a position where the door is 1 step forward. So, to reach the key, we need to:
+
+1. Move forward to get to the door's position (1 step forward).
+2. Then turn right and move 3 steps to reach the key.
+
+But we can't move right yet — we are not at the key's location.
+
+Alternatively, we can try to move toward","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps left
+a locked green door 1 step forward",0,False,"We are currently facing a locked green door that is  step forward There is a green key located  steps right and  step forward  meaning it is in the same row as the door but  steps to the right
+
+Since the key is not in front of us we cannot pick it up or toggle it yet To reach the key we need to move toward it However the key is not directly in front  its to the right
+
+But note: the door is only  step forward If we go forward we will reach the door which is locked and requires a key to open We dont have the key yet
+
+We must get the key To do that we need to move to the position where the key is  which is  steps right and  step forward But we are currently at a position where the door is  step forward So to reach the key we need to:
+
+ Move forward to get to the doors position  step forward
+ Then turn right and move  steps to reach the key
+
+But we cant move right yet  we are not at the keys location
+
+Alternatively we can try to move toward",
+9,"We are currently facing a locked green door that is  step forward There is a green key located  steps right and  step forward  meaning it is in the same row as the door but  steps to the right
+
+Since the key is not in front of us we cannot pick it up directly To reach it we need to move toward it However we are currently at a position where the door is  step forward The key is  steps to the right and  step forward  so it is in the same row as the door just offset horizontally
+
+We cannot go forward again  we are already at the position where the door is  step forward If we go forward we will reach the door which is locked and requires a key
+
+We need to move right to reach the key But we are not currently facing the key  we are facing forward toward the door So we need to turn right to face the keys direction
+
+But first we must determine if we can pick up the key The key is  steps right and  step forward  so it is not directly in front of us We need to move toward it
+
+However the observation does",go forward,"We are currently facing a locked green door that is 1 step forward. There is a green key located 3 steps right and 1 step forward — meaning it is in the same row as the door, but 3 steps to the right.
+
+Since the key is not in front of us, we cannot pick it up directly. To reach it, we need to move toward it. However, we are currently at a position where the door is 1 step forward. The key is 3 steps to the right and 1 step forward — so it is in the same row as the door, just offset horizontally.
+
+We cannot go forward again — we are already at the position where the door is 1 step forward. If we go forward, we will reach the door, which is locked and requires a key.
+
+We need to move right to reach the key. But we are not currently facing the key — we are facing forward (toward the door). So we need to turn right to face the key's direction.
+
+But first, we must determine if we can pick up the key. The key is 3 steps right and 1 step forward — so it is not directly in front of us. We need to move toward it.
+
+However, the observation does","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps left
+a locked green door 1 step forward",0,False,"We are currently facing a locked green door that is  step forward There is a green key located  steps right and  step forward  meaning it is in the same row as the door but  steps to the right
+
+Since the key is not in front of us we cannot pick it up directly To reach it we need to move toward it However we are currently at a position where the door is  step forward The key is  steps to the right and  step forward  so it is in the same row as the door just offset horizontally
+
+We cannot go forward again  we are already at the position where the door is  step forward If we go forward we will reach the door which is locked and requires a key
+
+We need to move right to reach the key But we are not currently facing the key  we are facing forward toward the door So we need to turn right to face the keys direction
+
+But first we must determine if we can pick up the key The key is  steps right and  step forward  so it is not directly in front of us We need to move toward it
+
+However the observation does",
+10,"We are currently facing a locked green door  step forward There is a green key located  steps right and  step forward  meaning it is in the same row as the door but  steps to the right
+
+Since the key is not in front of us we cannot pick it up directly To reach it we need to move toward it However we are currently at a position where the door is  step forward The key is  steps to the right and  step forward  so it is in the same row as the door just offset horizontally
+
+We cannot go forward again  we are already at the position where the door is  step forward If we go forward we will reach the door which is locked and requires a key
+
+We need to turn right to face the direction of the key to the right then move toward it But the key is  steps to the right  so we need to move right three times to reach it
+
+But we are not currently facing the key So first we must turn to face the right
+
+Best course of action:
+ Turn right to face the direction of the green key  steps right
+ Then go forward",go forward,"We are currently facing a locked green door 1 step forward. There is a green key located 3 steps right and 1 step forward — meaning it is in the same row as the door, but 3 steps to the right.
+
+Since the key is not in front of us, we cannot pick it up directly. To reach it, we need to move toward it. However, we are currently at a position where the door is 1 step forward. The key is 3 steps to the right and 1 step forward — so it is in the same row as the door, just offset horizontally.
+
+We cannot go forward again — we are already at the position where the door is 1 step forward. If we go forward, we will reach the door, which is locked and requires a key.
+
+We need to turn right to face the direction of the key (to the right), then move toward it. But the key is 3 steps to the right — so we need to move right three times to reach it.
+
+But we are not currently facing the key. So first, we must turn to face the right.
+
+Best course of action:
+1. Turn right to face the direction of the green key (3 steps right).
+2. Then go forward (","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps left
+a locked green door 1 step forward",0,False,"We are currently facing a locked green door  step forward There is a green key located  steps right and  step forward  meaning it is in the same row as the door but  steps to the right
+
+Since the key is not in front of us we cannot pick it up directly To reach it we need to move toward it However we are currently at a position where the door is  step forward The key is  steps to the right and  step forward  so it is in the same row as the door just offset horizontally
+
+We cannot go forward again  we are already at the position where the door is  step forward If we go forward we will reach the door which is locked and requires a key
+
+We need to turn right to face the direction of the key to the right then move toward it But the key is  steps to the right  so we need to move right three times to reach it
+
+But we are not currently facing the key So first we must turn to face the right
+
+Best course of action:
+ Turn right to face the direction of the green key  steps right
+ Then go forward",
+11,"We are currently facing a locked green door  step forward The green key is located  steps right and  step forward  meaning it is in the same row as the door but  steps to the right
+
+Since we are currently at a position where the door is  step forward and the key is  steps to the right we need to turn right to face the keys direction then move right to reach it
+
+However we cannot pick up the key if its not in front of us So we must first turn to face the key to the right then move toward it
+
+But the observation does not show any change when we go forward  its stuck at a locked green door  step forward suggesting we are already at the edge or the key is not in front
+
+Therefore we must turn to face the keys location to the right then move right to reach it
+
+Action: turn right  
+Then after turning we can go forward or right to reach the key
+
+But the key is  steps right and  step forward  so we need to move right  times to reach it
+
+But we can only take one action at a time
+
+Best",go forward,"We are currently facing a locked green door 1 step forward. The green key is located 3 steps right and 1 step forward — meaning it is in the same row as the door, but 3 steps to the right.
+
+Since we are currently at a position where the door is 1 step forward, and the key is 3 steps to the right, we need to turn right to face the key's direction, then move right to reach it.
+
+However, we cannot pick up the key if it's not in front of us. So we must first turn to face the key (to the right), then move toward it.
+
+But the observation does not show any change when we go forward — it's stuck at ""a locked green door 1 step forward"", suggesting we are already at the edge or the key is not in front.
+
+Therefore, we must turn to face the key's location (to the right), then move right to reach it.
+
+Action: turn right  
+Then, after turning, we can go forward (or right) to reach the key.
+
+But the key is 3 steps right and 1 step forward — so we need to move right 3 times to reach it.
+
+But we can only take one action at a time.
+
+Best","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps left
+a locked green door 1 step forward",0,False,"We are currently facing a locked green door  step forward The green key is located  steps right and  step forward  meaning it is in the same row as the door but  steps to the right
+
+Since we are currently at a position where the door is  step forward and the key is  steps to the right we need to turn right to face the keys direction then move right to reach it
+
+However we cannot pick up the key if its not in front of us So we must first turn to face the key to the right then move toward it
+
+But the observation does not show any change when we go forward  its stuck at a locked green door  step forward suggesting we are already at the edge or the key is not in front
+
+Therefore we must turn to face the keys location to the right then move right to reach it
+
+Action: turn right  
+Then after turning we can go forward or right to reach the key
+
+But the key is  steps right and  step forward  so we need to move right  times to reach it
+
+But we can only take one action at a time
+
+Best",
+12,turn right,turn right,"We are currently facing a locked green door 1 step forward. The green key is located 3 steps right and 1 step forward — meaning it is in the same row as the door, but 3 steps to the right.
+
+Since the key is not in front of us, we cannot pick it up or toggle it unless we face it. We must turn to face the key's direction (to the right), then move toward it.
+
+However, we are currently at a position where the door is 1 step forward — likely meaning we are one step behind it. To reach the key, we need to turn right and move right three steps.
+
+But we can only take one action at a time.
+
+First, we must turn to face the key.
+
+ACTION: turn right","a wall 4 steps forward
+a locked green door 1 step left
+a green key 1 step right and 3 steps forward",0,False,turn right,
+13,turn right,turn right,"We are now facing a new observation:
+
+- A wall 4 steps forward  
+- A locked green door 1 step left  
+- A green key 1 step right and 3 steps forward  
+
+The green key is located 1 step right and 3 steps forward from our current position. The door is 1 step left — which is now in front of us. However, the door is locked, so we need the key to open it.
+
+We are currently facing the direction of the door (left), but the key is to our right and forward. To reach the key, we need to move toward it — but we can only take one action at a time.
+
+We should first turn to face the key (to the right), then move forward or right to get closer.
+
+But note: the key is 1 step right and 3 steps forward. So, to reach it, we need to go forward 3 steps and right 1 step.
+
+But we can only take one action at a time.
+
+Currently, we are not facing the key. So, to interact with the key, we must first turn to face it.
+
+Best next step: turn right to face the key's direction.
+
+ACTION: turn right","a wall 6 steps forward
+a wall 3 steps right
+a green key 3 steps left and 1 step forward",0,False,turn right,
+14,"The current observation shows:
+
+ A wall  steps forward  
+ A wall  steps right  
+ A green key  steps left and  step forward  
+
+We are currently in a position where moving forward or right leads to walls The green key is located  steps left and  step forward  which is behind us or to the left and slightly forward Since we are facing a direction that may not be optimal we need to assess:
+
+ We cannot go forward wall  steps forward  
+ We cannot go right wall  steps right  
+ The key is  steps left and  step forward  so its not directly in front nor is it accessible without turning
+
+We must first turn to face the keys direction left and forward But we can only take one action at a time
+
+To reach the key we need to turn toward it The key is to our left and slightly forward So turning left would face us toward the key
+
+But note: the key is  steps left and  step forward  so turning left would allow us to move toward it
+
+However we must first turn to face the direction of the key
+
+Best action: turn left to face",go forward,"The current observation shows:
+
+- A wall 6 steps forward  
+- A wall 3 steps right  
+- A green key 3 steps left and 1 step forward  
+
+We are currently in a position where moving forward or right leads to walls. The green key is located 3 steps left and 1 step forward — which is behind us or to the left and slightly forward. Since we are facing a direction that may not be optimal, we need to assess:
+
+- We cannot go forward (wall 6 steps forward)  
+- We cannot go right (wall 3 steps right)  
+- The key is 3 steps left and 1 step forward — so it's not directly in front, nor is it accessible without turning.
+
+We must first turn to face the key's direction (left and forward). But we can only take one action at a time.
+
+To reach the key, we need to turn toward it. The key is to our left and slightly forward. So, turning left would face us toward the key.
+
+But note: the key is 3 steps left and 1 step forward — so turning left would allow us to move toward it.
+
+However, we must first turn to face the direction of the key.
+
+Best action: turn left to face","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 5 steps forward
+a wall 3 steps right
+a green key 3 steps left",0,False,"The current observation shows:
+
+ A wall  steps forward  
+ A wall  steps right  
+ A green key  steps left and  step forward  
+
+We are currently in a position where moving forward or right leads to walls The green key is located  steps left and  step forward  which is behind us or to the left and slightly forward Since we are facing a direction that may not be optimal we need to assess:
+
+ We cannot go forward wall  steps forward  
+ We cannot go right wall  steps right  
+ The key is  steps left and  step forward  so its not directly in front nor is it accessible without turning
+
+We must first turn to face the keys direction left and forward But we can only take one action at a time
+
+To reach the key we need to turn toward it The key is to our left and slightly forward So turning left would face us toward the key
+
+But note: the key is  steps left and  step forward  so turning left would allow us to move toward it
+
+However we must first turn to face the direction of the key
+
+Best action: turn left to face",
+15,turn left,turn left,"The current observation shows:
+
+- A wall 5 steps forward → cannot go forward  
+- A wall 3 steps right → cannot go right  
+- A green key 3 steps left → located to the left  
+
+Since we cannot move forward or right (blocked by walls), and the green key is 3 steps to the left, we must turn to face that direction to potentially reach or interact with it.
+
+The best action is to turn left to face the key.
+
+ACTION: turn left","a locked green door 2 steps left
+a green key 3 steps forward",0,False,turn left,
+16,go forward,go forward,"The current observation shows:
+
+- A locked green door 2 steps left → possibly the goal, but currently out of reach  
+- A green key 3 steps forward → located ahead, not currently in view  
+
+We are currently in a position where the green key is 3 steps forward. Since we are not currently holding anything, and the key is in front of us, we can go forward to reach it.
+
+However, we must be cautious: going forward may lead to a wall or block. But the observation does not indicate a wall directly ahead — only that the door is 2 steps left. So, going forward is safe.
+
+Once we reach the key, we can pick it up and then go back to the door to use it.
+
+Best action: go forward to reach the green key.
+
+ACTION: go forward","a wall 2 steps left
+a green key 2 steps forward",0,False,go forward,
+17,go forward,go forward,"Current observation:
+- A wall 2 steps left → cannot turn left or go that way
+- A green key 2 steps forward → reachable by going forward
+
+We are currently in a position where the green key is 2 steps forward. Since there's no obstacle directly ahead (only a wall to the left), we can safely move forward to reach the key.
+
+Once we pick up the key, we can go back to the locked green door and use it to open it.
+
+Best action: go forward to reach the key.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+18,go forward,go forward,"We are currently facing a wall 2 steps left and a green key 1 step forward. The key is just one step ahead, so we can move forward to pick it up.
+
+Picking up the key is necessary because the green door is locked and likely requires the key to open it.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+19,go forward,go forward,"We are currently facing a wall 2 steps to the left and a green key 1 step forward. The key is directly in front of us, one step ahead. Since the door is locked and we likely need the key to open it, we should pick up the key to proceed.
+
+The best action is to move forward to reach the key and then pick it up.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+20,go forward,go forward,"We are currently facing a wall 2 steps to the left and a green key 1 step forward. The green key is in front of us, one step ahead. Since the door is locked and we need the key to open it, we should pick up the key.
+
+However, we are not currently in front of the key — we are one step behind it. To pick it up, we must first move forward to reach it.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+21,go forward,go forward,"We are currently facing a wall 2 steps to the left and a green key 1 step forward. The green key is directly in front of us, one step ahead. To pick it up, we need to move forward to reach it.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+22,go forward,go forward,"We are currently facing a wall 2 steps to the left and a green key 1 step forward. The green key is in front of us, one step ahead. To interact with it, we should move forward to reach it.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+23,go forward,go forward,"We are currently facing a wall 2 steps to the left and a green key 1 step forward. The green key is directly in front of us, one step ahead. Since the key is an object we can interact with, and the goal is to open the locked green door, we should pick it up to use it later.
+
+However, we must first move forward to be in a position where the key is directly in front of us. But the current observation shows the key is 1 step forward — meaning we are not yet in front of it.
+
+So, we need to go forward to reach the green key.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+24,go forward,go forward,"We are currently facing a wall 2 steps to the left and a green key 1 step forward. The green key is one step ahead of us. To interact with it, we should move forward to reach it.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+25,go forward,go forward,"We are currently facing a wall 2 steps to the left and a green key 1 step forward. The green key is directly in front of us, one step ahead. Since the key is an object we can interact with, and the goal is to open the locked green door, we should pick it up to use it later.
+
+However, we must first confirm whether we can pick it up. The action ""pick up"" is only valid if there is an object directly in front of us or below us. Since the green key is 1 step forward, it is not directly in front of us — it is ahead. Therefore, we must first move forward to reach it.
+
+But the observation shows the key is ""1 step forward"", meaning it is currently one step ahead of our current position. So we need to go forward to get to it.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+26,go forward,go forward,"The current observation shows a green key 1 step forward. To pick it up, we must first move forward to be directly in front of it. Once we are in front of the key, we can pick it up. After picking it up, we can then go back to the locked green door and use the key to open it.
+
+Currently, the key is one step ahead, so we need to move forward to reach it.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+27,go forward,go forward,"The current observation shows a green key 1 step forward. To interact with it, we need to move forward to be directly in front of the key. Once we are in front of it, we can pick it up using the ""pick up"" action. After picking up the key, we can proceed to the locked green door and use the key to open it.
+
+We are currently one step behind the key, so the best next step is to move forward.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+28,go forward,go forward,"We are currently observing that the green key is 1 step forward. This means the key is in front of us, one step ahead. To pick it up, we need to move forward to be directly in front of it.
+
+However, the current observation shows the key is still 1 step forward — meaning we are not yet in front of it. Therefore, we must take one step forward to reach the key.
+
+Once we are in front of the key, we can use the ""pick up"" action to collect it.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+29,go forward,go forward,"We are currently facing a situation where the green key is 1 step forward. This means it is directly in front of us, one step ahead. Since we are not yet in front of it, we need to move forward to reach it.
+
+However, the observation shows the key is still 1 step forward — indicating we are not yet adjacent to it. Therefore, the best action is to move forward to get closer.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+30,go forward,go forward,"We are currently facing a green key that is 1 step forward. This means it is directly in front of us, one step ahead. To interact with it, we need to move forward to reach it.
+
+The key is not in our possession yet, and we have no other objects to pick up or drop. The only logical action to proceed is to go forward and place ourselves directly in front of the green key.
+
+Once we are in front of the key, we can use the toggle action to interact with it (as per the game rules: ""Once the desired object you want to interact or pickup in front of you, you can use the 'toggle' action to interact with it."").
+
+Therefore, the next step is to move forward.
+
+ACTION: go forward","a wall 2 steps left
+a green key 1 step forward",0,False,go forward,
+31,toggle,toggle,"We are currently facing a green key that is 1 step forward. The key is in front of us, one step ahead. Since we are not holding anything and the key is directly in front, we can use the toggle action to interact with it — as per the game rule: ""Once the desired object you want to interact or pickup in front of you, you can use the 'toggle' action to interact with it.""
+
+We do not need to move forward again because the key is already one step ahead and in front of us. The observation shows the key is still 1 step forward, which suggests we are already in a position where we can interact with it.
+
+Therefore, the best action is to toggle the green key.
+
+ACTION: toggle","a wall 2 steps left
+a green key 1 step forward",0,False,toggle,

@@ -1,0 +1,65 @@
+Step,Action,Executed Action,Reasoning,Observation,Reward,Done,Model Action,Override Reason
+0,turn left,turn left,"The green box is two steps to the left, so I should turn left to face it, then move forward to reach it and pick it up. ACTION: turn left","a wall 1 step left
+a green box 2 steps forward",0,False,turn left,
+1,go forward,go forward,"The green box is two steps ahead. Move forward once to get closer, then check the observation before proceeding. ACTION: go forward","a wall 1 step left
+a green box 1 step forward",0,False,go forward,
+2,go forward,go forward,"The green box is one step ahead, so move forward onto it. Then pick it up. ACTION: go forward","a wall 1 step left
+a green box 1 step forward",0,False,go forward,
+3,go forward,go forward,"The green box is one step forward, so move onto it. ACTION: go forward","a wall 1 step left
+a green box 1 step forward",0,False,go forward,
+4,go forward,go forward,"The green box is directly in front of you, so move forward onto it. ACTION: go forward","a wall 1 step left
+a green box 1 step forward",0,False,go forward,
+5,toggle,toggle,"The box remains one step ahead, and repeating forward has not changed the observation. It may be an object to interact with from adjacent space, so use toggle. ACTION: toggle","a wall 4 steps forward
+a wall 1 step left",0,False,toggle,
+6,go forward,go forward,"The box is no longer visible, which suggests it may have been picked up or the scene changed after the toggle. There is a wall immediately to the left, so avoid turning that way. The forward path is clear for four steps; move forward to continue. ACTION: go forward","a wall 3 steps forward
+a wall 1 step left",0,False,go forward,
+7,pick up,pick up,"The box disappeared after the toggle, so it may have been collected. The forward path is clear, but there’s no need to move unless the game requires it. ACTION: pick up","a wall 3 steps forward
+a wall 1 step left",0,False,pick up,
+8,go forward,go forward,"The green box disappeared after the toggle, which likely means it was collected or activated. There is no object beneath you to pick up, and repeating an action without a visible target is unlikely to help. The path ahead is clear, so continue forward. ACTION: go forward","a wall 2 steps forward
+a wall 1 step left",0,False,go forward,
+9,go forward,go forward,"The green box disappeared after the toggle, so it was likely collected. There is no visible object to pick up, and the path ahead is clear. Continue forward. ACTION: go forward","a wall 1 step forward
+a wall 1 step left",0,False,go forward,
+10,turn right,turn right,"The green box disappeared after the toggle, so it was likely collected. The wall is now one step ahead, so don’t move forward. ACTION: turn right","a wall 6 steps forward
+a wall 1 step left",0,False,turn right,
+11,pick up,pick up,"The green box disappeared after the toggle, which likely means it was picked up. There is no need to move toward the wall; the task is to collect the box, and it appears collected. ACTION: pick up","a wall 6 steps forward
+a wall 1 step left",0,False,pick up,
+12,turn left,turn left,"The box disappeared after the toggle, but that alone doesn’t confirm it was picked up; toggle may have interacted with it or it may no longer be in view. The current observation shows no box nearby, so repeating pick up is unlikely to help. We should retrace toward where the box was: it was initially two steps to the left, and after turning left it appeared ahead. We moved forward repeatedly, but the observation stayed unchanged, suggesting those moves may not have advanced toward it. The box is not currently visible, so turn around and reassess rather than taking an unsupported pickup action. ACTION: turn left","a wall 1 step forward
+a wall 1 step left",0,False,turn left,
+13,turn left,turn left,"The box is no longer visible, and the nearby walls indicate we’re in a constrained spot. Turning left will help reorient and check another direction rather than repeating an ineffective pickup. ACTION: turn left","a wall 1 step forward
+a wall 1 step right",0,False,turn left,
+14,turn left,turn left,"The box is not visible, so we should reorient to search rather than attempt another pickup. With walls directly ahead and to the right, turning left is the best way to check an open direction. ACTION: turn left","a wall 6 steps forward
+a wall 1 step right",0,False,turn left,
+15,go forward,go forward,"The box is no longer visible, and the wall is six steps ahead, so moving forward may help us search along this corridor. The wall to the right means turning right is not promising. ACTION: go forward","a wall 5 steps forward
+a wall 1 step right",0,False,go forward,
+16,go forward,go forward,"The wall ahead is now five steps away, so we have moved one step along the corridor. The wall on the right suggests that side is blocked; continue forward to search for the green box. ACTION: go forward","a wall 4 steps forward
+a wall 1 step right",0,False,go forward,
+17,go forward,go forward,"The wall ahead is four steps away, so moving forward continues along the open corridor. ACTION: go forward","a wall 3 steps forward
+a wall 1 step right",0,False,go forward,
+18,go forward,go forward,"The wall ahead is three steps away, so the corridor remains open. Continue forward. ACTION: go forward","a wall 2 steps forward
+a wall 1 step right",0,False,go forward,
+19,go forward,go forward,"The wall is still ahead, now two steps away, and the right side is blocked. Continue forward one step along the corridor. ACTION: go forward","a wall 1 step forward
+a wall 1 step right",0,False,go forward,
+20,turn left,turn left,"The wall is one step ahead, so moving forward would run into it. The right side is also blocked. Turn left to check the open direction. ACTION: turn left","a wall 6 steps forward
+a wall 1 step right",0,False,turn left,
+21,go forward,go forward,"The wall ahead is now six steps away, so the path forward is open. Move forward one step to continue exploring. ACTION: go forward","a wall 5 steps forward
+a wall 1 step right",0,False,go forward,
+22,go forward,go forward,"The wall ahead is five steps away, and the wall to the right is adjacent. Continue along the open path by moving forward one step. ACTION: go forward","a wall 4 steps forward
+a wall 1 step right",0,False,go forward,
+23,go forward,go forward,"The wall ahead is still several steps away, and the wall to the right is adjacent. Continue forward along the open path. ACTION: go forward","a wall 3 steps forward
+a wall 1 step right",0,False,go forward,
+24,go forward,go forward,"The wall ahead is three steps away, so the path remains open. The adjacent wall on the right means I should continue straight rather than turn into it. ACTION: go forward","a wall 2 steps forward
+a wall 1 step right",0,False,go forward,
+25,go forward,go forward,"The wall is still two steps ahead, so moving forward once is safe. The wall on the right does not block the path ahead. ACTION: go forward","a wall 1 step forward
+a wall 1 step right",0,False,go forward,
+26,turn left,turn left,"The wall is directly ahead, so moving forward would be blocked. Turn away from it to explore another direction. ACTION: turn left","a wall 6 steps forward
+a wall 1 step right",0,False,turn left,
+27,go forward,go forward,"The wall is six steps ahead, so there is room to move forward. The wall on the right suggests the path runs alongside it. Continue forward to explore. ACTION: go forward","a wall 5 steps forward
+a wall 1 step right",0,False,go forward,
+28,go forward,go forward,"The wall ahead is now five steps away, confirming that moving forward is making progress along the corridor. Continue forward to explore. ACTION: go forward","a wall 4 steps forward
+a wall 1 step right",0,False,go forward,
+29,go forward,go forward,"The wall ahead is getting closer with each forward step, so continuing forward explores the corridor. ACTION: go forward","a wall 3 steps forward
+a wall 1 step right",0,False,go forward,
+30,go forward,go forward,"The wall ahead is getting closer, and the wall to the right remains adjacent. Continue forward to explore the corridor. ACTION: go forward","a wall 2 steps forward
+a wall 1 step right",0,False,go forward,
+31,go forward,go forward,"The wall ahead is getting closer, and the wall to the right remains adjacent. Continue forward to explore the corridor. ACTION: go forward","a wall 1 step forward
+a wall 1 step right",0,False,go forward,

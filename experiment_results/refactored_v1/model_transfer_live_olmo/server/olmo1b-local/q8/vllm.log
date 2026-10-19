@@ -1,0 +1,64 @@
+(APIServer pid=978523) INFO 10-18 18:19:02 [api_utils.py:347] 
+(APIServer pid=978523) INFO 10-18 18:19:02 [api_utils.py:347]        █     █     █▄   ▄█
+(APIServer pid=978523) INFO 10-18 18:19:02 [api_utils.py:347]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.31.0
+(APIServer pid=978523) INFO 10-18 18:19:02 [api_utils.py:347]   █▄█▀ █     █     █     █  model   /home/joris/.cache/huggingface/hub/models--allenai--OLMo-2-0425-1B-Instruct-GGUF/snapshots/62f8c199538474c3e33ed5d7e0580abd66686a27/OLMo-2-0425-1B-Instruct-Q8_0.gguf
+(APIServer pid=978523) INFO 10-18 18:19:02 [api_utils.py:347]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=978523) INFO 10-18 18:19:02 [api_utils.py:347] 
+(APIServer pid=978523) INFO 10-18 18:19:02 [api_utils.py:286] non-default args: {'model_tag': '/home/joris/.cache/huggingface/hub/models--allenai--OLMo-2-0425-1B-Instruct-GGUF/snapshots/62f8c199538474c3e33ed5d7e0580abd66686a27/OLMo-2-0425-1B-Instruct-Q8_0.gguf', 'host': '127.0.0.1', 'port': 8097, 'model': '/home/joris/.cache/huggingface/hub/models--allenai--OLMo-2-0425-1B-Instruct-GGUF/snapshots/62f8c199538474c3e33ed5d7e0580abd66686a27/OLMo-2-0425-1B-Instruct-Q8_0.gguf', 'tokenizer': '/home/joris/.cache/huggingface/hub/models--allenai--OLMo-2-0425-1B-Instruct/snapshots/48d788eca847d4d7548f375ad03d3c9312f6139e', 'dtype': 'float16', 'hf_config_path': '/home/joris/.cache/huggingface/hub/models--allenai--OLMo-2-0425-1B-Instruct/snapshots/48d788eca847d4d7548f375ad03d3c9312f6139e', 'max_model_len': 4096, 'served_model_name': ['allenai/OLMo-2-0425-1B-Instruct'], 'gpu_memory_utilization': 0.88}
+Traceback (most recent call last):
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/transformers/configuration_utils.py", line 844, in _get_config_dict
+    config_dict = cls._dict_from_json_file(resolved_config_file)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/transformers/configuration_utils.py", line 956, in _dict_from_json_file
+    text = reader.read()
+           ^^^^^^^^^^^^^
+  File "<frozen codecs>", line 322, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb3 in position 8: invalid start byte
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/joris/miniconda3/envs/vllm/bin/vllm", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/vllm/entrypoints/cli/main.py", line 118, in main
+    args.dispatch_function(args)
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/vllm/entrypoints/cli/serve.py", line 154, in cmd
+    uvloop.run(run_server(args))
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/uvloop/__init__.py", line 92, in run
+    return runner.run(wrapper())
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 1515, in uvloop.loop.Loop.run_until_complete
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/uvloop/__init__.py", line 48, in wrapper
+    return await main
+           ^^^^^^^^^^
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/vllm/entrypoints/launchers/api_server/entry.py", line 172, in run_server
+    await run_server_worker(listen_address, sock, args, **uvicorn_kwargs)
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/vllm/entrypoints/launchers/api_server/entry.py", line 185, in run_server_worker
+    async with build_async_engine_client(
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/contextlib.py", line 210, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/vllm/entrypoints/launchers/api_server/entry.py", line 58, in build_async_engine_client
+    async with build_async_engine_client_from_engine_args(
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/contextlib.py", line 210, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/vllm/entrypoints/launchers/api_server/entry.py", line 80, in build_async_engine_client_from_engine_args
+    vllm_config = engine_args.create_engine_config(usage_context=usage_context)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/vllm/engine/arg_utils.py", line 2173, in create_engine_config
+    maybe_override_with_speculators(
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/vllm/transformers_utils/config.py", line 814, in maybe_override_with_speculators
+    config_dict, _ = PreTrainedConfig.get_config_dict(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/transformers/configuration_utils.py", line 747, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/joris/miniconda3/envs/vllm/lib/python3.11/site-packages/transformers/configuration_utils.py", line 848, in _get_config_dict
+    raise OSError(f"It looks like the config file at '{resolved_config_file}' is not a valid JSON file.")
+OSError: It looks like the config file at '/home/joris/.cache/huggingface/hub/models--allenai--OLMo-2-0425-1B-Instruct-GGUF/snapshots/62f8c199538474c3e33ed5d7e0580abd66686a27/OLMo-2-0425-1B-Instruct-Q8_0.gguf' is not a valid JSON file.
+ERROR conda.cli.main_run:execute(142): `conda run vllm serve /home/joris/.cache/huggingface/hub/models--allenai--OLMo-2-0425-1B-Instruct-GGUF/snapshots/62f8c199538474c3e33ed5d7e0580abd66686a27/OLMo-2-0425-1B-Instruct-Q8_0.gguf --host 127.0.0.1 --port 8097 --served-model-name allenai/OLMo-2-0425-1B-Instruct --gpu-memory-utilization 0.88 --max-model-len 4096 --generation-config auto --seed 0 --tokenizer /home/joris/.cache/huggingface/hub/models--allenai--OLMo-2-0425-1B-Instruct/snapshots/48d788eca847d4d7548f375ad03d3c9312f6139e --hf-config-path /home/joris/.cache/huggingface/hub/models--allenai--OLMo-2-0425-1B-Instruct/snapshots/48d788eca847d4d7548f375ad03d3c9312f6139e --dtype float16` failed. (See above for error)

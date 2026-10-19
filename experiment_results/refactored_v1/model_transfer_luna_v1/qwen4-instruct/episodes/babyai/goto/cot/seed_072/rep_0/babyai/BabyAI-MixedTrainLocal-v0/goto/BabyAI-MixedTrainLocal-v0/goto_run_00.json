@@ -1,0 +1,42 @@
+{
+    "task": "BabyAI-MixedTrainLocal-v0/goto",
+    "action_frequency": {
+        "go forward": 4,
+        "turn right": 1
+    },
+    "input_tokens": 2449,
+    "output_tokens": 905,
+    "done": true,
+    "episode_return": 0.9296875,
+    "num_steps": 5,
+    "failed_candidates": [
+        "Lets analyze the observation step by step:\n\nCurrent Observation:\n A wall is  steps forward\n A wall is  step left\n A blue ball is  steps right and  steps forward\n\nThis means:\n Moving forward  steps would hit a wall  cannot go that way\n Moving left  step would hit a wall  cannot go that way\n The blue ball is located at  steps right and  steps forward from current position\n\nSo to reach the blue ball:\n We need to go  steps right and  steps forward\n\nBut we must avoid walls:\n Forward  steps is blocked  so we cannot go straight forward\n Left  step is blocked  cannot go left\n\nTherefore we must move in a path that avoids the walls\n\nSince the blue ball is  steps right and  steps forward we can:\n Move forward  steps to get closer to the blue ball\n Then move right  steps\n\nBut we must check if any of these paths are blocked\n\n Forward  steps: the wall is  steps forward so  steps forward is safe we havent hit the wall yet\n Then"
+    ],
+    "mission": "go to the blue ball",
+    "progression": 1.0,
+    "process_num": null,
+    "seed": 72,
+    "agent": {
+        "type": "cot",
+        "remember_cot": true,
+        "max_text_history": 16,
+        "max_image_history": 0,
+        "max_cot_history": 1,
+        "max_icl_history": 1000,
+        "cache_icl": false
+    },
+    "client": {
+        "client_name": "vllm",
+        "model_id": "Qwen/Qwen3-4B-Instruct-2507-FP8",
+        "base_url": "http://127.0.0.1:8097/v1",
+        "generate_kwargs": {
+            "temperature": 0,
+            "max_tokens": 256,
+            "thinking_budget": null
+        },
+        "timeout": 60,
+        "max_retries": 3,
+        "delay": 2,
+        "alternate_roles": false
+    }
+}

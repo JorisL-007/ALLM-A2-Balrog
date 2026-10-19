@@ -1,0 +1,374 @@
+Step,Action,Executed Action,Reasoning,Observation,Reward,Done,Model Action,Override Reason
+0,"Lets analyze the observation step by step:
+
+Current Observation:
+ A wall is  step forward
+ A wall is  steps right
+
+This means:
+ If I go forward I will hit a wall  I cannot move forward
+ If I go right  steps I will reach a wall  also not a viable path
+
+So the immediate path forward is blocked The path to the right  steps is also blocked
+
+Since there are no visible objects like the blue key in the observation and the only things mentioned are walls its likely that the blue key is not directly visible or accessible from the current position
+
+But the key is likely hidden somewhere in the environment Since we cant go forward or right blocked by walls we must consider that the key might be behind or to the left or updown  but those directions are not mentioned
+
+However the observation only gives information about walls in specific directions It does not mention any objects like the blue key or other accessible paths
+
+Given that:
+ Forward and right are blocked
+ No object is mentioned
+ The only possible action that could reveal something is toggle to interact with something in front
+ But theres no object",go forward,"Let's analyze the observation step by step:
+
+Current Observation:
+- A wall is 1 step forward.
+- A wall is 3 steps right.
+
+This means:
+- If I go forward, I will hit a wall — I cannot move forward.
+- If I go right 3 steps, I will reach a wall — also not a viable path.
+
+So, the immediate path forward is blocked. The path to the right (3 steps) is also blocked.
+
+Since there are no visible objects (like the blue key) in the observation, and the only things mentioned are walls, it's likely that the blue key is not directly visible or accessible from the current position.
+
+But the key is likely hidden somewhere in the environment. Since we can't go forward or right (blocked by walls), we must consider that the key might be behind or to the left or up/down — but those directions are not mentioned.
+
+However, the observation only gives information about walls in specific directions. It does not mention any objects (like the blue key) or other accessible paths.
+
+Given that:
+- Forward and right are blocked,
+- No object is mentioned,
+- The only possible action that could reveal something is ""toggle"" (to interact with something in front),
+- But there's no object","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 1 step forward
+a wall 3 steps right",0,False,"Lets analyze the observation step by step:
+
+Current Observation:
+ A wall is  step forward
+ A wall is  steps right
+
+This means:
+ If I go forward I will hit a wall  I cannot move forward
+ If I go right  steps I will reach a wall  also not a viable path
+
+So the immediate path forward is blocked The path to the right  steps is also blocked
+
+Since there are no visible objects like the blue key in the observation and the only things mentioned are walls its likely that the blue key is not directly visible or accessible from the current position
+
+But the key is likely hidden somewhere in the environment Since we cant go forward or right blocked by walls we must consider that the key might be behind or to the left or updown  but those directions are not mentioned
+
+However the observation only gives information about walls in specific directions It does not mention any objects like the blue key or other accessible paths
+
+Given that:
+ Forward and right are blocked
+ No object is mentioned
+ The only possible action that could reveal something is toggle to interact with something in front
+ But theres no object",
+1,turn left,turn left,"The observation states:
+- A wall is 1 step forward → cannot go forward.
+- A wall is 3 steps right → cannot go right.
+
+No object (like the blue key) is visible or mentioned. The only possible interaction is with something in front — but there's no object mentioned, only a wall.
+
+Since going forward or right leads to walls, and no object is present, we cannot pick up or toggle anything.
+
+Therefore, no useful action can be taken with the current observation. Repeating ""go forward"" is invalid because it leads to a wall.
+
+Best course of action: **Wait or reorient** — but we have no information about left or up/down.
+
+Since no action leads to progress and the environment is blocked in known directions, and no object is visible, we must consider that the key might be in a direction not mentioned — such as left or up.
+
+But the observation does not describe those directions.
+
+Thus, the only safe action that doesn't lead to a wall and might allow exploration is to **turn left**, to check a new direction.
+
+ACTION: turn left","a wall 4 steps forward
+a wall 1 step right",0,False,turn left,
+2,turn left,turn left,"Observation:  
+- A wall is 4 steps forward → cannot go forward.  
+- A wall is 1 step right → cannot go right.  
+
+We previously tried going forward, which led to a wall. Now, the observation includes a wall 4 steps forward and 1 step right — both blocked.  
+
+We have not yet explored left or up/down. Since the only available directions mentioned are forward and right, and both are blocked, we need to reorient to explore other directions.  
+
+The most logical next step is to **turn left**, to check the left direction — which is not mentioned in the current observation and may lead to a path or the blue key.  
+
+Turning left is a safe, non-repetitive action that opens a new direction for exploration.  
+
+ACTION: turn left","a wall 3 steps left
+a blue key 4 steps forward",0,False,turn left,
+3,go forward,go forward,"We now have the following observation:  
+- A wall 3 steps left → cannot go left.  
+- A blue key 4 steps forward → the blue key is 4 steps forward, which is reachable.  
+
+Since the blue key is directly in front (4 steps forward), and there's no obstacle mentioned between the current position and the key (only a wall 3 steps left), we can proceed forward.  
+
+We do not need to pick it up yet — we just need to move to it.  
+
+The key is 4 steps forward, and there's no indication of walls blocking the path forward (only a wall 3 steps left, which is irrelevant to forward movement).  
+
+Therefore, we should go forward to reach the blue key.  
+
+ACTION: go forward","a wall 3 steps left
+a blue key 3 steps forward",0,False,go forward,
+4,go forward,go forward,"Current observation:  
+- A wall 3 steps left → cannot move left.  
+- A blue key 3 steps forward → the blue key is 3 steps forward.  
+
+We are currently facing a direction where moving forward will bring us closer to the blue key. There is no obstacle blocking the forward path (only a wall to the left, which is irrelevant).  
+
+We should move forward to reach the blue key. Once we are directly in front of it, we can pick it up.  
+
+Since the key is 3 steps forward, we need to go forward three times. But we can only take one step at a time.  
+
+We proceed with the first step:  
+
+ACTION: go forward","a wall 3 steps left
+a blue key 2 steps forward",0,False,go forward,
+5,go forward,go forward,"We are currently facing a direction where:
+- There is a wall 3 steps left (so we cannot go left).
+- A blue key is 2 steps forward.
+
+We need to reach the blue key. Since we can only move one step at a time, and the key is 2 steps forward, we should proceed forward.
+
+Moving forward will bring us closer to the key. After one step, the key will be 1 step forward. Then, we can go forward again to reach it.
+
+Current best action: go forward
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+6,go forward,go forward,"We are currently facing a direction where:
+- There is a wall 3 steps left (so we cannot go left).
+- The blue key is 1 step forward.
+
+Since the blue key is directly in front of us (1 step forward), we can simply move forward to reach it.
+
+No need to turn or toggle — we just need to go forward to pick it up.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+7,go forward,go forward,"We are currently facing a situation where:
+- There is a wall 3 steps left, so we cannot move left.
+- The blue key is 1 step forward.
+
+The blue key is directly in front of us, one step ahead. Since we are not holding anything and the key is accessible, the best action is to move forward to reach it.
+
+We do not need to turn or toggle — just go forward to pick it up.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+8,go forward,go forward,"We are currently facing a situation where:
+- There is a wall 3 steps left, so we cannot move left.
+- The blue key is 1 step forward, directly in front of us.
+
+Since the blue key is in front of us and we are not holding anything, the best action is to move forward to reach it.
+
+We do not need to turn or toggle — just go forward to get to the key.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+9,go forward,go forward,"We are currently facing a situation where:
+- There is a wall 3 steps left, so we cannot move left.
+- The blue key is 1 step forward, directly in front of us.
+
+We are not holding anything, and the key is in front. To pick it up, we must first move forward to reach it.
+
+Since the key is only 1 step forward and there's no obstacle in front (only a wall to the left), we can safely move forward.
+
+After moving forward, we will be directly in front of the blue key, and then we can pick it up.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+10,go forward,go forward,"We are currently facing the following observation:
+- A wall 3 steps left → we cannot move left.
+- A blue key 1 step forward → the key is directly in front of us, one step ahead.
+
+We are not holding anything, and the key is in front. Since it is in front of us, we can move forward to reach it.
+
+Once we are directly in front of the blue key, we can use the ""pick up"" action to collect it.
+
+However, the current observation shows the key is still 1 step forward — meaning we are not yet in front of it. Therefore, we must move forward to get closer.
+
+We cannot turn left (wall blocks that way), and there's no indication of obstacles in front. So, moving forward is safe and necessary.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+11,go forward,go forward,"We are currently facing the observation:
+- A wall 3 steps left → cannot move left.
+- A blue key 1 step forward → the blue key is one step ahead of us.
+
+We are not holding anything, and the key is in front. To pick it up, we must first reach it by moving forward.
+
+Since the key is directly one step ahead and there is no obstacle in front (only a wall to the left), we can safely move forward.
+
+After moving forward, we will be directly in front of the blue key, and then we can pick it up.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+12,go forward,go forward,"We are currently facing the observation:
+- A wall 3 steps left → cannot move left.
+- A blue key 1 step forward → the blue key is one step ahead.
+
+We are not holding anything, and the key is directly in front of us. Since the key is in front, we can use the 'toggle' action to interact with it (as per the tip: once the desired object is in front, use toggle to interact with it).
+
+However, the key is not directly in front of us — it is one step forward. So we must first move forward to reach it.
+
+After moving forward, we will be directly in front of the blue key, and then we can pick it up.
+
+But note: the observation says ""a blue key 1 step forward"" — meaning it is one step ahead. So we need to go forward to reach it.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+13,go forward,go forward,"The blue key is currently one step forward. To pick it up, we must first move forward to be directly in front of it. Once we are in front of the key, we can use the 'pick up' action.
+
+However, the current observation shows the key is still one step forward — meaning we are not yet in front of it. Therefore, we need to go forward to reach it.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+14,go forward,go forward,"The current observation shows that the blue key is one step forward from the current position. This means we are not yet in front of the key. To pick it up, we must move forward until we are directly in front of it.
+
+We have already attempted going forward multiple times, and the key remains one step ahead — suggesting that we are still not in front of it. However, the observation pattern indicates that the key is consistently one step forward, and the wall is three steps to the left. This implies that the key is located in a fixed position relative to our current orientation.
+
+Since we are not in front of the key, and the only way to reach it is to move forward, we must continue moving forward until we are directly in front of it.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+15,go forward,go forward,"We are currently observing:
+- A wall 3 steps left
+- A blue key 1 step forward
+
+This means the blue key is one step ahead of us in the forward direction. To pick it up, we must move forward until we are directly in front of it.
+
+We have been repeatedly going forward, but the key is always one step ahead — suggesting that we are not yet in front of it. However, the observation pattern indicates that the key is fixed in position relative to our current location.
+
+Since the key is one step forward, and we are not currently in front of it, the only logical action is to move forward one step to reach it.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+16,go forward,go forward,"We are currently observing:
+- A wall 3 steps to the left
+- A blue key 1 step forward
+
+This means the blue key is directly in front of us, one step ahead. We are not currently in front of it, so we need to move forward to reach it.
+
+The key is not behind us, to our left, or to our right — it is one step forward. Therefore, the only logical action is to move forward to get to the key's position.
+
+Once we are directly in front of the blue key, we can pick it up.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+17,go forward,go forward,"We are currently observing:
+- A wall 3 steps to the left
+- A blue key 1 step forward
+
+This means the blue key is one step ahead of us, directly in front. We are not currently touching or in front of it. To pick it up, we must first move forward to reach it.
+
+The key is not behind, to the left, or to the right — it is directly in front, one step ahead. Therefore, the best action is to move forward to get to the key's position.
+
+Once we are directly in front of the blue key, we can use the ""pick up"" action.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+18,go forward,go forward,"We are currently observing:
+- A wall 3 steps to the left
+- A blue key 1 step forward
+
+This means the blue key is one step ahead of us, directly in front. We are not currently in front of it, so we cannot pick it up yet.
+
+To pick up the blue key, we must first move forward to reach it.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+19,go forward,go forward,"We are currently facing an observation where:
+- There's a wall 3 steps to the left.
+- A blue key is 1 step forward.
+
+The blue key is directly in front of us, one step ahead. Since it is in front, we can pick it up immediately.
+
+No need to turn or move sideways — we just need to take one step forward to reach it and then pick it up.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+20,go forward,go forward,"The current observation shows that the blue key is 1 step forward, meaning it is directly in front of the player. The wall is 3 steps to the left, which is irrelevant to reaching the key. 
+
+Since the blue key is in front, the best action is to move forward to reach it. Once in front, we can pick it up. However, the current action space does not allow picking up unless we are directly in front and the key is adjacent.
+
+We are already in a position where the key is 1 step forward — so we must go forward to reach it.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+21,go forward,go forward,"The current observation shows that the blue key is 1 step forward, meaning it is directly in front of the player. The wall is 3 steps to the left, which is not obstructing the path to the key. 
+
+Since the blue key is in front of the player, the next logical step is to move forward to reach it. Once the player is in front of the key, they can then pick it up.
+
+However, the current observation does not show the player having moved closer — it remains the same. This suggests that the key is still one step ahead, and the player is not yet in position to pick it up.
+
+Therefore, the best action is to go forward to reach the blue key.
+
+ACTION: go forward","a wall 3 steps left
+a blue key 1 step forward",0,False,go forward,
+22,"Stepbystep reasoning:
+
+ The current observation shows that the blue key is  step forward meaning it is directly in front of the player The wall is  steps to the left which is not in the direct path to the key
+
+ The player is not currently in front of the blue key so they must move forward to reach it
+
+ The key is not behind to the side or behind a wall  it is directly in front one step ahead Therefore the only logical action is to move forward to get into position to pick it up
+
+ Once the player is directly in front of the blue key they can use the pick up action However since the observation does not change after going forward it remains the same it suggests that the key is still one step ahead  meaning the player has not yet reached it
+
+ Therefore the player must continue moving forward until they are directly in front of the key But since the observation is static it implies that the key is fixed at one step ahead and the player is not progressing
+
+ The only action that can change the players position relative to the key is go forward
+
+Thus the best action is to",go forward,"Step-by-step reasoning:
+
+1. The current observation shows that the blue key is 1 step forward, meaning it is directly in front of the player. The wall is 3 steps to the left, which is not in the direct path to the key.
+
+2. The player is not currently in front of the blue key, so they must move forward to reach it.
+
+3. The key is not behind, to the side, or behind a wall — it is directly in front, one step ahead. Therefore, the only logical action is to move forward to get into position to pick it up.
+
+4. Once the player is directly in front of the blue key, they can use the ""pick up"" action. However, since the observation does not change after going forward (it remains the same), it suggests that the key is still one step ahead — meaning the player has not yet reached it.
+
+5. Therefore, the player must continue moving forward until they are directly in front of the key. But since the observation is static, it implies that the key is fixed at one step ahead, and the player is not progressing.
+
+6. The only action that can change the player's position relative to the key is ""go forward"".
+
+Thus, the best action is to","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 3 steps left
+a blue key 1 step forward",0,False,"Stepbystep reasoning:
+
+ The current observation shows that the blue key is  step forward meaning it is directly in front of the player The wall is  steps to the left which is not in the direct path to the key
+
+ The player is not currently in front of the blue key so they must move forward to reach it
+
+ The key is not behind to the side or behind a wall  it is directly in front one step ahead Therefore the only logical action is to move forward to get into position to pick it up
+
+ Once the player is directly in front of the blue key they can use the pick up action However since the observation does not change after going forward it remains the same it suggests that the key is still one step ahead  meaning the player has not yet reached it
+
+ Therefore the player must continue moving forward until they are directly in front of the key But since the observation is static it implies that the key is fixed at one step ahead and the player is not progressing
+
+ The only action that can change the players position relative to the key is go forward
+
+Thus the best action is to",
+23,pick up,pick up,"The observation shows that the blue key is 1 step forward, meaning it is directly in front of the player. The wall is 3 steps to the left, which is not obstructing the path to the key. Since the key is in front, the player is already in a position where they can pick it up — no movement is needed to reach it.
+
+The only remaining action is to pick up the blue key, as it is directly in front.
+
+ACTION: pick up","You carry a blue key
+a wall 3 steps forward
+a wall 3 steps left",0.6625,True,pick up,

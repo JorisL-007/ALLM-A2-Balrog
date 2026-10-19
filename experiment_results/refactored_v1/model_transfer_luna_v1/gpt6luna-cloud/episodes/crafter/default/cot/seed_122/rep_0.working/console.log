@@ -1,0 +1,55 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/BALROG/eval.py:28: Hydra14MigrationWarning: 
+version_base="1.1" selects Hydra 1.1 compatibility behavior.
+Hydra 1.4 will remove this compatibility behavior.
+Before upgrading to Hydra 1.4, set version_base="1.3" and test your application.
+See https://hydra.cc/docs/upgrades/1.3_to_1.4/prepare_for_1_4/ for preparation instructions.
+  @hydra.main(config_path="balrog/config", config_name="config", version_base="1.1")
+/home/joris/miniconda3/envs/balrog/lib/python3.10/site-packages/hydra/_internal/hydra.py:119: UserWarning: Future Hydra versions will no longer change working directory at job runtime by default.
+See https://hydra.cc/docs/1.2/upgrades/1.1_to_1.2/changes_to_job_working_dir/ for more information.
+  ret = run_job(
+Evaluating Episodes:   0%|          | 0/1 [00:00<?, ?it/s]/home/joris/miniconda3/envs/balrog/lib/python3.10/site-packages/nle/nethack/nethack.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+
+Task: default, Proc: None:   0%|          | 0/50 [00:00<?, ?it/s][A
+Task: default, Proc: None:   2%|▏         | 1/50 [00:01<01:09,  1.41s/it][A
+Task: default, Proc: None:   4%|▍         | 2/50 [00:02<01:01,  1.28s/it][A
+Task: default, Proc: None:   6%|▌         | 3/50 [00:03<01:01,  1.31s/it][A
+Task: default, Proc: None:   8%|▊         | 4/50 [00:05<01:03,  1.38s/it][A
+Task: default, Proc: None:  10%|█         | 5/50 [00:06<01:02,  1.39s/it][A
+Task: default, Proc: None:  12%|█▏        | 6/50 [00:07<00:56,  1.29s/it][AEvaluating Episodes:   0%|          | 0/1 [00:11<?, ?it/s]
+Error executing job with overrides: ['agent.type=cot', 'agent.max_text_history=16', 'agent.max_image_history=0', 'agent.remember_cot=True', 'agent.max_cot_history=1', 'envs.names=crafter', 'envs.env_kwargs.seed=122', 'eval.num_episodes.crafter=1', 'eval.num_workers=1', 'eval.max_steps_per_episode=50', 'eval.save_trajectories=True', 'eval.resume_from=/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/experiment_results/refactored_v1/model_transfer_luna_v1/gpt6luna-cloud/episodes/crafter/default/cot/seed_122/rep_0.working', 'client.client_name=openai', 'client.model_id=gpt-6-luna', 'client.base_url=http://127.0.0.1:8088/v1', 'client.generate_kwargs.temperature=0', 'client.generate_kwargs.max_tokens=256', 'client.generate_kwargs.thinking_budget=null', 'envs.crafter_kwargs.seed=122', 'client.timeout=60', 'client.max_retries=3', 'client.delay=2']
+Traceback (most recent call last):
+  File "/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/BALROG/eval.py", line 58, in main
+    evaluator_manager.run(agent_factory)
+  File "/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/BALROG/balrog/evaluator.py", line 77, in run
+    results = self._run_sequential(agent_factory)
+  File "/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/BALROG/balrog/evaluator.py", line 95, in _run_sequential
+    episode_log = evaluator.run_episode(task, agent, position=1, episode_idx=episode_idx)
+  File "/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/BALROG/balrog/evaluator.py", line 310, in run_episode
+    response = agent.act(obs, prev_action=action)
+  File "/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/BALROG/balrog/agents/chain_of_thought.py", line 50, in act
+    cot_reasoning = self.client.generate(messages)
+  File "/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/BALROG/balrog/client.py", line 254, in generate
+    response, completion = self.execute_with_retries(api_call)
+  File "/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/BALROG/balrog/client.py", line 87, in execute_with_retries
+    return func(*args, **kwargs)
+  File "/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/BALROG/balrog/client.py", line 234, in api_call
+    response = audited_request(self.client, api_kwargs, audit_path)
+  File "/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/exercises/common/transport_audit.py", line 29, in audited_request
+    response = client.chat.completions.create(**kwargs)
+  File "/home/joris/miniconda3/envs/balrog/lib/python3.10/site-packages/openai/_utils/_utils.py", line 298, in wrapper
+    return func(*args, **kwargs)
+  File "/home/joris/miniconda3/envs/balrog/lib/python3.10/site-packages/openai/resources/chat/completions/completions.py", line 1318, in create
+    return self._post(
+  File "/home/joris/miniconda3/envs/balrog/lib/python3.10/site-packages/openai/_base_client.py", line 1440, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/home/joris/miniconda3/envs/balrog/lib/python3.10/site-packages/openai/_base_client.py", line 1213, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': 'Invalid prompt: your prompt was flagged as potentially violating our usage policy. Please try again with a different prompt: https://platform.openai.com/docs/guides/reasoning#advice-on-prompting', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_prompt'}}
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+
+                                                                         [AERROR conda.cli.main_run:execute(142): `conda run python eval.py agent.type=cot agent.max_text_history=16 agent.max_image_history=0 agent.remember_cot=True agent.max_cot_history=1 envs.names=crafter envs.env_kwargs.seed=122 eval.num_episodes.crafter=1 eval.num_workers=1 eval.max_steps_per_episode=50 eval.save_trajectories=True eval.resume_from=/home/joris/Master/Semester 3/Agentic Large Language Models/A2/ALLM-A2-Balrog/experiment_results/refactored_v1/model_transfer_luna_v1/gpt6luna-cloud/episodes/crafter/default/cot/seed_122/rep_0.working client.client_name=openai client.model_id=gpt-6-luna client.base_url=http://127.0.0.1:8088/v1 client.generate_kwargs.temperature=0 client.generate_kwargs.max_tokens=256 client.generate_kwargs.thinking_budget=null envs.crafter_kwargs.seed=122 client.timeout=60 client.max_retries=3 client.delay=2` failed. (See above for error)

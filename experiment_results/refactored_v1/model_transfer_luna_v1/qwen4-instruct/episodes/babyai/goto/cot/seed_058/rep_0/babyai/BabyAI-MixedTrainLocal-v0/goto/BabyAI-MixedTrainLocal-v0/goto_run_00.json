@@ -1,0 +1,43 @@
+{
+    "task": "BabyAI-MixedTrainLocal-v0/goto",
+    "action_frequency": {
+        "go forward": 2,
+        "turn right": 1
+    },
+    "input_tokens": 1415,
+    "output_tokens": 664,
+    "done": true,
+    "episode_return": 0.9578125,
+    "num_steps": 3,
+    "failed_candidates": [
+        "Lets analyze the observation step by step:\n\nCurrent Observation:\n A wall  steps forward\n A wall  step left\n A yellow key  step right and  steps forward\n\nThis means:\n Theres a wall  steps forward  we cannot go that way\n Theres a wall  step left  we cannot go left\n The yellow key is located  step right and  steps forward from our current position\n\nSo to reach the yellow key:\n We need to go  step right and then  steps forward\n But we must avoid the walls:\n   Going left is blocked wall  step left  avoid left\n   Going forward  steps is blocked wall  steps forward  avoid going straight forward\n\nTherefore we must go right first to reach the keys xcoordinate then forward  steps\n\nBut is the key directly reachable The key is at  step right and  steps forward  so we can go right then forward  steps\n\nNo obstacles are mentioned between us and the key only walls in specific directions\n\nWe do not need to pick up or drop anything and theres no object in",
+        "Observation:\n A wall  steps forward  cannot go  steps forward\n A wall  step left  cannot go left\n A yellow key is located  step right and  step forward\n\nSo the yellow key is at:  step right and  step forward from current position\n\nWe cannot go left wall and going forward  steps is blocked but we only need to go  step forward  which is within the allowed range\n\nTherefore we can:\n Go right to reach the xcoordinate of the key\n Then go forward  step to reach the key\n\nBut we must be cautious: going forward  step is not blocked only  steps forward is blocked So going forward  step is safe\n\nWe dont need to pick up or toggle anything yet  the key is not in front of us initially\n\nSo first action: go right to get closer to the key\n\nAfter going right the key will be  step forward in front of us\n\nThen we can go forward to reach it\n\nBut we must act step by step\n\nBest first action: turn right  to face the direction toward the key\n\nWait  the key is"
+    ],
+    "mission": "go to the yellow key",
+    "progression": 1.0,
+    "process_num": null,
+    "seed": 58,
+    "agent": {
+        "type": "cot",
+        "remember_cot": true,
+        "max_text_history": 16,
+        "max_image_history": 0,
+        "max_cot_history": 1,
+        "max_icl_history": 1000,
+        "cache_icl": false
+    },
+    "client": {
+        "client_name": "vllm",
+        "model_id": "Qwen/Qwen3-4B-Instruct-2507-FP8",
+        "base_url": "http://127.0.0.1:8097/v1",
+        "generate_kwargs": {
+            "temperature": 0,
+            "max_tokens": 256,
+            "thinking_budget": null
+        },
+        "timeout": 60,
+        "max_retries": 3,
+        "delay": 2,
+        "alternate_roles": false
+    }
+}

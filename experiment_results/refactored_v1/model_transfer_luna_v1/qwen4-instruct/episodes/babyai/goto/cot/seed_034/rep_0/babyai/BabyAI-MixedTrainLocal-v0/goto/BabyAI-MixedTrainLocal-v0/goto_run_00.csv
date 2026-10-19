@@ -1,0 +1,116 @@
+Step,Action,Executed Action,Reasoning,Observation,Reward,Done,Model Action,Override Reason
+0,"Lets analyze the observation step by step:
+
+Current Observation:
+ A wall  steps forward
+ A wall  step right
+ A yellow ball  step left and  steps forward
+
+This means:
+ If I go  steps forward theres a wall  so I cannot go that way
+ If I go  step right theres a wall  so I cannot go that way
+ The yellow ball is located  step left and  steps forward from my current position
+
+So to reach the yellow ball:
+ I need to go  steps forward and  step left
+
+But I must avoid walls:
+ Forward  steps is blocked  so I cant go forward  steps but going  steps forward is fine as long as its not blocked
+ Right  step is blocked  so I cant go right but going left is not blocked
+
+Therefore the path to the yellow ball is:
+ Go forward  steps safe since only  steps forward is blocked not 
+ Then go left  step safe since no wall is mentioned to the left
+
+No object is mentioned to be in front of me",go forward,"Let's analyze the observation step by step:
+
+Current Observation:
+- A wall 5 steps forward
+- A wall 1 step right
+- A yellow ball 1 step left and 2 steps forward
+
+This means:
+- If I go 5 steps forward, there's a wall — so I cannot go that way.
+- If I go 1 step right, there's a wall — so I cannot go that way.
+- The yellow ball is located 1 step left and 2 steps forward from my current position.
+
+So, to reach the yellow ball:
+- I need to go 2 steps forward and 1 step left.
+
+But I must avoid walls:
+- Forward 5 steps is blocked — so I can't go forward 5 steps, but going 2 steps forward is fine (as long as it's not blocked).
+- Right 1 step is blocked — so I can't go right, but going left is not blocked.
+
+Therefore, the path to the yellow ball is:
+1. Go forward 2 steps (safe, since only 5 steps forward is blocked, not 2)
+2. Then go left 1 step (safe, since no wall is mentioned to the left)
+
+No object is mentioned to be in front of me","
+
+Your previous output did not contain a valid action. Defaulted to action: go forward
+
+Observation:
+a wall 4 steps forward
+a wall 1 step right
+a yellow ball 1 step left and 1 step forward",0,False,"Lets analyze the observation step by step:
+
+Current Observation:
+ A wall  steps forward
+ A wall  step right
+ A yellow ball  step left and  steps forward
+
+This means:
+ If I go  steps forward theres a wall  so I cannot go that way
+ If I go  step right theres a wall  so I cannot go that way
+ The yellow ball is located  step left and  steps forward from my current position
+
+So to reach the yellow ball:
+ I need to go  steps forward and  step left
+
+But I must avoid walls:
+ Forward  steps is blocked  so I cant go forward  steps but going  steps forward is fine as long as its not blocked
+ Right  step is blocked  so I cant go right but going left is not blocked
+
+Therefore the path to the yellow ball is:
+ Go forward  steps safe since only  steps forward is blocked not 
+ Then go left  step safe since no wall is mentioned to the left
+
+No object is mentioned to be in front of me",
+1,go forward,go forward,"Observation:
+- A wall 4 steps forward → cannot go 4 steps forward
+- A wall 1 step right → cannot go 1 step right
+- A yellow ball is located 1 step left and 1 step forward
+
+So, the yellow ball is at:
+- 1 step forward and 1 step left from current position.
+
+We need to move:
+- 1 step forward (safe, since wall is only at 4 steps forward — 1 step forward is fine)
+- Then 1 step left (no wall mentioned to the left)
+
+After going 1 step forward, we will be one step closer to the yellow ball, and then we can go left to reach it.
+
+No object is in front of us currently, so no need to toggle.
+
+We do not need to pick up or drop anything yet — the goal is to reach the yellow ball.
+
+Best action: go forward (to get closer to the ball)
+
+ACTION: go forward","a wall 3 steps forward
+a wall 1 step right
+a yellow ball 1 step left",0,False,go forward,
+2,turn left,turn left,"Current observation:
+- A wall 3 steps forward → cannot go 3 steps forward
+- A wall 1 step right → cannot go 1 step right
+- Yellow ball is 1 step left
+
+So, the yellow ball is directly 1 step to the left of current position.
+
+We are not blocked from moving left (no wall mentioned), and the wall is only to the right and forward (but not directly in the path to the left).
+
+Therefore, we can safely move left to reach the yellow ball.
+
+No need to toggle, pick up, or drop — the goal is to reach the yellow ball.
+
+ACTION: turn left","a wall 3 steps right
+a yellow ball 1 step forward",0.9578125,True,turn left,
